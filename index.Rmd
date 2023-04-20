@@ -1,0 +1,147 @@
+---
+title: "Disease Modeling workshop"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+<img src="img/cadms-left.png" style="width:50%;position:center"/>
+
+# Introduction
+
+In this workshop we will cover basics of R for animal health research. Some concepts we cover in this workshop includes data management, visualization, introduction to analytical methods and geographical information systems. At the end of the workshop, the participants will have a basic understanding of R and geographical information systems.
+
+
+# Objectives
+
+  - Understand the basic Rstudio ecosystem and R programming language syntax.
+  - Use R for data visualization.
+  - Integrate geospatial data in our analysis and visualization.
+  - Get a crash course in reproducible research.
+  - Introduce some concepts from network theory.  
+  <!-- - Identify appropriate statistical test to use for data analysis. -->
+
+
+# Requisites
+
+-   Laptop or desktop computer.  
+-   Software we will use:  
+    -   [R](https://cloud.r-project.org/) and [R
+        studio](https://www.rstudio.com/products/rstudio/).
+
+Please follow [these instructions](0a_R_Intro.html) for software installation and make sure you have R version \>3.5
+
+
+------------------------------------------------------------------------
+
+## Data
+
+The data used for this workshop is contained in the package `STNet`. To
+install `STNet` we need the package `devtools` and use the command
+`devtools::install_github("spablotemporal/STNet")`.
+
+<!-- ------------------------------------------------------------------------ -->
+
+## Links
+
+-   [Shared
+    folder](https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e), we will use this folder to provide some workshop materials such as code, data, or other resources.
+
+<!-- ### Recommended reading -->
+
+<!-- -   Martínez-López B, Perez AM, Sánchez-Vizcaíno JM. Social network -->
+<!--     analysis. Review of general concepts and use in preventive -->
+<!--     veterinary medicine. Transbound Emerg Dis. 2009 May;56(4):109-20. -->
+<!--     doi: 10.1111/j.1865-1682.2009.01073.x. PMID: 19341388. -->
+<!-- -   Enright J, Kao RR. Epidemics on dynamic networks. Epidemics. 2018 -->
+<!--     Sep;24:88-97. doi: 10.1016/j.epidem.2018.04.003. Epub 2018 Apr 28. -->
+<!--     PMID: 29907403. -->
+<!-- -   Silk, M.J., Croft, D.P., Delahay, R.J., Hodgson, D.J., Weber, N., -->
+<!--     Boots, M. and McDonald, R.A. (2017), The application of statistical -->
+<!--     network models in disease research. Methods Ecol Evol, 8: 1026-1041. -->
+<!--     <https://doi.org/10.1111/2041-210X.12770> -->
+<!-- -   Farine, DR. When to choose dynamic vs. static social network -->
+<!--     analysis. J Anim Ecol. 2018; 87: 128-- 138. -->
+<!--     <https://doi.org/10.1111/1365-2656.12764> -->
+
+------------------------------------------------------------------------
+
+# Tentative schedule
+
+<!-- Multiple-day format: -->
+
+  - Day 01: Intro to R
+    - Intro to R studio and Markdown
+      <!-- - The interface -->
+      <!-- - Writing documents: pdfs, reports and presentations -->
+    - R syntax and the tidyverse
+      <!-- - Importing data -->
+      <!-- - Cleaning data -->
+      <!-- - Summary tables and statistics -->
+    - Graphics in R
+      <!-- - Visualizing distributions  -->
+      <!-- - Plots for continuous data -->
+      <!-- - Plots for categorical data -->
+  - Day 02: GIS in R
+    - Vectors and Rasters
+    - Manipulating spatial objects
+    - Projections
+    - Spatial statistics
+    - Cartography
+  - Day 03: Network analysis
+    - Static networks
+    - Bipartite networks
+    - Dynamic networks
+  - Day 04: Advanced visualization: Shiny etc..
+    - Intro to shiny
+
+| Time        | May 16 | May 17 | May 18 | May 19 |
+|-------------|--------|--------|--------|--------|
+| 9:00-10:00  |        |        |        |        |
+| 10:00-11:00 |        |        |        |        |
+| 11:00-12:00 |        |        |        |        |
+| 12:00-13:00 |        |        |        |        |
+| 13:00-14:00 |        |        |        |        |
+| 14:00-15:00 |        |        |        |        |
+
+<!-- | Time        | Topic                   | Format  | -->
+<!-- |-------------|-------------------------|---------| -->
+<!-- | 10:00-10:15 | Introduction            | Lecture | -->
+<!-- | 10:15-10:45 | [Part I](Part_I.html)   | Lecture | -->
+<!-- | 10:45-12:00 | [Lab 1](Lab1.html)      | Lab     | -->
+<!-- | 12:00-13:00 | Lunch                   | Lunch   | -->
+<!-- | 13:00-14:00 | [Lab 2](Lab2.html)      | Lab     | -->
+<!-- | 14:00-14:30 | [Part II](Part_II.html) | Lecture | -->
+<!-- | 14:30-14:40 | Break                   | Break   | -->
+<!-- | 14:40-15:10 | [Lab 3](Lab3.html)      | Lab     | -->
+<!-- | 15:20-16:00 | [Lab 4](Lab4.html)      | Lab     | -->
+
+------------------------------------------------------------------------
+
+<!-- # Post workshop survey -->
+
+<!-- ICAHS -->
+
+<!-- We would appreciate if you take a minute to fill a quick anonymous -->
+<!-- survey for feedback. To go to the survey follow [THIS LINK](Survey.html) -->
+<!-- https://forms.gle/2NLzs7vLYUdumYjT9 -->
+
+<!-- NIFNAF -->
+
+<!-- We would appreciate if you take a minute to fill a quick anonymous survey for feedback. To go to the survey follow [THIS LINK](https://ucdavis.co1.qualtrics.com/jfe/form/SV_40oI9hjyLzb4W0K) -->
+
+*This course has been developed with contributions from: [Jose Pablo
+Gomez-Vazquez](https://www.spablo-temporal.network), [Jerome
+Baron](https://www.researchgate.net/profile/Jerome-Baron-2?_iepl%5Bcontexts%5D%5B0%5D=searchReact&_iepl%5BinteractionType%5D=headerSearchResearcher&_iepl%5Bposition%5D=1&_iepl%5BrgKey%5D=AC%3A19976637&_iepl%5Bquery%5D=jerome%20baron&_sg%5B0%5D=h0qwByBH7jEA9pnkn57dm5DqgHcuF9RNJMTd-1Y79ltjmKk1-oUwMXIy0pcjRE2CnEYq1KdLptyRR6s54PsSQTvSojEvOpxGlpJjg6kuLhyfGh3pNjLchg.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&_sg%5B1%5D=LN6moeDNOP7fMtM7A31LTwZ9q27yotxpXtAgTlLmDlxFCvXSd6qjzytmLHphEk7feO7YsBVeJEbTHCewI-A.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&_sgd%5B2%20words%5D=1&_sgd%5B10-20%20characters%5D=1)
+Alejandro Zaldivar, and [Beatriz
+Martinez-Lopez](https://cadms.vetmed.ucdavis.edu/about/director).\
+Feel free to use these training materials for your own research and
+teaching. When using the materials we would appreciate using the proper
+credits. If you would be interested in a training session, please
+contact: [jpgo\@ucdavis.edu](mailto:jpgo@ucdavis.edu){.email}*
+
+------------------------------------------------------------------------
