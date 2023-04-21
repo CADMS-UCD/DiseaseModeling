@@ -86,19 +86,19 @@ tRange <- 10:14
 
 data.frame(
   Time = c('', paste0(tRange, ':00', '-', tRange + 1, ':00')),
-  D01 = c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R', ''),
-  # D01 = cell_spec(c('Intro to R studio', 'R syntax', 'Lunch', 'Graphs', ''), 'html', link = c('')),
+  D01 = c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'),
+  # D01 = cell_spec(c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'), 'html', link = c('')),
   D02 = c('Geographical Information systems', 'Intro to vectors and rasters', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography'),
   D03 = c('Network Analysis','Intro to SNA', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks'),
-  D04 = c('Advanced visualization', 'Interactive visualization', 'Implementation of dashboards', 'Lunch', '', '')
+  D04 = c('Advanced visualization', 'Interactive visualization', 'Implementation of dashboards I', 'Lunch', 'Implementation of dashboards II', '')
 ) %>% 
-  kbl("html", escape = FALSE, col.names = c('Time', 'Day 01', 'Day 02', 'Day 03', 'Day 04')) %>%
+  kbl("html", escape = FALSE, col.names = c('', 'Day 01', 'Day 02', 'Day 03', 'Day 04')) %>%
   kable_paper(full_width = F, lightable_options = c('hover')) %>% 
-  column_spec(1, bold = T, border_left = T, border_right = T) %>% 
+  column_spec(1, bold = T, border_right = T) %>% 
   column_spec(2, border_right = T) %>% 
   column_spec(3, border_right = T) %>% 
   column_spec(4, border_right = T) %>% 
-  row_spec(1, bold = T) %>% 
+  row_spec(1, bold = T, extra_css = "border-bottom: 1px solid") %>% 
   row_spec(4, background = "#F6F5FA", italic = T)
 ```
 
