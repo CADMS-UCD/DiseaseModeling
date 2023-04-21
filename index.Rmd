@@ -9,6 +9,12 @@ editor_options:
     wrap: 72
 ---
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(kableExtra); library(dplyr)
+knitr::opts_chunk$set(echo = F)
+```
+
+
 <img src="img/cadms-left.png" style="width:50%;position:center"/>
 
 # Introduction
@@ -38,23 +44,6 @@ have a basic understanding of R and geographical information systems.
 
 Please follow [these instructions](0a_R_Intro.html) for software
 installation and make sure you have R version \>3.5
-
-------------------------------------------------------------------------
-
-## Data
-
-The data used for this workshop is contained in the package `STNet`. To
-install `STNet` we need the package `devtools` and use the command
-`devtools::install_github("spablotemporal/STNet")`.
-
-<!-- ------------------------------------------------------------------------ -->
-
-## Links
-
--   [Shared
-    folder](https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e),
-    we will use this folder to provide some workshop materials such as
-    code, data, or other resources.
 
 <!-- ### Recommended reading -->
 
@@ -90,60 +79,67 @@ install `STNet` we need the package `devtools` and use the command
 
 # Tentative schedule
 
-<!-- Multiple-day format: -->
+    
+```{r}
+tRange <- 10:14
 
--   Day 01: Intro to R
-    -   Intro to R studio and Markdown <!-- - The interface -->
-        <!-- - Writing documents: pdfs, reports and presentations -->
-    -   R syntax and the tidyverse <!-- - Importing data -->
-        <!-- - Cleaning data -->
-        <!-- - Summary tables and statistics -->
-    -   Graphics in R <!-- - Visualizing distributions  -->
-        <!-- - Plots for continuous data -->
-        <!-- - Plots for categorical data -->
--   Day 02: GIS in R
-    -   Intro to Vectors and Rasters
-    -   Manipulating spatial objects and projections
-    -   Spatial statistics
-    -   Cartography
--   Day 03: Network analysis
-    -   Static networks
-    -   Bipartite networks
-    -   Dynamic networks
--   Day 04: Advanced visualization: Shiny etc..
-    -   Intro to shiny
 
-| Time        | May 16                         | May 17                                       | May 18           | May 19 |
-|-----------------|--------------|--------------|--------------|--------------|
-| 10:00-11:00 | Intro to R studio and Markdown | Intro to Vectors and Rasters                 | Static networks  |        |
-| 11:00-12:00 | R syntax and the tidyverse     | Manipulating spatial objects and projections |                  |        |
-| 12:00-13:00 | Lunch                          | Lunch                                        | Lunch            | Lunch  |
-| 13:00-14:00 | Graphics in R                  | Spatial statistics                           | Dynamic networks |        |
-| 14:00-15:00 |                                | Cartography                                  |                  |        |
+data.frame(
+  Time = c('', paste0(tRange, ':00', '-', tRange + 1, ':00')),
+  D01 = c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R', ''),
+  # D01 = cell_spec(c('Intro to R studio', 'R syntax', 'Lunch', 'Graphs', ''), 'html', link = c('')),
+  D02 = c('Geographical Information systems', 'Intro to vectors and rasters', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography'),
+  D03 = c('Network Analysis','Intro to SNA', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks'),
+  D04 = c('Advanced visualization', 'Interactive visualization', 'Implementation of dashboards', 'Lunch', '', '')
+) %>% 
+  kbl("html", escape = FALSE, col.names = c('Time', 'Day 01', 'Day 02', 'Day 03', 'Day 04')) %>%
+  kable_paper(full_width = F, lightable_options = c('hover')) %>% 
+  column_spec(1, bold = T, border_left = T, border_right = T) %>% 
+  column_spec(2, border_right = T) %>% 
+  column_spec(3, border_right = T) %>% 
+  column_spec(4, border_right = T) %>% 
+  row_spec(1, bold = T) %>% 
+  row_spec(4, background = "#F6F5FA", italic = T)
+```
 
-<!-- | Time        | Topic                   | Format  | -->
 
-<!-- |-------------|-------------------------|---------| -->
-
-<!-- | 10:00-10:15 | Introduction            | Lecture | -->
-
-<!-- | 10:15-10:45 | [Part I](Part_I.html)   | Lecture | -->
-
-<!-- | 10:45-12:00 | [Lab 1](Lab1.html)      | Lab     | -->
-
-<!-- | 12:00-13:00 | Lunch                   | Lunch   | -->
-
-<!-- | 13:00-14:00 | [Lab 2](Lab2.html)      | Lab     | -->
-
-<!-- | 14:00-14:30 | [Part II](Part_II.html) | Lecture | -->
-
-<!-- | 14:30-14:40 | Break                   | Break   | -->
-
-<!-- | 14:40-15:10 | [Lab 3](Lab3.html)      | Lab     | -->
-
-<!-- | 15:20-16:00 | [Lab 4](Lab4.html)      | Lab     | -->
+<!-- -   Day 01: Intro to R -->
+<!--     -   Intro to R studio and Markdown <!-- - The interface --> 
+<!--         <!-- - Writing documents: pdfs, reports and presentations --> 
+<!--     -   R syntax and the tidyverse <!-- - Importing data --> 
+<!--         <!-- - Cleaning data --> 
+<!--         <!-- - Summary tables and statistics --> 
+<!--     -   Graphics in R <!-- - Visualizing distributions  --> 
+<!--         <!-- - Plots for continuous data --> 
+<!--         <!-- - Plots for categorical data --> 
+<!-- -   Day 02: GIS in R -->
+<!--     -   Intro to Vectors and Rasters -->
+<!--     -   Manipulating spatial objects and projections -->
+<!--     -   Spatial statistics -->
+<!--     -   Cartography -->
+<!-- -   Day 03: Network analysis -->
+<!--     -   Static networks -->
+<!--     -   Bipartite networks -->
+<!--     -   Dynamic networks -->
+<!-- -   Day 04: Advanced visualization: Shiny etc.. -->
+<!--     -   Intro to shiny -->
 
 ------------------------------------------------------------------------
+
+## Data
+
+The data used for this workshop is contained in the package `STNet`. To
+install `STNet` we need the package `devtools` and use the command
+`devtools::install_github("spablotemporal/STNet")`.
+
+<!-- ------------------------------------------------------------------------ -->
+
+## Links
+
+-   [Shared
+    folder](https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e),
+    we will use this folder to provide some workshop materials such as
+    code, data, or other resources.
 
 <!-- # Post workshop survey -->
 
@@ -158,6 +154,8 @@ install `STNet` we need the package `devtools` and use the command
 <!-- NIFNAF -->
 
 <!-- We would appreciate if you take a minute to fill a quick anonymous survey for feedback. To go to the survey follow [THIS LINK](https://ucdavis.co1.qualtrics.com/jfe/form/SV_40oI9hjyLzb4W0K) -->
+
+------------------------------------------------------------------------
 
 *This course has been developed with contributions from: [Jose Pablo
 Gomez-Vazquez](https://www.spablo-temporal.network), [Jerome

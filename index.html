@@ -35,6 +35,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -420,23 +422,6 @@ href="https://www.rstudio.com/products/rstudio/">R studio</a>.</li>
 </ul>
 <p>Please follow <a href="0a_R_Intro.html">these instructions</a> for
 software installation and make sure you have R version &gt;3.5</p>
-<hr />
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>The data used for this workshop is contained in the package
-<code>STNet</code>. To install <code>STNet</code> we need the package
-<code>devtools</code> and use the command
-<code>devtools::install_github("spablotemporal/STNet")</code>.</p>
-<!-- ------------------------------------------------------------------------ -->
-</div>
-<div id="links" class="section level2">
-<h2>Links</h2>
-<ul>
-<li><a
-href="https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e">Shared
-folder</a>, we will use this folder to provide some workshop materials
-such as code, data, or other resources.</li>
-</ul>
 <!-- ### Recommended reading -->
 <!-- -   Martínez-López B, Perez AM, Sánchez-Vizcaíno JM. Social network -->
 <!--     analysis. Review of general concepts and use in preventive -->
@@ -454,106 +439,166 @@ such as code, data, or other resources.</li>
 <!--     <https://doi.org/10.1111/1365-2656.12764> -->
 <hr />
 </div>
-</div>
 <div id="tentative-schedule" class="section level1">
 <h1>Tentative schedule</h1>
-<!-- Multiple-day format: -->
-<ul>
-<li>Day 01: Intro to R
-<ul>
-<li>Intro to R studio and Markdown <!-- - The interface -->
-<!-- - Writing documents: pdfs, reports and presentations --></li>
-<li>R syntax and the tidyverse <!-- - Importing data -->
-<!-- - Cleaning data --> <!-- - Summary tables and statistics --></li>
-<li>Graphics in R <!-- - Visualizing distributions  -->
-<!-- - Plots for continuous data -->
-<!-- - Plots for categorical data --></li>
-</ul></li>
-<li>Day 02: GIS in R
-<ul>
-<li>Intro to Vectors and Rasters</li>
-<li>Manipulating spatial objects and projections</li>
-<li>Spatial statistics</li>
-<li>Cartography</li>
-</ul></li>
-<li>Day 03: Network analysis
-<ul>
-<li>Static networks</li>
-<li>Bipartite networks</li>
-<li>Dynamic networks</li>
-</ul></li>
-<li>Day 04: Advanced visualization: Shiny etc..
-<ul>
-<li>Intro to shiny</li>
-</ul></li>
-</ul>
-<table>
-<colgroup>
-<col width="23%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-</colgroup>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th>Time</th>
-<th>May 16</th>
-<th>May 17</th>
-<th>May 18</th>
-<th>May 19</th>
+<tr>
+<th style="text-align:left;">
+Time
+</th>
+<th style="text-align:left;">
+Day 01
+</th>
+<th style="text-align:left;">
+Day 02
+</th>
+<th style="text-align:left;">
+Day 03
+</th>
+<th style="text-align:left;">
+Day 04
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>10:00-11:00</td>
-<td>Intro to R studio and Markdown</td>
-<td>Intro to Vectors and Rasters</td>
-<td>Static networks</td>
-<td></td>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;font-weight: bold;">
+</td>
+<td style="text-align:left;border-right:1px solid;font-weight: bold;">
+Introduction to R
+</td>
+<td style="text-align:left;border-right:1px solid;font-weight: bold;">
+Geographical Information systems
+</td>
+<td style="text-align:left;border-right:1px solid;font-weight: bold;">
+Network Analysis
+</td>
+<td style="text-align:left;font-weight: bold;">
+Advanced visualization
+</td>
 </tr>
-<tr class="even">
-<td>11:00-12:00</td>
-<td>R syntax and the tidyverse</td>
-<td>Manipulating spatial objects and projections</td>
-<td></td>
-<td></td>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;">
+10:00-11:00
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Intro to R studio and Markdown
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Intro to vectors and rasters
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Intro to SNA
+</td>
+<td style="text-align:left;">
+Interactive visualization
+</td>
 </tr>
-<tr class="odd">
-<td>12:00-13:00</td>
-<td>Lunch</td>
-<td>Lunch</td>
-<td>Lunch</td>
-<td>Lunch</td>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;">
+11:00-12:00
+</td>
+<td style="text-align:left;border-right:1px solid;">
+R syntax and the tidyverse
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Manipulating spatial objects and projections
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Network visualization
+</td>
+<td style="text-align:left;">
+Implementation of dashboards
+</td>
 </tr>
-<tr class="even">
-<td>13:00-14:00</td>
-<td>Graphics in R</td>
-<td>Spatial statistics</td>
-<td>Dynamic networks</td>
-<td></td>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+12:00-13:00
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Lunch
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Lunch
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Lunch
+</td>
+<td style="text-align:left;font-style: italic;background-color: #F6F5FA !important;">
+Lunch
+</td>
 </tr>
-<tr class="odd">
-<td>14:00-15:00</td>
-<td></td>
-<td>Cartography</td>
-<td></td>
-<td></td>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;">
+13:00-14:00
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Graphics in R
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Spatial statistics
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Bipartite Networks
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-left:1px solid;border-right:1px solid;">
+14:00-15:00
+</td>
+<td style="text-align:left;border-right:1px solid;">
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Cartography
+</td>
+<td style="text-align:left;border-right:1px solid;">
+Dynamic Networks
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
 </tbody>
 </table>
-<!-- | Time        | Topic                   | Format  | -->
-<!-- |-------------|-------------------------|---------| -->
-<!-- | 10:00-10:15 | Introduction            | Lecture | -->
-<!-- | 10:15-10:45 | [Part I](Part_I.html)   | Lecture | -->
-<!-- | 10:45-12:00 | [Lab 1](Lab1.html)      | Lab     | -->
-<!-- | 12:00-13:00 | Lunch                   | Lunch   | -->
-<!-- | 13:00-14:00 | [Lab 2](Lab2.html)      | Lab     | -->
-<!-- | 14:00-14:30 | [Part II](Part_II.html) | Lecture | -->
-<!-- | 14:30-14:40 | Break                   | Break   | -->
-<!-- | 14:40-15:10 | [Lab 3](Lab3.html)      | Lab     | -->
-<!-- | 15:20-16:00 | [Lab 4](Lab4.html)      | Lab     | -->
+<!-- -   Day 01: Intro to R -->
+<!--     -   Intro to R studio and Markdown <!-- - The interface -->
+<!--         <!-- - Writing documents: pdfs, reports and presentations -->
+<!--     -   R syntax and the tidyverse <!-- - Importing data -->
+<!--         <!-- - Cleaning data -->
+<!--         <!-- - Summary tables and statistics -->
+<!--     -   Graphics in R <!-- - Visualizing distributions  -->
+<!--         <!-- - Plots for continuous data -->
+<!--         <!-- - Plots for categorical data -->
+<!-- -   Day 02: GIS in R -->
+<!--     -   Intro to Vectors and Rasters -->
+<!--     -   Manipulating spatial objects and projections -->
+<!--     -   Spatial statistics -->
+<!--     -   Cartography -->
+<!-- -   Day 03: Network analysis -->
+<!--     -   Static networks -->
+<!--     -   Bipartite networks -->
+<!--     -   Dynamic networks -->
+<!-- -   Day 04: Advanced visualization: Shiny etc.. -->
+<!--     -   Intro to shiny -->
 <hr />
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The data used for this workshop is contained in the package
+<code>STNet</code>. To install <code>STNet</code> we need the package
+<code>devtools</code> and use the command
+<code>devtools::install_github("spablotemporal/STNet")</code>.</p>
+<!-- ------------------------------------------------------------------------ -->
+</div>
+<div id="links" class="section level2">
+<h2>Links</h2>
+<ul>
+<li><a
+href="https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e">Shared
+folder</a>, we will use this folder to provide some workshop materials
+such as code, data, or other resources.</li>
+</ul>
 <!-- # Post workshop survey -->
 <!-- ICAHS -->
 <!-- We would appreciate if you take a minute to fill a quick anonymous -->
@@ -561,6 +606,7 @@ such as code, data, or other resources.</li>
 <!-- https://forms.gle/2NLzs7vLYUdumYjT9 -->
 <!-- NIFNAF -->
 <!-- We would appreciate if you take a minute to fill a quick anonymous survey for feedback. To go to the survey follow [THIS LINK](https://ucdavis.co1.qualtrics.com/jfe/form/SV_40oI9hjyLzb4W0K) -->
+<hr />
 <p><em>This course has been developed with contributions from: <a
 href="https://www.spablo-temporal.network">Jose Pablo Gomez-Vazquez</a>,
 <a
@@ -574,6 +620,7 @@ credits. If you would be interested in a training session, please
 contact: <a href="mailto:jpgo@ucdavis.edu"
 class="email">jpgo@ucdavis.edu</a></em></p>
 <hr />
+</div>
 </div>
 
 
