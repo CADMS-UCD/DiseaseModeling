@@ -12,7 +12,7 @@
 <meta name="author" content="Pablo Gomez" />
 
 
-<title>R syntax and the tidyverse</title>
+<title>Graphics part II</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -381,190 +381,23 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">R syntax and the tidyverse</h1>
+<h1 class="title toc-ignore">Graphics part II</h1>
 <h4 class="author">Pablo Gomez</h4>
 
 </div>
 
 
-<div id="r-basics" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> R basics</h1>
-<p>R is like a calculator, we can make mathematical operations, for
-example:</p>
-<pre class="r"><code>2 + 2</code></pre>
-<pre><code>## [1] 4</code></pre>
-<p>R is a object-oriented programming language, this means that we
-create objects that contain information. In R you can achieve the same
-results using different approaches, for example, to create an object we
-just type a name for the object and assign it a value using the
-operators <code>=</code> or <code>&lt;-</code>. We can make operations
-with objects of the same type, for example:</p>
-<pre class="r"><code>x = 2 # create a new object with the = operator
-y &lt;- 2 # create a new object with the &lt;- operator
-x + y # make a operation with the objects</code></pre>
-<pre><code>## [1] 4</code></pre>
-<div id="vectors-in-r" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Vectors in R</h2>
-<p>You can store more than one value using vectors, to create a vector
-of numbers we use <code>c()</code>. For example, we will store a
-sequence of numbers from 5 to 10 using 2 different approaches and then
-ask R if the objects are the same.<br />
-<strong>tip:</strong> using the keys “alt” + “-” will automatically add
-the operator <code>&lt;-</code>. Choosing which assign operator to use
-is a matter of preference, I personally think that is easier reading
-code with the operator <code>&lt;-</code>, but a lot of people uses
-<code>=</code>.</p>
-<pre class="r"><code>x &lt;- c(5, 6, 7, 8, 9, 10) # create a sequence form 5 to 10
-y = 5:10 # create the same sequence but with a different approach
-x == y # ask R if the objects have the same information</code></pre>
-<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<p>When we have a vector, we can ask R specific values inside an
-object.</p>
-<pre class="r"><code># Here we ask the 3rd value from our sequence
-x[3]</code></pre>
-<pre><code>## [1] 7</code></pre>
-<pre class="r"><code># Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence
-x[3] * y[5]</code></pre>
-<pre><code>## [1] 63</code></pre>
+<div id="layouts" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Layouts</h1>
 </div>
-<div id="introducing-the-pipes" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Introducing the
-pipes</h2>
-<p>The library <code>dplyr</code> has several functions that can help to
-clean, create new variables, and modify our data in other ways.</p>
-<pre class="r"><code># if we dont have installed the library we will need to install it using:
-# install.packages(&quot;dplyr&quot;)
-# we load the library:
-library(dplyr)</code></pre>
-<p><code>dplyr</code> introduces a new operator called <em>pipes</em>
-(<code>%&gt;%</code>), which can connect several functions to an object.
-This is an alternative to write several functions in a single “line of
-code” in a more organized way. For example, if we want to execute a
-function <code>F1()</code> followed by another function
-<code>F2()</code> for the object <code>x</code>:</p>
-<p><code>F2(F1(x))</code> is equivalent to
-<code>x %&gt;% F1() %&gt;% F2()</code></p>
-<p>As you can notice, to read the code <code>F2(F1(x))</code> we have to
-go from the inside to the outside to see the order of execution of the
-functions, but when we read <code>x %&gt;% F1() %&gt;% F2()</code> we
-read from left to right, which is the same way we normally would read
-any text.</p>
-<p><strong>Suggestion:</strong> we can use the keys <em>Ctrl</em> +
-<em>shift</em> + <em>m</em> to insert the <code>%&gt;%</code>
-operator.</p>
+<div id="exporting-plots" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Exporting plots</h1>
 </div>
-<div id="types-of-variables" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Types of
-variables</h2>
-</div>
-<div id="functions" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Functions</h2>
-<p>R has a lot of base functions, but we can define new functions. When
-using R studio, the key <em>Tab</em> will help us to auto complete, this
-can help us a lot when we don’t remember the exact name of the functions
-available. The best part of programming with R is that it has a very
-active community. Since its open source, anyone can create functions and
-compile them in a package (or library). we can download these packages
-and access new functions.<br />
-Functions in R require arguments, which we can see in the function
-documentation or if we press the key <em>Tab</em> when we are inside the
-function.</p>
-<pre class="r"><code># To get the sum of a vector of numbers inside an object we use sum()
-sum(x)</code></pre>
-<pre><code>## [1] 45</code></pre>
-<p>We can put functions inside function, for example, to get <span
-class="math inline">\(\sqrt{\sum_1^n x}\)</span> the square root of a
-sum of the numbers in x we can use:</p>
-<pre class="r"><code>sqrt(sum(x))</code></pre>
-<pre><code>## [1] 6.708204</code></pre>
-<p>Making functions in R is not as complicated as it sounds and can be
-very useful when we need to do repetitive work. To define a function we
-need to include the arguments that we want for the function and what are
-we doing with those arguments. For example, the following function has
-only one argument which is a name (string) and just pastes some text
-before and after:</p>
-<pre class="r"><code>F1 &lt;- function(name){
-  x &lt;- paste(&quot;Hola&quot;, name, &quot;! welcome to the R world!&quot;) # paste the name with some text
-  print(x)
-}
-# trying the function (Put your name)
-F1(name = &quot;Pablo&quot;)</code></pre>
-<pre><code>## [1] &quot;Hola Pablo ! welcome to the R world!&quot;</code></pre>
-<p>Besides storing numbers in the objects in R, we can store text,
-matrices, tables, spatial objects, images, and other types of objects.
-Next we will import our own data and do some manipulation in R.</p>
-</div>
-</div>
-<div id="importing-datasets" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Importing datasets</h1>
-<p>R can import data in different formats. The most common are excel
-files (<em>.csv</em>, <em>.xls</em> y <em>.xlsx</em>), text files
-<em>.txt</em> and spatial data <em>.shp</em>, which we will talk about
-more in detail later.<br />
-To read <em>.xls</em>, <em>.xlsx</em> and <em>.shp</em> files we will
-need to install some libraries. To install a new library you need to be
-connected to the internet and use the function
-<code>install.packages()</code> to install the library. Once it has been
-installed, you can load the library using the function
-<code>library()</code>.</p>
-<p>Download the excel file from this <a
-href="https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv">link</a>.
-It’s not necessary to have a Box account.</p>
-<p><strong>Suggestion:</strong> Sometimes when we want to use only one
-function from a library, we can just write the name of the library
-followed by the operator <code>::</code> and the name of the function,
-for example: <code>package::function()</code>. This way we won’t have to
-load the whole library.</p>
-<pre class="r"><code># If we dont have the library installed, we use:
-# install.packages(&quot;readxl&quot;)
-library(readxl) # load the library
-
-# Import the excel file
-PRRS &lt;- readxl::read_xlsx(&quot;Data/PRRS.xlsx&quot;)</code></pre>
-<p>The most popular format for tables in R are called
-<code>data.frame</code>, when we import the data from a <em>.csv</em> o
-<em>.xlsx</em>. We can examine what kind of object it is using the
-function <code>class()</code>, an object can have more than one type of
-class.</p>
-<pre class="r"><code>class(PRRS)</code></pre>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-</div>
-<div id="tables-in-r" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Tables in R</h1>
-<p>We can use the base R functions to create basic tables. For example,
-we can create a table that shows the number of positive by sex:</p>
-<pre class="r"><code>TBL &lt;- table(PRRS$Sex, PRRS$Result)
-TBL</code></pre>
-<pre><code>##    
-##       0   1
-##   H 737 229
-##   M 249 138</code></pre>
-<p>When we have a table object we can ask for a specific column or row,
-where is represented as [row, column].</p>
-<pre class="r"><code>TBL[,2] # Get the second column</code></pre>
-<pre><code>##   H   M 
-## 229 138</code></pre>
-</div>
-<div id="data-manipulation" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Data manipulation</h1>
-<div id="creating-new-variables" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Creating new
-variables</h2>
-</div>
-<div id="joining-datasets" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Joining datasets</h2>
-</div>
-<div id="wide-and-long-formats" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Wide and Long
-formats</h2>
-</div>
-<div id="grouping-and-summarizing-tables" class="section level2"
-number="4.4">
-<h2><span class="header-section-number">4.4</span> Grouping and
-summarizing tables</h2>
+<div id="interactive-figures" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Interactive
+figures</h1>
 <hr />
 <p><a href="index.html">Go Back</a></p>
-</div>
 </div>
 
 

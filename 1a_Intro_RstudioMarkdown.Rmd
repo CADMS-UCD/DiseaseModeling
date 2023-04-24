@@ -54,3 +54,7 @@ Once the project is created, in the files tab you will see that Rstudio created 
 ## Documents with Rmd
 
 ## Presentations with quatro
+
+------------------
+
+[Go Back](index.html)

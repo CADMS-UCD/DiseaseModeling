@@ -1,5 +1,5 @@
 ---
-title: "Graphics in R I"
+title: "Graphics part II"
 author: "Pablo Gomez"
 output:
   html_document:
@@ -13,20 +13,11 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
+# Layouts
 
-# Basic plots
+# Exporting plots
 
-# Visualizing distributions
-
-## Continous variables (Histograms, boxplots)
-
-## Frequencies (Barplots, bubbles, mozaics, Pie charts)
-
-# Visualizing relationships
-
-## Scatterplots
-
-# Time series
+# Interactive figures
 
 ------------------
 
