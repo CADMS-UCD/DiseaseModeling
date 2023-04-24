@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Pablo Gomez" />
 
 
-<title>Disease Modeling workshop</title>
+<title>Graphics in R I</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -35,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -382,248 +381,38 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Disease Modeling workshop</h1>
+<h1 class="title toc-ignore">Graphics in R I</h1>
+<h4 class="author">Pablo Gomez</h4>
 
 </div>
 
 
-<p><img src="img/cadms-left.png" style="width:50%;position:center"/></p>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>In this workshop we will cover basics of R for animal health
-research. Some concepts we cover in this workshop includes data
-management, visualization, introduction to analytical methods and
-geographical information systems. At the end of the workshop, the
-participants will have a basic understanding of R and geographical
-information systems.</p>
+<div id="basic-plots" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Basic plots</h1>
 </div>
-<div id="objectives" class="section level1">
-<h1>Objectives</h1>
-<ul>
-<li>Understand the basic Rstudio ecosystem and R programming language
-syntax.</li>
-<li>Use R for data visualization.</li>
-<li>Integrate geospatial data in the analysis and visualization.</li>
-<li>Get a crash course in reproducible research.</li>
-<li>Introduce some concepts from network theory.<br />
-<!-- - Identify appropriate statistical test to use for data analysis. --></li>
-</ul>
+<div id="visualizing-distributions" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Visualizing
+distributions</h1>
+<div id="continous-variables-histograms-boxplots" class="section level2"
+number="2.1">
+<h2><span class="header-section-number">2.1</span> Continous variables
+(Histograms, boxplots)</h2>
 </div>
-<div id="requisites" class="section level1">
-<h1>Requisites</h1>
-<ul>
-<li>Laptop or desktop computer.<br />
-</li>
-<li>Software we will use:
-<ul>
-<li><a href="https://cloud.r-project.org/">R</a> and <a
-href="https://www.rstudio.com/products/rstudio/">R studio</a>.</li>
-</ul></li>
-</ul>
-<p>Please follow <a href="0a_R_Intro.html">these instructions</a> for
-software installation and make sure you have R version &gt;3.5</p>
-<!-- ### Recommended reading -->
-<!-- -   Martínez-López B, Perez AM, Sánchez-Vizcaíno JM. Social network -->
-<!--     analysis. Review of general concepts and use in preventive -->
-<!--     veterinary medicine. Transbound Emerg Dis. 2009 May;56(4):109-20. -->
-<!--     doi: 10.1111/j.1865-1682.2009.01073.x. PMID: 19341388. -->
-<!-- -   Enright J, Kao RR. Epidemics on dynamic networks. Epidemics. 2018 -->
-<!--     Sep;24:88-97. doi: 10.1016/j.epidem.2018.04.003. Epub 2018 Apr 28. -->
-<!--     PMID: 29907403. -->
-<!-- -   Silk, M.J., Croft, D.P., Delahay, R.J., Hodgson, D.J., Weber, N., -->
-<!--     Boots, M. and McDonald, R.A. (2017), The application of statistical -->
-<!--     network models in disease research. Methods Ecol Evol, 8: 1026-1041. -->
-<!--     <https://doi.org/10.1111/2041-210X.12770> -->
-<!-- -   Farine, DR. When to choose dynamic vs. static social network -->
-<!--     analysis. J Anim Ecol. 2018; 87: 128-- 138. -->
-<!--     <https://doi.org/10.1111/1365-2656.12764> -->
-<hr />
+<div id="frequencies-barplots-bubbles-mozaics-pie-charts"
+class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Frequencies
+(Barplots, bubbles, mozaics, Pie charts)</h2>
 </div>
-<div id="tentative-schedule" class="section level1">
-<h1>Tentative schedule</h1>
-<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Day 01
-</th>
-<th style="text-align:left;">
-Day 02
-</th>
-<th style="text-align:left;">
-Day 03
-</th>
-<th style="text-align:left;">
-Day 04
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-<a href="" style="     ">Introduction to R</a>
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-Geographical Information systems
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-Network Analysis
-</td>
-<td style="text-align:left;font-weight: bold;border-bottom: 1px solid">
-Risk assessment
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-10:00-11:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1a_Intro_RstudioMarkdown.html" style="     ">Intro to R studio
-and Markdown</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Intro to vectors and rasters
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Intro to SNA
-</td>
-<td style="text-align:left;">
-Introduction to Risk assessment
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-11:00-12:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1b_RandTidyverse.html" style="     ">R syntax and the
-tidyverse</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Manipulating spatial objects and projections
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Network visualization
-</td>
-<td style="text-align:left;">
-Risk assessment in R I
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-12:00-13:00
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-<a href="" style="     ">Lunch</a>
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-<td style="text-align:left;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-13:00-14:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1c_GraphicsI.html" style="     ">Graphics in R I</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Spatial statistics
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Bipartite Networks
-</td>
-<td style="text-align:left;">
-Risk assessment in R I II
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-14:00-15:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="" style="     ">Graphics in R II</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Cartography
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Dynamic Networks
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-</tbody>
-</table>
-<!-- -   Day 01: Intro to R -->
-<!--     -   Intro to R studio and Markdown <!-- - The interface -->
-<!--         <!-- - Writing documents: pdfs, reports and presentations -->
-<!--     -   R syntax and the tidyverse <!-- - Importing data -->
-<!--         <!-- - Cleaning data -->
-<!--         <!-- - Summary tables and statistics -->
-<!--     -   Graphics in R <!-- - Visualizing distributions  -->
-<!--         <!-- - Plots for continuous data -->
-<!--         <!-- - Plots for categorical data -->
-<!-- -   Day 02: GIS in R -->
-<!--     -   Intro to Vectors and Rasters -->
-<!--     -   Manipulating spatial objects and projections -->
-<!--     -   Spatial statistics -->
-<!--     -   Cartography -->
-<!-- -   Day 03: Network analysis -->
-<!--     -   Static networks -->
-<!--     -   Bipartite networks -->
-<!--     -   Dynamic networks -->
-<!-- -   Day 04: Advanced visualization: Shiny etc.. -->
-<!--     -   Intro to shiny -->
-<hr />
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>The data used for this workshop is contained in the package
-<code>STNet</code>. To install <code>STNet</code> we need the package
-<code>devtools</code> and use the command
-<code>devtools::install_github("spablotemporal/STNet")</code>.</p>
-<!-- ------------------------------------------------------------------------ -->
 </div>
-<div id="links" class="section level2">
-<h2>Links</h2>
-<ul>
-<li><a
-href="https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e">Shared
-folder</a>, we will use this folder to provide some workshop materials
-such as code, data, or other resources.</li>
-</ul>
-<!-- # Post workshop survey -->
-<!-- ICAHS -->
-<!-- We would appreciate if you take a minute to fill a quick anonymous -->
-<!-- survey for feedback. To go to the survey follow [THIS LINK](Survey.html) -->
-<!-- https://forms.gle/2NLzs7vLYUdumYjT9 -->
-<!-- NIFNAF -->
-<!-- We would appreciate if you take a minute to fill a quick anonymous survey for feedback. To go to the survey follow [THIS LINK](https://ucdavis.co1.qualtrics.com/jfe/form/SV_40oI9hjyLzb4W0K) -->
-<hr />
-<p><em>This course has been developed with contributions from: <a
-href="https://www.spablo-temporal.network">Jose Pablo Gomez-Vazquez</a>,
-<a
-href="https://www.researchgate.net/profile/Jerome-Baron-2?_iepl%5Bcontexts%5D%5B0%5D=searchReact&amp;_iepl%5BinteractionType%5D=headerSearchResearcher&amp;_iepl%5Bposition%5D=1&amp;_iepl%5BrgKey%5D=AC%3A19976637&amp;_iepl%5Bquery%5D=jerome%20baron&amp;_sg%5B0%5D=h0qwByBH7jEA9pnkn57dm5DqgHcuF9RNJMTd-1Y79ltjmKk1-oUwMXIy0pcjRE2CnEYq1KdLptyRR6s54PsSQTvSojEvOpxGlpJjg6kuLhyfGh3pNjLchg.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&amp;_sg%5B1%5D=LN6moeDNOP7fMtM7A31LTwZ9q27yotxpXtAgTlLmDlxFCvXSd6qjzytmLHphEk7feO7YsBVeJEbTHCewI-A.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&amp;_sgd%5B2%20words%5D=1&amp;_sgd%5B10-20%20characters%5D=1">Jerome
-Baron</a> Alejandro Zaldivar, and <a
-href="https://cadms.vetmed.ucdavis.edu/about/director">Beatriz
-Martinez-Lopez</a>.<br />
-Feel free to use these training materials for your own research and
-teaching. When using the materials we would appreciate using the proper
-credits. If you would be interested in a training session, please
-contact: <a href="mailto:jpgo@ucdavis.edu"
-class="email">jpgo@ucdavis.edu</a></em></p>
-<hr />
+<div id="visualizing-relationships" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Visualizing
+relationships</h1>
+<div id="scatterplots" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Scatterplots</h2>
 </div>
+</div>
+<div id="time-series" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Time series</h1>
 </div>
 
 

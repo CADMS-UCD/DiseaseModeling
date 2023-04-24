@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Pablo Gomez" />
 
 
-<title>Disease Modeling workshop</title>
+<title>Intro to R studio and Markdown</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -35,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -382,247 +381,78 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Disease Modeling workshop</h1>
+<h1 class="title toc-ignore">Intro to R studio and Markdown</h1>
+<h4 class="author">Pablo Gomez</h4>
 
 </div>
 
 
-<p><img src="img/cadms-left.png" style="width:50%;position:center"/></p>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>In this workshop we will cover basics of R for animal health
-research. Some concepts we cover in this workshop includes data
-management, visualization, introduction to analytical methods and
-geographical information systems. At the end of the workshop, the
-participants will have a basic understanding of R and geographical
-information systems.</p>
-</div>
-<div id="objectives" class="section level1">
-<h1>Objectives</h1>
-<ul>
-<li>Understand the basic Rstudio ecosystem and R programming language
-syntax.</li>
-<li>Use R for data visualization.</li>
-<li>Integrate geospatial data in the analysis and visualization.</li>
-<li>Get a crash course in reproducible research.</li>
-<li>Introduce some concepts from network theory.<br />
-<!-- - Identify appropriate statistical test to use for data analysis. --></li>
-</ul>
-</div>
-<div id="requisites" class="section level1">
-<h1>Requisites</h1>
-<ul>
-<li>Laptop or desktop computer.<br />
+<div id="the-rstudio-interface" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> The Rstudio
+interface</h1>
+<p>When we start R studio, we can see 4 sections:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Source</strong> (top left), here we have our code editor and
+other files. We will use this section to edit and view our scripts and
+other documents we will be using to interact with R.</li>
+<li><strong>Console and Terminal</strong> (bottom left), this is where
+the code is executed (<em>Console</em> will execute R code and
+<em>Terminal</em> other code for your operating system). We can directly
+write the code here, but normally we will be using the other source
+files such as .R or .Rmd to write our code which then will be send
+here.<br />
 </li>
-<li>Software we will use:
-<ul>
-<li><a href="https://cloud.r-project.org/">R</a> and <a
-href="https://www.rstudio.com/products/rstudio/">R studio</a>.</li>
-</ul></li>
-</ul>
-<p>Please follow <a href="0a_R_Intro.html">these instructions</a> for
-software installation and make sure you have R version &gt;3.5</p>
-<!-- ### Recommended reading -->
-<!-- -   Martínez-López B, Perez AM, Sánchez-Vizcaíno JM. Social network -->
-<!--     analysis. Review of general concepts and use in preventive -->
-<!--     veterinary medicine. Transbound Emerg Dis. 2009 May;56(4):109-20. -->
-<!--     doi: 10.1111/j.1865-1682.2009.01073.x. PMID: 19341388. -->
-<!-- -   Enright J, Kao RR. Epidemics on dynamic networks. Epidemics. 2018 -->
-<!--     Sep;24:88-97. doi: 10.1016/j.epidem.2018.04.003. Epub 2018 Apr 28. -->
-<!--     PMID: 29907403. -->
-<!-- -   Silk, M.J., Croft, D.P., Delahay, R.J., Hodgson, D.J., Weber, N., -->
-<!--     Boots, M. and McDonald, R.A. (2017), The application of statistical -->
-<!--     network models in disease research. Methods Ecol Evol, 8: 1026-1041. -->
-<!--     <https://doi.org/10.1111/2041-210X.12770> -->
-<!-- -   Farine, DR. When to choose dynamic vs. static social network -->
-<!--     analysis. J Anim Ecol. 2018; 87: 128-- 138. -->
-<!--     <https://doi.org/10.1111/1365-2656.12764> -->
-<hr />
+<li><strong>Environment, History and others</strong> (top right),
+Environment will list all the objects you create and History will have
+the code you sent to the console. There are other tabs in this section
+which we wont be using for now.</li>
+<li><strong>Files, Packages and Help</strong> (bottom right). This
+section includes a file browser, and other tabs for package management
+and help.</li>
+</ol>
+<p><img src="img/I_a.png" style="width:100%" align="center"></p>
 </div>
-<div id="tentative-schedule" class="section level1">
-<h1>Tentative schedule</h1>
-<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Day 01
-</th>
-<th style="text-align:left;">
-Day 02
-</th>
-<th style="text-align:left;">
-Day 03
-</th>
-<th style="text-align:left;">
-Day 04
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-<a href="" style="     ">Introduction to R</a>
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-Geographical Information systems
-</td>
-<td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
-Network Analysis
-</td>
-<td style="text-align:left;font-weight: bold;border-bottom: 1px solid">
-Risk assessment
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-10:00-11:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1a_Intro_RstudioMarkdown.html" style="     ">Intro to R studio
-and Markdown</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Intro to vectors and rasters
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Intro to SNA
-</td>
-<td style="text-align:left;">
-Introduction to Risk assessment
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-11:00-12:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1b_RandTidyverse.html" style="     ">R syntax and the
-tidyverse</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Manipulating spatial objects and projections
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Network visualization
-</td>
-<td style="text-align:left;">
-Risk assessment in R I
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-12:00-13:00
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-<a href="" style="     ">Lunch</a>
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-<td style="text-align:left;font-style: italic;background-color: #F6F5FA !important;">
-Lunch
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-13:00-14:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="1c_GraphicsI.html" style="     ">Graphics in R I</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Spatial statistics
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Bipartite Networks
-</td>
-<td style="text-align:left;">
-Risk assessment in R I II
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;border-right:1px solid;">
-14:00-15:00
-</td>
-<td style="text-align:left;border-right:1px solid;">
-<a href="" style="     ">Graphics in R II</a>
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Cartography
-</td>
-<td style="text-align:left;border-right:1px solid;">
-Dynamic Networks
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-</tbody>
-</table>
-<!-- -   Day 01: Intro to R -->
-<!--     -   Intro to R studio and Markdown <!-- - The interface -->
-<!--         <!-- - Writing documents: pdfs, reports and presentations -->
-<!--     -   R syntax and the tidyverse <!-- - Importing data -->
-<!--         <!-- - Cleaning data -->
-<!--         <!-- - Summary tables and statistics -->
-<!--     -   Graphics in R <!-- - Visualizing distributions  -->
-<!--         <!-- - Plots for continuous data -->
-<!--         <!-- - Plots for categorical data -->
-<!-- -   Day 02: GIS in R -->
-<!--     -   Intro to Vectors and Rasters -->
-<!--     -   Manipulating spatial objects and projections -->
-<!--     -   Spatial statistics -->
-<!--     -   Cartography -->
-<!-- -   Day 03: Network analysis -->
-<!--     -   Static networks -->
-<!--     -   Bipartite networks -->
-<!--     -   Dynamic networks -->
-<!-- -   Day 04: Advanced visualization: Shiny etc.. -->
-<!--     -   Intro to shiny -->
-<hr />
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>The data used for this workshop is contained in the package
-<code>STNet</code>. To install <code>STNet</code> we need the package
-<code>devtools</code> and use the command
-<code>devtools::install_github("spablotemporal/STNet")</code>.</p>
-<!-- ------------------------------------------------------------------------ -->
+<div id="organizing-your-projects" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Organizing your
+projects</h1>
+<p>One of the most useful features of R studio is the project
+organization, if you haven, I strongly encourage you to familiarize with
+creating and using projects to organize your workflow. Projects allow to
+create a file that will contain all the information regarding your
+session (including objects, data sets and configurations) and organize
+your files in folders in your system. This is particularly useful when
+we are working with multiple topics.<br />
+When you open Rstudio for the first time it starts on an empty project.
+To create a new project, just go to the top right corner menu and select
+<em>New Project…</em></p>
+<p><img src="img/Ia_01-NewProj.png" style="width:50%" align="center"></p>
+<p>Then will five you the option to create a new project in a new
+directory, un an existing directory or version control. For today, we
+wont be talking about version control in detail, but this is to
+integrate Rstudio with Github.</p>
+<p><img src="img/Ia_02-NewProj.png" style="width:30%" align="center"></p>
+<p>Once you have selected the option that you want, it will show you
+multiple options for types of projects, you can select <em>New
+project</em> and continue.</p>
+<p><img src="img/Ia_03-NewProj.png" style="width:30%" align="center"></p>
+<p>Then you just name your directory and select a location.</p>
+<p><img src="img/Ia_04-NewProj.png" style="width:30%" align="center"></p>
+<p>Once the project is created, in the files tab you will see that
+Rstudio created the files for your project in the folder that you
+selected. The project organization depends on your personal preferences,
+but I usuallly like to create 3 folders (code, data and docs) to
+organice my files related with the current project.</p>
+<p><img src="img/Ia_05-NewProj.png" style="width:30%" align="center"></p>
 </div>
-<div id="links" class="section level2">
-<h2>Links</h2>
-<ul>
-<li><a
-href="https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e">Shared
-folder</a>, we will use this folder to provide some workshop materials
-such as code, data, or other resources.</li>
-</ul>
-<!-- # Post workshop survey -->
-<!-- ICAHS -->
-<!-- We would appreciate if you take a minute to fill a quick anonymous -->
-<!-- survey for feedback. To go to the survey follow [THIS LINK](Survey.html) -->
-<!-- https://forms.gle/2NLzs7vLYUdumYjT9 -->
-<!-- NIFNAF -->
-<!-- We would appreciate if you take a minute to fill a quick anonymous survey for feedback. To go to the survey follow [THIS LINK](https://ucdavis.co1.qualtrics.com/jfe/form/SV_40oI9hjyLzb4W0K) -->
-<hr />
-<p><em>This course has been developed with contributions from: <a
-href="https://www.spablo-temporal.network">Jose Pablo Gomez-Vazquez</a>,
-<a
-href="https://www.researchgate.net/profile/Jerome-Baron-2?_iepl%5Bcontexts%5D%5B0%5D=searchReact&amp;_iepl%5BinteractionType%5D=headerSearchResearcher&amp;_iepl%5Bposition%5D=1&amp;_iepl%5BrgKey%5D=AC%3A19976637&amp;_iepl%5Bquery%5D=jerome%20baron&amp;_sg%5B0%5D=h0qwByBH7jEA9pnkn57dm5DqgHcuF9RNJMTd-1Y79ltjmKk1-oUwMXIy0pcjRE2CnEYq1KdLptyRR6s54PsSQTvSojEvOpxGlpJjg6kuLhyfGh3pNjLchg.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&amp;_sg%5B1%5D=LN6moeDNOP7fMtM7A31LTwZ9q27yotxpXtAgTlLmDlxFCvXSd6qjzytmLHphEk7feO7YsBVeJEbTHCewI-A.RUn0HdO-b7dyxeqozqlU1rJYELS8Vbv-3SOTmOVKfhG2vntyZ18MRQemx2xzjlKdofPhapNFbhW2HCVG1gGhtw&amp;_sgd%5B2%20words%5D=1&amp;_sgd%5B10-20%20characters%5D=1">Jerome
-Baron</a> Alejandro Zaldivar, and <a
-href="https://cadms.vetmed.ucdavis.edu/about/director">Beatriz
-Martinez-Lopez</a>.<br />
-Feel free to use these training materials for your own research and
-teaching. When using the materials we would appreciate using the proper
-credits. If you would be interested in a training session, please
-contact: <a href="mailto:jpgo@ucdavis.edu"
-class="email">jpgo@ucdavis.edu</a></em></p>
-<hr />
+<div id="intro-to-markdown" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Intro to Markdown</h1>
+<div id="documents-with-rmd" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Documents with
+Rmd</h2>
+</div>
+<div id="presentations-with-quatro" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Presentations with
+quatro</h2>
 </div>
 </div>
 

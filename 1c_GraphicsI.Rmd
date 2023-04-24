@@ -1,0 +1,30 @@
+---
+title: "Graphics in R I"
+author: "Pablo Gomez"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = F, message = F)
+library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
+```
+
+
+# Basic plots
+
+# Visualizing distributions
+
+## Continous variables (Histograms, boxplots)
+
+## Frequencies (Barplots, bubbles, mozaics, Pie charts)
+
+# Visualizing relationships
+
+## Scatterplots
+
+# Time series
+
