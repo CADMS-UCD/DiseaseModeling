@@ -17,13 +17,13 @@ library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 
 R is like a calculator, we can make mathematical operations, for example:
 
-```{r}
+```{r basic operations}
 2 + 2
 ```
 
 R is a object-oriented programming language, this means that we create objects that contain information. In R you can achieve the same results using different approaches, for example, to create an object we just type a name for the object and assign it a value using the operators `=` or `<-`. We can make operations with objects of the same type, for example:
 
-```{r}
+```{r storing values}
 x = 2 # create a new object with the = operator
 y <- 2 # create a new object with the <- operator
 x + y # make a operation with the objects
@@ -35,7 +35,7 @@ You can store more than one value using vectors, to create a vector of numbers w
 For example, we will store a sequence of numbers from 5 to 10 using 2 different approaches and then ask R if the objects are the same.  
 **tip:** using the keys "alt" + "-" will automatically add the operator `<-`. Choosing which assign operator to use is a matter of preference, I personally think that is easier reading code with the operator `<-`, but a lot of people uses `=`.  
 
-```{r}
+```{r vectors}
 x <- c(5, 6, 7, 8, 9, 10) # create a sequence form 5 to 10
 y = 5:10 # create the same sequence but with a different approach
 x == y # ask R if the objects have the same information
@@ -43,13 +43,72 @@ x == y # ask R if the objects have the same information
 
 When we have a vector, we can ask R specific values inside an object.
 
-```{r}
+```{r vector operations}
 # Here we ask the 3rd value from our sequence
 x[3]
 # Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence
 x[3] * y[5]
 ```
 
+## Functions
+
+R has a lot of base functions, but we can define new functions. When using R studio, the key *Tab* will help us to auto complete, this can help us a lot when we don't remember the exact name of the functions available.
+The best part of programming with R is that it has a very active community. Since its open source, anyone can create functions and compile them in a package (or library). we can download these packages and access new functions.  
+Functions in R require arguments, which we can see in the function documentation or if we press the key *Tab* when we are inside the function.  
+
+```{r functions}
+# To get the sum of a vector of numbers inside an object we use sum()
+sum(x)
+```
+
+We can put functions inside function, for example, to get $\sqrt{\sum_1^n x}$ the square root of a sum of the numbers in x we can use:
+
+```{r nested functions}
+sqrt(sum(x))
+```
+
+Making functions in R is not as complicated as it sounds and can be very useful when we need to do repetitive work. To define a function we need to include the arguments that we want for the function and what are we doing with those arguments. For example, the following function has only one argument which is a name (string) and just pastes some text before and after:
+
+```{r creating a function}
+F1 <- function(name){
+  paste("Hola", name, "! welcome to the R world!") # paste the name with some text
+}
+
+# Testing the function (Put your name)
+F1(name = "Pablo")
+```
+
+Besides storing numbers in the objects in R, we can store text, matrices, tables, spatial objects, images, and other types of objects. Next we will import our own data and do some manipulation in R.
+
+**Exercise:** Create a function that performs the $\sqrt{\sum_1^n x}$ operation you did previously with the code `sqrt(sum(x))`
+
+```{r Excercise 1, eval=FALSE, include=FALSE}
+# Define the function
+F2 <- function(x){
+  sqrt(sum(x))
+}
+
+# Test the function
+F2(x)
+```
+
+## Types of variables
+
+There are different types of variables in R, so far we have used the numeric and string types. If yo want to know what kind of variable is a given object, you can use the function `class()`. Lets try it.
+
+```{r variables I}
+class(x)
+```
+
+**Exercise: ** What kind of variable is the output from the first function you defined `F1()`?
+
+```{r exercise vars, eval=FALSE, include=FALSE}
+class(F1(name = 'Pablo'))
+```
+
+There are other type of variables that we will see later in the course. 
+
+<!-- **Introduce different type of variables in R (e.g. Numeric, String, Factor, Date)** -->
 
 ## Introducing the pipes
 
@@ -66,42 +125,24 @@ library(dplyr)
 
 `F2(F1(x))` is equivalent to `x %>% F1() %>% F2()`    
 
-As you can notice, to read the code `F2(F1(x))` we have to go from the inside to the outside to see the order of execution of the functions, but when we read `x %>% F1() %>% F2()` we read from left to right, which is the same way we normally would read any text.  
+As you can notice, to read the code `F2(F1(x))` we have to go from the inside to the outside to see the order of execution of the functions, but when we read `x %>% F1() %>% F2()` we read from left to right, which is the same way we normally would read any text in western language.    
 
 **Suggestion:** we can use the keys *Ctrl* + *shift* + *m* to insert the `%>%` operator.  
 
-## Types of variables
-
-## Functions
-
-R has a lot of base functions, but we can define new functions. When using R studio, the key *Tab* will help us to auto complete, this can help us a lot when we don't remember the exact name of the functions available.
-The best part of programming with R is that it has a very active community. Since its open source, anyone can create functions and compile them in a package (or library). we can download these packages and access new functions.  
-Functions in R require arguments, which we can see in the function documentation or if we press the key *Tab* when we are inside the function.  
-
-```{r}
-# To get the sum of a vector of numbers inside an object we use sum()
-sum(x)
-```
-
-We can put functions inside function, for example, to get $\sqrt{\sum_1^n x}$ the square root of a sum of the numbers in x we can use:
-
-```{r}
+```{r pipes} 
+# We previosly used this code to calculate the square root of the sum of x
 sqrt(sum(x))
 ```
 
-Making functions in R is not as complicated as it sounds and can be very useful when we need to do repetitive work. To define a function we need to include the arguments that we want for the function and what are we doing with those arguments. For example, the following function has only one argument which is a name (string) and just pastes some text before and after:
+Using the pipes we can do the same more organized, by writing the order of execution from left to right. 
 
-```{r}
-F1 <- function(name){
-  x <- paste("Hola", name, "! welcome to the R world!") # paste the name with some text
-  print(x)
-}
-# trying the function (Put your name)
-F1(name = "Pablo")
+```{r pipes II}
+x %>% # First we call the data
+  sum() %>% # Sum all the values
+  sqrt() # Compute the square root
 ```
 
-Besides storing numbers in the objects in R, we can store text, matrices, tables, spatial objects, images, and other types of objects. Next we will import our own data and do some manipulation in R.
-
+You will notice that the outputs are exactly the same. Feel free to use whatever syntax you prefer, but for this course we will use mostly the pipes and writing the code from left to right.
 
 # Importing datasets
 
@@ -110,7 +151,7 @@ To read *.xls*, *.xlsx* and *.shp* files we will need to install some libraries.
   
 Download the excel file from this [link](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv). It's not necessary to have a Box account.  
   
-**Suggestion:** Sometimes when we want to use only one function from a library, we can just write the name of the library followed by the operator `::` and the name of the function, for example: `package::function()`. This way we won't have to load the whole library.  
+*Suggestion:* Sometimes when we want to use only one function from a library, we can just write the name of the library followed by the operator `::` and the name of the function, for example: `package::function()`. This way we won't have to load the whole library.  
 
 ```{r}
 # If we dont have the library installed, we use:
@@ -126,7 +167,6 @@ The most popular format for tables in R are called `data.frame`, when we import 
 ```{r}
 class(PRRS)
 ```
-
 
 # Tables in R
 

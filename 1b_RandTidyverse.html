@@ -427,38 +427,8 @@ x[3]</code></pre>
 x[3] * y[5]</code></pre>
 <pre><code>## [1] 63</code></pre>
 </div>
-<div id="introducing-the-pipes" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Introducing the
-pipes</h2>
-<p>The library <code>dplyr</code> has several functions that can help to
-clean, create new variables, and modify our data in other ways.</p>
-<pre class="r"><code># if we dont have installed the library we will need to install it using:
-# install.packages(&quot;dplyr&quot;)
-# we load the library:
-library(dplyr)</code></pre>
-<p><code>dplyr</code> introduces a new operator called <em>pipes</em>
-(<code>%&gt;%</code>), which can connect several functions to an object.
-This is an alternative to write several functions in a single “line of
-code” in a more organized way. For example, if we want to execute a
-function <code>F1()</code> followed by another function
-<code>F2()</code> for the object <code>x</code>:</p>
-<p><code>F2(F1(x))</code> is equivalent to
-<code>x %&gt;% F1() %&gt;% F2()</code></p>
-<p>As you can notice, to read the code <code>F2(F1(x))</code> we have to
-go from the inside to the outside to see the order of execution of the
-functions, but when we read <code>x %&gt;% F1() %&gt;% F2()</code> we
-read from left to right, which is the same way we normally would read
-any text.</p>
-<p><strong>Suggestion:</strong> we can use the keys <em>Ctrl</em> +
-<em>shift</em> + <em>m</em> to insert the <code>%&gt;%</code>
-operator.</p>
-</div>
-<div id="types-of-variables" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Types of
-variables</h2>
-</div>
-<div id="functions" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Functions</h2>
+<div id="functions" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Functions</h2>
 <p>R has a lot of base functions, but we can define new functions. When
 using R studio, the key <em>Tab</em> will help us to auto complete, this
 can help us a lot when we don’t remember the exact name of the functions
@@ -484,15 +454,70 @@ we doing with those arguments. For example, the following function has
 only one argument which is a name (string) and just pastes some text
 before and after:</p>
 <pre class="r"><code>F1 &lt;- function(name){
-  x &lt;- paste(&quot;Hola&quot;, name, &quot;! welcome to the R world!&quot;) # paste the name with some text
-  print(x)
+  paste(&quot;Hola&quot;, name, &quot;! welcome to the R world!&quot;) # paste the name with some text
 }
-# trying the function (Put your name)
+
+# Testing the function (Put your name)
 F1(name = &quot;Pablo&quot;)</code></pre>
 <pre><code>## [1] &quot;Hola Pablo ! welcome to the R world!&quot;</code></pre>
 <p>Besides storing numbers in the objects in R, we can store text,
 matrices, tables, spatial objects, images, and other types of objects.
 Next we will import our own data and do some manipulation in R.</p>
+<p><strong>Exercise:</strong> Create a function that performs the <span
+class="math inline">\(\sqrt{\sum_1^n x}\)</span> operation you did
+previously with the code <code>sqrt(sum(x))</code></p>
+</div>
+<div id="types-of-variables" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Types of
+variables</h2>
+<p>There are different types of variables in R, so far we have used the
+numeric and string types. If yo want to know what kind of variable is a
+given object, you can use the function <code>class()</code>. Lets try
+it.</p>
+<pre class="r"><code>class(x)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p><strong>Exercise: </strong> What kind of variable is the output from
+the first function you defined <code>F1()</code>?</p>
+<p><strong>Introduce different type of variables in R (e.g. Numeric,
+String, Factor, Date)</strong></p>
+</div>
+<div id="introducing-the-pipes" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Introducing the
+pipes</h2>
+<p>The library <code>dplyr</code> has several functions that can help to
+clean, create new variables, and modify our data in other ways.</p>
+<pre class="r"><code># if we dont have installed the library we will need to install it using:
+# install.packages(&quot;dplyr&quot;)
+# we load the library:
+library(dplyr)</code></pre>
+<p><code>dplyr</code> introduces a new operator called <em>pipes</em>
+(<code>%&gt;%</code>), which can connect several functions to an object.
+This is an alternative to write several functions in a single “line of
+code” in a more organized way. For example, if we want to execute a
+function <code>F1()</code> followed by another function
+<code>F2()</code> for the object <code>x</code>:</p>
+<p><code>F2(F1(x))</code> is equivalent to
+<code>x %&gt;% F1() %&gt;% F2()</code></p>
+<p>As you can notice, to read the code <code>F2(F1(x))</code> we have to
+go from the inside to the outside to see the order of execution of the
+functions, but when we read <code>x %&gt;% F1() %&gt;% F2()</code> we
+read from left to right, which is the same way we normally would read
+any text in western language.</p>
+<p><strong>Suggestion:</strong> we can use the keys <em>Ctrl</em> +
+<em>shift</em> + <em>m</em> to insert the <code>%&gt;%</code>
+operator.</p>
+<pre class="r"><code># We previosly used this code to calculate the square root of the sum of x
+sqrt(sum(x))</code></pre>
+<pre><code>## [1] 6.708204</code></pre>
+<p>Using the pipes we can do the same more organized, by writing the
+order of execution from left to right.</p>
+<pre class="r"><code>x %&gt;% # First we call the data
+  sum() %&gt;% # Sum all the values
+  sqrt() # Compute the square root</code></pre>
+<pre><code>## [1] 6.708204</code></pre>
+<p>You will notice that the outputs are exactly the same. Feel free to
+use whatever syntax you prefer, but for this course we will use mostly
+the pipes and writing the code from left to right.</p>
 </div>
 </div>
 <div id="importing-datasets" class="section level1" number="2">
@@ -510,11 +535,11 @@ installed, you can load the library using the function
 <p>Download the excel file from this <a
 href="https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv">link</a>.
 It’s not necessary to have a Box account.</p>
-<p><strong>Suggestion:</strong> Sometimes when we want to use only one
-function from a library, we can just write the name of the library
-followed by the operator <code>::</code> and the name of the function,
-for example: <code>package::function()</code>. This way we won’t have to
-load the whole library.</p>
+<p><em>Suggestion:</em> Sometimes when we want to use only one function
+from a library, we can just write the name of the library followed by
+the operator <code>::</code> and the name of the function, for example:
+<code>package::function()</code>. This way we won’t have to load the
+whole library.</p>
 <pre class="r"><code># If we dont have the library installed, we use:
 # install.packages(&quot;readxl&quot;)
 library(readxl) # load the library

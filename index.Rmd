@@ -84,8 +84,8 @@ tRange <- 10:14
 
 data.frame(
   Time = c('', paste0(tRange, ':00', '-', tRange + 1, ':00')),
-  # D01 = c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'),
-  D01 = cell_spec(c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'), 'html', link = c('', '1a_Intro_RstudioMarkdown.html', '1b_RandTidyverse.html','Lunch.html', '1c_GraphicsI.html', '1d_GraphicsII.html')),
+  D01 = c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'),
+  # D01 = cell_spec(c('Introduction to R', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Lunch', 'Graphics in R I', 'Graphics in R II'), 'html', link = c('', '1a_Intro_RstudioMarkdown.html', '1b_RandTidyverse.html','Lunch.html', '1c_GraphicsI.html', '1d_GraphicsII.html')),
   D02 = c('Geographical Information systems', 'Intro to vectors and rasters', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography'),
   D03 = c('Network Analysis','Intro to SNA', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks'),
   D04 = c('Risk assessment', 'Introduction to Risk assessment', 'Risk assessment in R I', 'Lunch', 'Risk assessment in R I II', '')
