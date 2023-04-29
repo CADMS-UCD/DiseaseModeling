@@ -34,7 +34,7 @@ No software needs to be installed for this workshop, all the exercises will be d
 -   Introduce some concepts from network theory.\
     <!-- - Identify appropriate statistical test to use for data analysis. -->
     
-At the end of this workshop you will be able to use your own R to process your data and generate visualizations such as these:
+At the end of this workshop you will be able to use your own R to process your data and generate visualizations such as the following:
 
 <img src="img/0_exampleMap.png" style="width:33%;position:left"/>
 <img src="img/0_exBar.png" style="width:33%;position:center"/>
@@ -162,5 +162,3 @@ credits. If you would be interested in a training session, please
 contact: [jpgo\@ucdavis.edu](mailto:jpgo@ucdavis.edu){.email}*
 
 ------------------------------------------------------------------------
-
-[link](myPresentation.html)
