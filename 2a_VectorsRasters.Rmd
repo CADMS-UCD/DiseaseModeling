@@ -1,0 +1,39 @@
+---
+title: "Vectors and Rasters"
+author: "Pablo Gomez"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = F, message = F)
+library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
+```
+
+# Vectors
+
+## Components of spatial datasets
+
+### CRS
+
+### Projections
+
+## Types of vectors
+
+### One dimension: Location
+
+Point data
+
+### Two dimensions: Direction
+
+Lines
+
+### Three dimensions: Are
+
+Polygons
+
+# Rasters

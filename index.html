@@ -11,9 +11,9 @@
 
 
 
-<title>Disease Modeling workshop</title>
+<title>Using R for Animal health research</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -37,8 +37,8 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -382,7 +382,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Disease Modeling workshop</h1>
+<h1 class="title toc-ignore">Using R for Animal health research</h1>
 
 </div>
 
@@ -395,7 +395,15 @@ research. Some concepts we cover in this workshop includes data
 management, visualization, introduction to analytical methods and
 geographical information systems. At the end of the workshop, the
 participants will have a basic understanding of R and geographical
-information systems.</p>
+information systems. For this workshop we will be using a data set
+derived from a bovine rabies study done in the south of Mexico in 2016
+provided by Alejandro Zaldivar Gomez et. al.<br />
+No software needs to be installed for this workshop, all the exercises
+will be done in a web based platform for cloud computing. Please follow
+<a href="0a_R_Intro.html">these instructions</a> for setting up your
+posit.cloud account. All the concepts covered in this workshop are
+directly transferable to Rstudio for people that prefer to run the
+exercises locally.</p>
 </div>
 <div id="objectives" class="section level1">
 <h1>Objectives</h1>
@@ -408,20 +416,19 @@ syntax.</li>
 <li>Introduce some concepts from network theory.<br />
 <!-- - Identify appropriate statistical test to use for data analysis. --></li>
 </ul>
+<p>At the end of this workshop you will be able to use your own R to
+process your data and generate visualizations such as these:</p>
+<p><img src="img/0_exampleMap.png" style="width:33%;position:left"/>
+<img src="img/0_exBar.png" style="width:33%;position:center"/>
+<img src="img/0_exNet.png" style="width:33%;position:right"/></p>
 </div>
 <div id="requisites" class="section level1">
 <h1>Requisites</h1>
 <ul>
 <li>Laptop or desktop computer.<br />
 </li>
-<li>Software we will use:
-<ul>
-<li><a href="https://cloud.r-project.org/">R</a> and <a
-href="https://www.rstudio.com/products/rstudio/">R studio</a>.</li>
-</ul></li>
+<li>A <a href="https://posit.cloud">posit.cloud</a> account</li>
 </ul>
-<p>Please follow <a href="0a_R_Intro.html">these instructions</a> for
-software installation and make sure you have R version &gt;3.5</p>
 <!-- ### Recommended reading -->
 <!-- -   Martínez-López B, Perez AM, Sánchez-Vizcaíno JM. Social network -->
 <!--     analysis. Review of general concepts and use in preventive -->
@@ -463,6 +470,7 @@ Day 04
 <tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
+10:00-11:00
 </td>
 <td style="text-align:left;border-right:1px solid;font-weight: bold;border-bottom: 1px solid">
 Introduction to R
@@ -479,7 +487,7 @@ Risk assessment
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;">
-10:00-11:00
+11:00-11:45
 </td>
 <td style="text-align:left;border-right:1px solid;">
 Intro to R studio and Markdown
@@ -495,8 +503,25 @@ Introduction to Risk assessment
 </td>
 </tr>
 <tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+11:45-12:00
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Break
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Break
+</td>
+<td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
+Break
+</td>
+<td style="text-align:left;font-style: italic;background-color: #F6F5FA !important;">
+Break
+</td>
+</tr>
+<tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;">
-11:00-12:00
+12:00-13:00
 </td>
 <td style="text-align:left;border-right:1px solid;">
 R syntax and the tidyverse
@@ -513,7 +538,7 @@ Risk assessment in R I
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
-12:00-13:00
+13:00-14:00
 </td>
 <td style="text-align:left;border-right:1px solid;font-style: italic;background-color: #F6F5FA !important;">
 Lunch
@@ -530,7 +555,7 @@ Lunch
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;">
-13:00-14:00
+14:00-15:00
 </td>
 <td style="text-align:left;border-right:1px solid;">
 Graphics in R I
@@ -547,7 +572,7 @@ Risk assessment in R I II
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;border-right:1px solid;">
-14:00-15:00
+15:00-16:00
 </td>
 <td style="text-align:left;border-right:1px solid;">
 Graphics in R II

@@ -168,6 +168,81 @@ The most popular format for tables in R are called `data.frame`, when we import 
 class(PRRS)
 ```
 
+# Data manipulation
+
+In the following section we will cover some basics of data manipulation, this includes create, modify and summarise variables in our data. 
+
+## Grouping and summarizing tables
+
+```{r}
+# We can count how many observations for each of a variable name
+PRRS %>% 
+  count(Result)
+```
+
+The previous table show us that were 986 observations with test result negative and 367 with test result positive. We can add multiple variables to count
+
+```{r}
+# We can count based on multiple variables
+PRRS %>% 
+  count(Result, Sex)
+```
+
+```{r}
+PRRS %>% 
+  count(Sex, wt = Result)
+```
+
+
+
+## Creating new variables
+
+To create a new variable we can use the function `mutate()`. For example, lets create a new variable that will tell us if the farm type is a sow farm or not. For this we use the variable `farm_type` which already contains information for different farm types 
+
+```{r}
+PRRS %>% 
+  mutate(SowFarm = ifelse(farm_type == 'sow farm', 1, 0))
+```
+
+## Joining datasets
+
+```{r}
+# Importing the farm dataseet
+nodes <- read.csv("Data/node_attrib.csv")
+# Importing the movement dataset
+mov <- read.csv("Data/network.csv")
+# Get the number of outgoing and incoming shipments 
+Out <- mov %>% 
+  group_by(id_orig) %>%
+  summarise(Outgoing = n()) %>%
+  rename(id = id_orig)
+In <- mov %>%
+  group_by(id_dest) %>%
+  summarise(Incoming = n()) %>% 
+  rename(id = id_dest)
+
+# Joining the two datasets
+nodes <- nodes %>% 
+  left_join(Out, by ="id")
+
+nodes <- nodes %>%
+  left_join(In, by = "id")
+nodes
+```
+
+Now we will get the ones that had the higher number of movements: 
+
+```{r}
+mov %>% 
+  group_by(id_orig) %>% 
+  summarise(N = n(), N_pigs = sum(pigs.moved)) %>%
+  arrange(desc(N)) %>%
+  head()
+```
+  
+
+## Wide and Long formats
+
 # Tables in R
 
 We can use the base R functions to create basic tables. For example, we can create a table that shows the number of positive by sex:  
@@ -183,16 +258,6 @@ When we have a table object we can ask for a specific column or row, where is re
 TBL[,2] # Get the second column
 ```
 
-
-# Data manipulation
-
-## Creating new variables
-
-## Joining datasets
-
-## Wide and Long formats
-
-## Grouping and summarizing tables
 
 ------------------
 

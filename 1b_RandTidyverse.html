@@ -478,8 +478,9 @@ it.</p>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
 <p><strong>Exercise: </strong> What kind of variable is the output from
 the first function you defined <code>F1()</code>?</p>
-<p><strong>Introduce different type of variables in R (e.g. Numeric,
-String, Factor, Date)</strong></p>
+<p>There are other type of variables that we will see later in the
+course.</p>
+<!-- **Introduce different type of variables in R (e.g. Numeric, String, Factor, Date)** -->
 </div>
 <div id="introducing-the-pipes" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Introducing the
@@ -554,8 +555,79 @@ class.</p>
 <pre class="r"><code>class(PRRS)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 </div>
-<div id="tables-in-r" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Tables in R</h1>
+<div id="data-manipulation" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Data manipulation</h1>
+<p>In the following section we will cover some basics of data
+manipulation, this includes create, modify and summarise variables in
+our data.</p>
+<div id="grouping-and-summarizing-tables" class="section level2"
+number="3.1">
+<h2><span class="header-section-number">3.1</span> Grouping and
+summarizing tables</h2>
+<pre class="r"><code># We can count how many observations for each of a variable name
+PRRS %&gt;% 
+  count(Result)</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   Result     n
+##    &lt;dbl&gt; &lt;int&gt;
+## 1      0   986
+## 2      1   367</code></pre>
+<p>The previous table show us that were 986 observations with test
+result negative and 367 with test result positive. We can add multiple
+variables to count</p>
+<pre class="r"><code># We can count based on multiple variables
+PRRS %&gt;% 
+  count(Result, Sex)</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   Result Sex       n
+##    &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
+## 1      0 H       737
+## 2      0 M       249
+## 3      1 H       229
+## 4      1 M       138</code></pre>
+<pre class="r"><code>PRRS %&gt;% 
+  count(Sex, wt = Result)</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   Sex       n
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 H       229
+## 2 M       138</code></pre>
+</div>
+<div id="creating-new-variables" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Creating new
+variables</h2>
+<p>To create a new variable we can use the function
+<code>mutate()</code>. For example, lets create a new variable that will
+tell us if the farm type is a sow farm or not. For this we use the
+variable <code>farm_type</code> which already contains information for
+different farm types</p>
+<pre class="r"><code>PRRS %&gt;% 
+  mutate(SowFarm = ifelse(farm_type == &#39;sow farm&#39;, 1, 0))</code></pre>
+<pre><code>## # A tibble: 1,353 × 9
+##    Result Sex     Age OtherSpecies    id name             farm_…¹ County SowFarm
+##     &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
+##  1      0 H        18            0    23 Armstrong Resea… sow fa… Potta…       1
+##  2      0 H        60            0    23 Armstrong Resea… sow fa… Potta…       1
+##  3      0 H        60            0    23 Armstrong Resea… sow fa… Potta…       1
+##  4      1 H        36            0    23 Armstrong Resea… sow fa… Potta…       1
+##  5      1 H        50            0    23 Armstrong Resea… sow fa… Potta…       1
+##  6      1 H        16            0    23 Armstrong Resea… sow fa… Potta…       1
+##  7      1 M        15            0    23 Armstrong Resea… sow fa… Potta…       1
+##  8      1 M        22            0    23 Armstrong Resea… sow fa… Potta…       1
+##  9      1 M        30            0    23 Armstrong Resea… sow fa… Potta…       1
+## 10      1 H        14            0    23 Armstrong Resea… sow fa… Potta…       1
+## # … with 1,343 more rows, and abbreviated variable name ¹​farm_type</code></pre>
+</div>
+<div id="joining-datasets" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Joining datasets</h2>
+</div>
+<div id="wide-and-long-formats" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Wide and Long
+formats</h2>
+</div>
+</div>
+<div id="tables-in-r" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Tables in R</h1>
 <p>We can use the base R functions to create basic tables. For example,
 we can create a table that shows the number of positive by sex:</p>
 <pre class="r"><code>TBL &lt;- table(PRRS$Sex, PRRS$Result)
@@ -569,27 +641,8 @@ where is represented as [row, column].</p>
 <pre class="r"><code>TBL[,2] # Get the second column</code></pre>
 <pre><code>##   H   M 
 ## 229 138</code></pre>
-</div>
-<div id="data-manipulation" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Data manipulation</h1>
-<div id="creating-new-variables" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Creating new
-variables</h2>
-</div>
-<div id="joining-datasets" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Joining datasets</h2>
-</div>
-<div id="wide-and-long-formats" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Wide and Long
-formats</h2>
-</div>
-<div id="grouping-and-summarizing-tables" class="section level2"
-number="4.4">
-<h2><span class="header-section-number">4.4</span> Grouping and
-summarizing tables</h2>
 <hr />
 <p><a href="index.html">Go Back</a></p>
-</div>
 </div>
 
 
