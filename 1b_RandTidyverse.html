@@ -14,7 +14,7 @@
 
 <title>R syntax and the tidyverse</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -454,12 +454,12 @@ we doing with those arguments. For example, the following function has
 only one argument which is a name (string) and just pastes some text
 before and after:</p>
 <pre class="r"><code>F1 &lt;- function(name){
-  paste(&quot;Hola&quot;, name, &quot;! welcome to the R world!&quot;) # paste the name with some text
+  paste(&quot;Hola&quot;, name, &quot;! welcome to the R world (: !&quot;) # paste the name with some text
 }
 
 # Testing the function (Put your name)
 F1(name = &quot;Pablo&quot;)</code></pre>
-<pre><code>## [1] &quot;Hola Pablo ! welcome to the R world!&quot;</code></pre>
+<pre><code>## [1] &quot;Hola Pablo ! welcome to the R world (: !&quot;</code></pre>
 <p>Besides storing numbers in the objects in R, we can store text,
 matrices, tables, spatial objects, images, and other types of objects.
 Next we will import our own data and do some manipulation in R.</p>
@@ -543,7 +543,6 @@ the operator <code>::</code> and the name of the function, for example:
 whole library.</p>
 <pre class="r"><code># If we dont have the library installed, we use:
 # install.packages(&quot;readxl&quot;)
-library(readxl) # load the library
 
 # Import the excel file
 PRRS &lt;- readxl::read_xlsx(&quot;Data/PRRS.xlsx&quot;)</code></pre>
@@ -554,6 +553,8 @@ function <code>class()</code>, an object can have more than one type of
 class.</p>
 <pre class="r"><code>class(PRRS)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<p>In the previous example, you can notice that the <code>PRRS</code>
+object has 3 different types of class.</p>
 </div>
 <div id="data-manipulation" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Data manipulation</h1>
@@ -569,9 +570,9 @@ PRRS %&gt;%
   count(Result)</code></pre>
 <pre><code>## # A tibble: 2 × 2
 ##   Result     n
-##    &lt;dbl&gt; &lt;int&gt;
-## 1      0   986
-## 2      1   367</code></pre>
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 No       986
+## 2 Yes      367</code></pre>
 <p>The previous table show us that were 986 observations with test
 result negative and 367 with test result positive. We can add multiple
 variables to count</p>
@@ -580,18 +581,13 @@ PRRS %&gt;%
   count(Result, Sex)</code></pre>
 <pre><code>## # A tibble: 4 × 3
 ##   Result Sex       n
-##    &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
-## 1      0 H       737
-## 2      0 M       249
-## 3      1 H       229
-## 4      1 M       138</code></pre>
-<pre class="r"><code>PRRS %&gt;% 
-  count(Sex, wt = Result)</code></pre>
-<pre><code>## # A tibble: 2 × 2
-##   Sex       n
-##   &lt;chr&gt; &lt;dbl&gt;
-## 1 H       229
-## 2 M       138</code></pre>
+##   &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+## 1 No     H       737
+## 2 No     M       249
+## 3 Yes    H       229
+## 4 Yes    M       138</code></pre>
+<pre class="r"><code># PRRS %&gt;% 
+  # count(Sex, wt = Result)</code></pre>
 </div>
 <div id="creating-new-variables" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Creating new
@@ -604,22 +600,142 @@ different farm types</p>
 <pre class="r"><code>PRRS %&gt;% 
   mutate(SowFarm = ifelse(farm_type == &#39;sow farm&#39;, 1, 0))</code></pre>
 <pre><code>## # A tibble: 1,353 × 9
-##    Result Sex     Age OtherSpecies    id name             farm_…¹ County SowFarm
-##     &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
-##  1      0 H        18            0    23 Armstrong Resea… sow fa… Potta…       1
-##  2      0 H        60            0    23 Armstrong Resea… sow fa… Potta…       1
-##  3      0 H        60            0    23 Armstrong Resea… sow fa… Potta…       1
-##  4      1 H        36            0    23 Armstrong Resea… sow fa… Potta…       1
-##  5      1 H        50            0    23 Armstrong Resea… sow fa… Potta…       1
-##  6      1 H        16            0    23 Armstrong Resea… sow fa… Potta…       1
-##  7      1 M        15            0    23 Armstrong Resea… sow fa… Potta…       1
-##  8      1 M        22            0    23 Armstrong Resea… sow fa… Potta…       1
-##  9      1 M        30            0    23 Armstrong Resea… sow fa… Potta…       1
-## 10      1 H        14            0    23 Armstrong Resea… sow fa… Potta…       1
-## # … with 1,343 more rows, and abbreviated variable name ¹​farm_type</code></pre>
+##    Result Sex     Age OtherSpecies    id name           farm_type County SowFarm
+##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;
+##  1 No     H        18            0    23 Armstrong Res… sow farm  Potta…       1
+##  2 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
+##  3 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
+##  4 Yes    H        36            0    23 Armstrong Res… sow farm  Potta…       1
+##  5 Yes    H        50            0    23 Armstrong Res… sow farm  Potta…       1
+##  6 Yes    H        16            0    23 Armstrong Res… sow farm  Potta…       1
+##  7 Yes    M        15            0    23 Armstrong Res… sow farm  Potta…       1
+##  8 Yes    M        22            0    23 Armstrong Res… sow farm  Potta…       1
+##  9 Yes    M        30            0    23 Armstrong Res… sow farm  Potta…       1
+## 10 Yes    H        14            0    23 Armstrong Res… sow farm  Potta…       1
+## # ℹ 1,343 more rows</code></pre>
 </div>
 <div id="joining-datasets" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Joining datasets</h2>
+<pre class="r"><code># Importing the farm dataseet
+nodes &lt;- read.csv(&quot;Data/node_attrib.csv&quot;)
+# Importing the movement dataset
+mov &lt;- read.csv(&quot;Data/network.csv&quot;)
+# Get the number of outgoing and incoming shipments 
+Out &lt;- mov %&gt;% 
+  group_by(id_orig) %&gt;%
+  summarise(Outgoing = n()) %&gt;%
+  rename(id = id_orig)
+
+In &lt;- mov %&gt;%
+  group_by(id_dest) %&gt;%
+  summarise(Incoming = n()) %&gt;% 
+  rename(id = id_dest)
+
+# Joining the two datasets
+nodes &lt;- nodes %&gt;% 
+  left_join(Out, by =&quot;id&quot;)
+
+nodes &lt;- nodes %&gt;%
+  left_join(In, by = &quot;id&quot;)
+
+nodes</code></pre>
+<pre><code>##    id                                                  name      lat      long
+## 1   1                                 Iowa Select Farms Inc 42.50489 -93.26323
+## 2   2                       Stanley Martins Fleckvieh Farms 43.08261 -91.56682
+## 3   3                                  Centrum Valley Farms 42.66331 -93.63630
+## 4   4                           Hilltop Farms fresh produce 41.71651 -93.90491
+## 5   5                                         Hog Slat Inc. 42.25929 -91.15566
+## 6   6                             Safari Iowa Hunting Farms 41.56854 -92.02317
+## 7   7                                           Kloubec Koi 41.83465 -91.81982
+## 8   8                                  Johnson Farms Supply 42.85789 -93.61687
+## 9   9                                           Kroul Farms 41.87700 -91.47084
+## 10 10                              Steve Robinson Farm Shop 41.96634 -91.19099
+## 11 11                             Loess Hills Lavender Farm 41.67884 -95.93713
+## 12 12                                     Uncle Bill&#39;s Farm 41.71713 -92.73772
+## 13 13                                       Wild Woods Farm 41.70194 -91.47338
+## 14 14                                Western Iowa Farms LLC 42.44647 -96.25294
+## 15 15                                        Mushroom Mills 41.20559 -91.37005
+## 16 16                                          Kruger Farms 42.41710 -92.69073
+## 17 17                                         US Farm Lease 41.64893 -93.62416
+## 18 18                                     Dawn Golden Farms 43.08464 -91.56918
+## 19 19                            Kris Del Farms Corporation 41.62007 -90.64899
+## 20 20 Lapp\x89\xf6_\xe5\xa9&#39;s Bee Supply and Honey Farm LLC 41.22699 -93.92651
+## 21 21                          Nelson Pioneer Farm &amp; Museum 41.33235 -92.62145
+## 22 22                                          WinMor Farms 41.71702 -92.65580
+## 23 23                               Armstrong Research Farm 41.30823 -95.17208
+## 24 24                                  Cinnamon Ridge Farms 41.71469 -90.69231
+## 25 25                                  Rustik Rooster Farms 42.89116 -92.33734
+## 26 26                                 Picket Fence Creamery 41.82968 -93.93218
+## 27 27                          Doe&#39;s and Diva&#39;s Dairy, Inc. 41.46512 -95.82878
+## 28 28                              Bushman Family Farms Inc 43.09108 -91.82770
+## 29 29                                     Johnson Farms Inc 43.45690 -92.28017
+## 30 30                                         Premier Grain 42.27013 -91.67477
+## 31 31                                          Bethany Farm 41.56188 -94.88469
+## 32 32               Farm Sweet Farm at Rosmann Family Farms 41.68048 -95.38560
+## 33 33                                      Iowa Farm Family 42.30512 -93.29866
+## 34 34   Iowa State University Horticulture Research Station 42.10658 -93.58981
+## 35 35                                         RJM Farms Inc 43.11208 -94.76516
+## 36 36                             Practical Farmers of Iowa 42.00683 -93.61690
+## 37 37                                            Bass Farms 41.91948 -91.49390
+## 38 38                                       A &amp; D Farms Inc 41.27141 -92.01188
+## 39 39                                           Geno Source 41.89120 -92.06679
+## 40 40                                          Tatonka Farm 42.53873 -92.10478
+##    farm_type Outgoing Incoming
+## 1   sow farm       30       13
+## 2   sow farm       NA       33
+## 3    nursery       13       NA
+## 4   sow farm       15       35
+## 5        GDU       33       14
+## 6        GDU       11       47
+## 7        GDU        3      116
+## 8   sow farm       83      195
+## 9    nursery        6       NA
+## 10   nursery        1        7
+## 11   nursery        1       NA
+## 12   nursery        5       21
+## 13   nursery       NA        2
+## 14   nursery       15      121
+## 15  finisher       NA       42
+## 16  finisher        1       NA
+## 17  finisher       68      821
+## 18  finisher       NA       23
+## 19  sow farm      397       45
+## 20  finisher       27       NA
+## 21   nursery       38       NA
+## 22  sow farm       NA        1
+## 23  sow farm       21       NA
+## 24  sow farm       27        2
+## 25       GDU      154        6
+## 26  sow farm       NA        1
+## 27   nursery        1       NA
+## 28   nursery       22       NA
+## 29   nursery      522       NA
+## 30   nursery       12       34
+## 31       GDU      101       27
+## 32 boar stud       NA        1
+## 33  sow farm       NA        1
+## 34  sow farm       NA        1
+## 35  sow farm       NA        1
+## 36  sow farm       NA        1
+## 37  sow farm        1       NA
+## 38  sow farm        1       NA
+## 39  sow farm        1       NA
+## 40  sow farm        1       NA</code></pre>
+<p>Now we will get the ones that had the higher number of movements:</p>
+<pre class="r"><code>mov %&gt;% 
+  group_by(id_orig) %&gt;% 
+  summarise(N = n(), N_pigs = sum(pigs.moved)) %&gt;%
+  arrange(desc(N)) %&gt;%
+  head()</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   id_orig     N N_pigs
+##     &lt;int&gt; &lt;int&gt;  &lt;int&gt;
+## 1      29   522  50565
+## 2      19   397  38686
+## 3      25   154  15653
+## 4      31   101  10711
+## 5       8    83   7620
+## 6      17    68   6633</code></pre>
 </div>
 <div id="wide-and-long-formats" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Wide and Long
@@ -633,7 +749,7 @@ we can create a table that shows the number of positive by sex:</p>
 <pre class="r"><code>TBL &lt;- table(PRRS$Sex, PRRS$Result)
 TBL</code></pre>
 <pre><code>##    
-##       0   1
+##      No Yes
 ##   H 737 229
 ##   M 249 138</code></pre>
 <p>When we have a table object we can ask for a specific column or row,
@@ -641,8 +757,23 @@ where is represented as [row, column].</p>
 <pre class="r"><code>TBL[,2] # Get the second column</code></pre>
 <pre><code>##   H   M 
 ## 229 138</code></pre>
+</div>
+<div id="loops-in-r" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Loops in R</h1>
+</div>
+<div id="exporting-the-data" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Exporting the data</h1>
+<pre class="r"><code>write.csv(nodes, &#39;Data/nodes.csv&#39;, row.names = F)</code></pre>
 <hr />
-<p><a href="index.html">Go Back</a></p>
+<p><em>This lab has been developed with contributions from: <a
+href="https://www.spablo-temporal.network">Jose Pablo
+Gomez-Vazquez</a>.<br />
+Feel free to use these training materials for your own research and
+teaching. When using the materials we would appreciate using the proper
+credits. If you would be interested in a training session, please
+contact: <a href="mailto:jpgo@ucdavis.edu"
+class="email">jpgo@ucdavis.edu</a></em></p>
+<hr />
 </div>
 
 

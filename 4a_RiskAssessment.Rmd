@@ -1,6 +1,5 @@
 ---
 title: "Risk Assessment in R"
-author: "Pablo Gomez"
 output:
   html_document:
     toc: true
@@ -425,4 +424,14 @@ To submit your assignment you should include:
   3. Your opinion about the model sensitivity.
 
 
-----------------------------
+------------------------------------------------------------------------
+
+*This lab has been developed with contributions from: [Jose Pablo
+Gomez-Vazquez](https://www.spablo-temporal.network) and [Beatriz
+Martinez-Lopez](https://cadms.vetmed.ucdavis.edu/about/director).\
+Feel free to use these training materials for your own research and
+teaching. When using the materials we would appreciate using the proper
+credits. If you would be interested in a training session, please
+contact: [jpgo\@ucdavis.edu](mailto:jpgo@ucdavis.edu){.email}*
+
+------------------------------------------------------------------------
