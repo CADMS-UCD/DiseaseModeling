@@ -13,6 +13,8 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
+# Further customization
+
 # Layouts
 
 # Exporting plots

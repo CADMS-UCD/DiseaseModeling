@@ -1,5 +1,5 @@
 ---
-title: "Graphics in R I"
+title: "Graphics part I"
 author: "Pablo Gomez"
 output:
   html_document:
@@ -13,20 +13,112 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
+We will continue using the data set from the previous section to introduce some basics of data visualization. If starting a new session, make sure to load the data, otherwise just make sure the data is in your environment.
 
-# Basic plots
+```{r}
+# Import the excel file
+PRRS <- readxl::read_xlsx("Data/PRRS.xlsx")
+nodes <- read.csv('Data/nodes.csv')
+mov <- read.csv('Data/network.csv')
+
+# We load the library
+library(ggplot2)
+```
+
+# Plots in R
+
+By default R already has a set of functions to create a variety of figures, but the code can get quite complex and difficult to read as we produce more detailed figures. `ggplot2` is a library that provides a set of functions for producing a variety of figures.
+
+The basic components that we need to define for a plot are the following:
+  
+  - *data*, the dataset we will use to generate the figure
+  - *geometry*, or type of graphic we will generate (i.e. histogram, bar, scatter, etc..)
+  - *aesthetic*, variables or arguments that will be used for the figure for example: location, color, size, etc..
+
+An example:
+
+```{r hist example}
+ggplot(data = PRRS) + # This is the data we will use
+  geom_histogram( # This is the geometry 
+    aes(x = Age) # The aesthetic includes only one variable representing the x axis
+  )
+```
+
+Other components of the plots can be defined to further customize our figures, and we will cover those more in detail in future sections.
 
 # Visualizing distributions
 
-## Continous variables (Histograms, boxplots)
+## Continous variables
+
+### Histograms
+
+The most simple way to visualize the distribution of a continuous variable is using a histogram. Histograms are a special kind of bar plots where our variable is grouped in bins and showing the counts for each bin.
+
+```{r hist}
+PRRS %>% 
+  ggplot() +
+  geom_histogram(aes(x = Age))
+```
+
+
+### Boxplots
+
+Box plots are great to show the distribution of a continuous variable. We can use it to show only one variable, or multiple variables. It is important to be very descriptive when making plots, the idea of a figure is that can explain itself. we will start to slowly introduce functions to do this and customize our figures.
+
+```{r boxplot}
+# Only one variable
+PRRS %>% 
+  ggplot() +
+  geom_boxplot(aes(y = Age)) +
+  labs(title = 'Distribution of Age') # we can add different labels such as the main title
+```
+
 
 ## Frequencies (Barplots, bubbles, mozaics, Pie charts)
+
+### Barplots
+
+```{r barplots}
+PRRS %>% 
+  count(farm_type) %>% 
+  ggplot() +
+  geom_bar(aes(x = farm_type, y = n), stat = 'identity')
+```
 
 # Visualizing relationships
 
 ## Scatterplots
 
+This is one of the most popular kind of plots, it is useful to represent relationship between two continuous variables.  
+We can achieve the same result in different ways. The first one is better when we have our variables in the same dataset, and the second one when we have data from different objects. (the length of the two vectors has to be the same).  
+
+```{r}
+nodes %>% # first we start with the name of our data.frame
+  ggplot() + # then we call ggplot
+  geom_point(aes(Outgoing, Incoming)) # and we add the first layer, which is the points
+```
+
+
 # Time series
+
+To create a time series we will need to reformat the data a little bit so R can do what we want.  
+```{r}
+mov <- mov %>% 
+  mutate(date = as.Date(date, "%m/%d/%y"), # First we will format the date
+         week = format(date, "%V"),
+         week = lubridate::floor_date(date, 'week')) # The we create a variable formatting the date as week of the year
+```
+
+
+
+```{r}
+mov %>% 
+  count(week) %>% 
+  ggplot() +
+  geom_line(aes(x = week, y = n)) +
+  labs(title = 'Movements per week', x = 'Date', y = "Number of movements")
+```
+
 
 ------------------
 

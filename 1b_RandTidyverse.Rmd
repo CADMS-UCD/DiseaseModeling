@@ -71,7 +71,7 @@ Making functions in R is not as complicated as it sounds and can be very useful 
 
 ```{r creating a function}
 F1 <- function(name){
-  paste("Hola", name, "! welcome to the R world!") # paste the name with some text
+  paste("Hola", name, "! welcome to the R world (: !") # paste the name with some text
 }
 
 # Testing the function (Put your name)
@@ -156,7 +156,6 @@ Download the excel file from this [link](https://ucdavis.app.box.com/folder/1747
 ```{r}
 # If we dont have the library installed, we use:
 # install.packages("readxl")
-library(readxl) # load the library
 
 # Import the excel file
 PRRS <- readxl::read_xlsx("Data/PRRS.xlsx")
@@ -167,6 +166,8 @@ The most popular format for tables in R are called `data.frame`, when we import 
 ```{r}
 class(PRRS)
 ```
+
+In the previous example, you can notice that the `PRRS` object has 3 different types of class.
 
 # Data manipulation
 
@@ -193,8 +194,6 @@ PRRS %>%
   count(Sex, wt = Result)
 ```
 
-
-
 ## Creating new variables
 
 To create a new variable we can use the function `mutate()`. For example, lets create a new variable that will tell us if the farm type is a sow farm or not. For this we use the variable `farm_type` which already contains information for different farm types 
@@ -216,6 +215,7 @@ Out <- mov %>%
   group_by(id_orig) %>%
   summarise(Outgoing = n()) %>%
   rename(id = id_orig)
+
 In <- mov %>%
   group_by(id_dest) %>%
   summarise(Incoming = n()) %>% 
@@ -227,6 +227,7 @@ nodes <- nodes %>%
 
 nodes <- nodes %>%
   left_join(In, by = "id")
+
 nodes
 ```
 
@@ -239,7 +240,6 @@ mov %>%
   arrange(desc(N)) %>%
   head()
 ```
-  
 
 ## Wide and Long formats
 
@@ -256,6 +256,14 @@ When we have a table object we can ask for a specific column or row, where is re
 
 ```{r}
 TBL[,2] # Get the second column
+```
+
+# Loops in R
+
+# Exporting the data
+
+```{r}
+write.csv(nodes, 'Data/nodes.csv', row.names = F)
 ```
 
 

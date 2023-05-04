@@ -12,9 +12,9 @@
 <meta name="author" content="Pablo Gomez" />
 
 
-<title>Graphics in R I</title>
+<title>Graphics part I</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -381,27 +381,91 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Graphics in R I</h1>
+<h1 class="title toc-ignore">Graphics part I</h1>
 <h4 class="author">Pablo Gomez</h4>
 
 </div>
 
 
-<div id="basic-plots" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Basic plots</h1>
+<p>We will continue using the data set from the previous section to
+introduce some basics of data visualization. If starting a new session,
+make sure to load the data, otherwise just make sure the data is in your
+environment.</p>
+<pre class="r"><code># Import the excel file
+PRRS &lt;- readxl::read_xlsx(&quot;Data/PRRS.xlsx&quot;)
+nodes &lt;- read.csv(&#39;Data/nodes.csv&#39;)
+mov &lt;- read.csv(&#39;Data/network.csv&#39;)
+
+# We load the library
+library(ggplot2)</code></pre>
+<div id="plots-in-r" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Plots in R</h1>
+<p>By default R already has a set of functions to create a variety of
+figures, but the code can get quite complex and difficult to read as we
+produce more detailed figures. <code>ggplot2</code> is a library that
+provides a set of functions for producing a variety of figures.</p>
+<p>The basic components that we need to define for a plot are the
+following:</p>
+<ul>
+<li><em>data</em>, the dataset we will use to generate the figure</li>
+<li><em>geometry</em>, or type of graphic we will generate
+(i.e. histogram, bar, scatter, etc..)</li>
+<li><em>aesthetic</em>, variables or arguments that will be used for the
+figure for example: location, color, size, etc..</li>
+</ul>
+<p>An example:</p>
+<pre class="r"><code>ggplot(data = PRRS) + # This is the data we will use
+  geom_histogram( # This is the geometry 
+    aes(x = Age) # The aesthetic includes only one variable representing the x axis
+  )</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/hist%20example-1.png" width="672" /></p>
+<p>Other components of the plots can be defined to further customize our
+figures, and we will cover those more in detail in future sections.</p>
 </div>
 <div id="visualizing-distributions" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Visualizing
 distributions</h1>
-<div id="continous-variables-histograms-boxplots" class="section level2"
-number="2.1">
-<h2><span class="header-section-number">2.1</span> Continous variables
-(Histograms, boxplots)</h2>
+<div id="continous-variables" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Continous
+variables</h2>
+<div id="histograms" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Histograms</h3>
+<p>The most simple way to visualize the distribution of a continuous
+variable is using a histogram. Histograms are a special kind of bar
+plots where our variable is grouped in bins and showing the counts for
+each bin.</p>
+<pre class="r"><code>PRRS %&gt;% 
+  ggplot() +
+  geom_histogram(aes(x = Age))</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/hist-1.png" width="672" /></p>
+</div>
+<div id="boxplots" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Boxplots</h3>
+<p>Box plots are great to show the distribution of a continuous
+variable. We can use it to show only one variable, or multiple
+variables. It is important to be very descriptive when making plots, the
+idea of a figure is that can explain itself. we will start to slowly
+introduce functions to do this and customize our figures.</p>
+<pre class="r"><code># Only one variable
+PRRS %&gt;% 
+  ggplot() +
+  geom_boxplot(aes(y = Age)) +
+  labs(title = &#39;Distribution of Age&#39;) # we can add different labels such as the main title</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/boxplot-1.png" width="672" /></p>
+</div>
 </div>
 <div id="frequencies-barplots-bubbles-mozaics-pie-charts"
 class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Frequencies
 (Barplots, bubbles, mozaics, Pie charts)</h2>
+<div id="barplots" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Barplots</h3>
+<pre class="r"><code>PRRS %&gt;% 
+  count(farm_type) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = farm_type, y = n), stat = &#39;identity&#39;)</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/barplots-1.png" width="672" /></p>
+</div>
 </div>
 </div>
 <div id="visualizing-relationships" class="section level1" number="3">
@@ -409,10 +473,32 @@ class="section level2" number="2.2">
 relationships</h1>
 <div id="scatterplots" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Scatterplots</h2>
+<p>This is one of the most popular kind of plots, it is useful to
+represent relationship between two continuous variables.<br />
+We can achieve the same result in different ways. The first one is
+better when we have our variables in the same dataset, and the second
+one when we have data from different objects. (the length of the two
+vectors has to be the same).</p>
+<pre class="r"><code>nodes %&gt;% # first we start with the name of our data.frame
+  ggplot() + # then we call ggplot
+  geom_point(aes(Outgoing, Incoming)) # and we add the first layer, which is the points</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="time-series" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Time series</h1>
+<p>To create a time series we will need to reformat the data a little
+bit so R can do what we want.</p>
+<pre class="r"><code>mov &lt;- mov %&gt;% 
+  mutate(date = as.Date(date, &quot;%m/%d/%y&quot;), # First we will format the date
+         week = format(date, &quot;%V&quot;),
+         week = lubridate::floor_date(date, &#39;week&#39;)) # The we create a variable formatting the date as week of the year</code></pre>
+<pre class="r"><code>mov %&gt;% 
+  count(week) %&gt;% 
+  ggplot() +
+  geom_line(aes(x = week, y = n)) +
+  labs(title = &#39;Movements per week&#39;, x = &#39;Date&#39;, y = &quot;Number of movements&quot;)</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <hr />
 <p><a href="index.html">Go Back</a></p>
 </div>
