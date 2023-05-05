@@ -241,7 +241,7 @@ mov %>%
   head()
 ```
 
-## Wide and Long formats
+<!-- ## Wide and Long formats -->
 
 # Tables in R
 
@@ -258,7 +258,7 @@ When we have a table object we can ask for a specific column or row, where is re
 TBL[,2] # Get the second column
 ```
 
-# Loops in R
+<!-- # Loops in R -->
 
 # Exporting the data
 

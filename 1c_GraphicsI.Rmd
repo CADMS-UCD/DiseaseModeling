@@ -31,7 +31,7 @@ By default R already has a set of functions to create a variety of figures, but 
 
 The basic components that we need to define for a plot are the following:
   
-  - *data*, the dataset we will use to generate the figure
+  - *data*, the data set we will use to generate the figure
   - *geometry*, or type of graphic we will generate (i.e. histogram, bar, scatter, etc..)
   - *aesthetic*, variables or arguments that will be used for the figure for example: location, color, size, etc..
 
@@ -44,7 +44,14 @@ ggplot(data = PRRS) + # This is the data we will use
   )
 ```
 
-Other components of the plots can be defined to further customize our figures, and we will cover those more in detail in future sections.
+Other components of the plots can be defined to further customize our figures, and we will cover those more in detail in future sections.  
+As you noticed in the previous example, we can print the figures directly from the R console, but a way I like to organize our figures is to put them all inside a single object in R. This object can be a `list`, which is just a container for other objects.  
+
+```{r create fig list}
+# To create an empty list we can use the function list()
+figures <- list()
+```
+
 
 # Visualizing distributions
 
@@ -52,12 +59,15 @@ Other components of the plots can be defined to further customize our figures, a
 
 ### Histograms
 
-The most simple way to visualize the distribution of a continuous variable is using a histogram. Histograms are a special kind of bar plots where our variable is grouped in bins and showing the counts for each bin.
+The most simple way to visualize the distribution of a continuous variable is using a histogram. Histograms are a special kind of bar plots where our variable is grouped in bins and showing the counts for each bin. Now that we have our container list for the plots, we can simply save it there and assign a name we want.
 
 ```{r hist}
-PRRS %>% 
+figures$histogram <- PRRS %>% 
   ggplot() +
   geom_histogram(aes(x = Age))
+
+# we can see our plot by calling the name in our container list
+figures$histogram
 ```
 
 
@@ -67,10 +77,12 @@ Box plots are great to show the distribution of a continuous variable. We can us
 
 ```{r boxplot}
 # Only one variable
-PRRS %>% 
+figures$box <- PRRS %>% 
   ggplot() +
   geom_boxplot(aes(y = Age)) +
   labs(title = 'Distribution of Age') # we can add different labels such as the main title
+
+figures$box
 ```
 
 
@@ -79,10 +91,12 @@ PRRS %>%
 ### Barplots
 
 ```{r barplots}
-PRRS %>% 
+figures$bars <- PRRS %>% 
   count(farm_type) %>% 
   ggplot() +
   geom_bar(aes(x = farm_type, y = n), stat = 'identity')
+
+figures$bars
 ```
 
 # Visualizing relationships
@@ -93,15 +107,18 @@ This is one of the most popular kind of plots, it is useful to represent relatio
 We can achieve the same result in different ways. The first one is better when we have our variables in the same dataset, and the second one when we have data from different objects. (the length of the two vectors has to be the same).  
 
 ```{r}
-nodes %>% # first we start with the name of our data.frame
+figures$scatter <- nodes %>% # first we start with the name of our data.frame
   ggplot() + # then we call ggplot
   geom_point(aes(Outgoing, Incoming)) # and we add the first layer, which is the points
+
+figures$scatter
 ```
 
 
 # Time series
 
-To create a time series we will need to reformat the data a little bit so R can do what we want.  
+To create a time series we will need to reformat the data a little bit so R can do what we want. We will introduce a new kind of variable: `date`. The date variables are pretty much what it sounds like, is a variable that has a format with year, month and day; there are other ways to format dates in R, but this is the most common and straight forward.  
+
 ```{r}
 mov <- mov %>% 
   mutate(date = as.Date(date, "%m/%d/%y"), # First we will format the date
@@ -109,14 +126,26 @@ mov <- mov %>%
          week = lubridate::floor_date(date, 'week')) # The we create a variable formatting the date as week of the year
 ```
 
-
+Now that we have our variables in the correct format, we can use it as any other variable.
 
 ```{r}
-mov %>% 
+figures$timeseries <- mov %>% 
   count(week) %>% 
   ggplot() +
   geom_line(aes(x = week, y = n)) +
   labs(title = 'Movements per week', x = 'Date', y = "Number of movements")
+
+figures$timeseries
+```
+
+# Arranging the plots in a layout
+
+Now that we have all the figures in a list, we can make arrangements with our figures. For this we use the function `ggarrange()` from the ggpubr library.  
+
+```{r}
+library(ggpubr) # load the library
+
+ggarrange(plotlist = figures)
 ```
 
 
