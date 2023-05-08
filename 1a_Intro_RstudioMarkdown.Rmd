@@ -12,6 +12,14 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
+In this first section we are not going to worry at all about coding or the syntax used in R, we will focus on familiarizing with the Rstudio interface and what kind of files we can create with it.  
+
+The goal of this lab is that, by the end, you feel more comfortable with the following concepts:
+  
+  - Project organization. 
+  - The main components of teh Rstudio interface. 
+  - Files you can create with Rstudio.  
+
 # The Rstudio interface
 
 When we start R studio, we can see 4 sections:
@@ -64,7 +72,7 @@ We created our first document with R Markdown. The document will contain already
 
 <img src="img/Ia_RmdDoc.png" style="width:60%" align="center"/>
 
-The text in the document is a brief introduction to the Rmd syntax, which is just a syntax for creating documents that combines Markdown with R code. YOu can find more information about the syntax in [this link](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). You can edit the document directly with the Rmd syntax, but if you prefer to save some time and don't have to deal with learning everything from scratch, there is an option to edit the document in a more familiar way. To do this just change the option located in the top right of the document from *Source* to *Visual*. You will notice that a toolbar with some familiar icons appeared at the top.
+The text in the document is a brief introduction to the Rmd syntax, which is just a syntax for creating documents that combines Markdown with R code. You can find more information about the syntax in [this link](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). You can edit the document directly with the Rmd syntax, but if you prefer to save some time and don't have to deal with learning everything from scratch, there is an option to edit the document in a more familiar way. To do this just change the option located in the top right of the document from *Source* to *Visual*. You will notice that a toolbar with some familiar icons appeared at the top.
 
 <img src="img/Ia_RmdVisual.png" style="width:60%" align="center"/>
 

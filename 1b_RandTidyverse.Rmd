@@ -41,7 +41,9 @@ y = 5:10 # create the same sequence but with a different approach
 x == y # ask R if the objects have the same information
 ```
 
-When we have a vector, we can ask R specific values inside an object.
+Notice that in the previous example we compared two objects using `==`, this is the way we tell R that we want to COMPARE and not to assign (remember that to assign you use only one `=` symbol).  
+
+When we have a vector, we can ask R specific values inside an object by using the operator `[ ]` and specifying which ones we want.
 
 ```{r vector operations}
 # Here we ask the 3rd value from our sequence
@@ -161,49 +163,107 @@ Download the excel file from this [link](https://ucdavis.app.box.com/folder/1747
 PRRS <- readxl::read_xlsx("Data/PRRS.xlsx")
 ```
 
-The most popular format for tables in R are called `data.frame`, when we import the data from a *.csv* o *.xlsx*. We can examine what kind of object it is using the function `class()`, an object can have more than one type of class.  
+The most popular format for tables in R are called `data.frame`, when we import the data from a *.csv* o *.xlsx*. We can examine what kind of object it is using the function `class()`:  
 
 ```{r}
+# Ask the class of a given object
 class(PRRS)
 ```
 
-In the previous example, you can notice that the `PRRS` object has 3 different types of class.
+It is possible that objects can have more than 1 class. In the previous example, you can notice that the `PRRS` object has 3 different types of class.  
 
 # Data manipulation
 
 In the following section we will cover some basics of data manipulation, this includes create, modify and summarise variables in our data. 
 
+## Reducing our data
+
+Sometimes we want to select specific columns and rows on our data to reduce the dimentionality, for this we can use the functions:
+  
+  - `select()` to select specific *columns*
+  - `slice()` to select specific *rows* based on position
+  - `filter()` to select specific *rows* based on a condition
+  
+### Selecting specific columns
+
+```{r select 1}
+PRRS %>%  # the name of our data
+  select(Result, farm_type) # we want to select only the columns Result and farm_type
+```
+
+We can also specify which columns we DON'T want to show in our data:
+
+```{r select 2}
+PRRS %>% 
+  select(-Age, -id) # with a '-' before the name we will exclude the column from the data
+```
+
+### Filtering specific rows
+
+Filtering columns works based on boolean logic, so we can specify a condition and R will show only the rows that satisfy that condition. For example, lets filter only the observations from boar studs: 
+
+```{r filtering observations}
+PRRS %>% 
+  filter(farm_type == 'boar studs') # we will use the equals to operator for this
+```
+
+## Creating or modifying variables
+
+To create a new variable we can use the function `mutate()`. For example, lets create a new variable that will tell us if the farm type is a sow farm or not. For this we use the variable `farm_type` which already contains information for different farm types 
+
+```{r creating new variables}
+# Creating a new variable
+PRRS %>% # name of the data set
+  mutate( # mutate is the function we sue to create new variables
+    SowFarm = ifelse(farm_type == 'sow farm', 1, 0) # we will create a binary variable where 1 = sow farm, 0 = Any other farm type
+  ) 
+```
+
+Notice that in the previous code chunk, we did not assigned it to an object, which means that R is just going to print it and dont save it. To save it, remember that we use the assign operator `<-` or `=`.  
+To modify an existing variable we can use the same function `mutate()`, and specify what we want to replace the existing variable with. For example, in the next chunk of code, we will modify the variable *Sex*. The original variable has H for Female and M for Male, so let's change it to something that makes more sense: 
+
+```{r modifying an existing variable}
+# Now we will assign the new object to itself overwriting it.
+PRRS <- PRRS %>%  # this is the data set we will use
+  mutate( # we use the mutate function to create new variables
+    Sex = recode( # The function recode, can be used similar to replace in excel
+      Sex, # we will overwrite the variable Sex using the same name
+      H = 'Female',
+      M = 'Male'
+    )
+  )
+```
+
+Be careful when overwriting objects in R there is no undo for this. It is important that your code is ordered and replicable in case you make any mistake, so you can easily reach to your progress before the mistake.  
+
 ## Grouping and summarizing tables
 
-```{r}
+Often times we want to calculate summary statistics from our data, we can group by a specific variable (or even multiple variables) to examine if there are differences between groups.  
+
+The most basic way of doing this is with the function `count()` which will only tell us the number of rows for each group:
+
+```{r count}
 # We can count how many observations for each of a variable name
 PRRS %>% 
   count(Result)
 ```
 
-The previous table show us that were 986 observations with test result negative and 367 with test result positive. We can add multiple variables to count
+The previous table show us that were 986 observations with test result negative and 367 with test result positive. We can add multiple variables to count. Now we will count by *Result* and *Sex*:
 
-```{r}
+```{r count}
 # We can count based on multiple variables
 PRRS %>% 
   count(Result, Sex)
 ```
 
-```{r}
+```{r weighted count}
 # PRRS %>% 
   # count(Sex, wt = Result)
 ```
 
-## Creating new variables
+## Joining data sets
 
-To create a new variable we can use the function `mutate()`. For example, lets create a new variable that will tell us if the farm type is a sow farm or not. For this we use the variable `farm_type` which already contains information for different farm types 
-
-```{r}
-PRRS %>% 
-  mutate(SowFarm = ifelse(farm_type == 'sow farm', 1, 0))
-```
-
-## Joining datasets
+Sometimes we have different data sets that have variables in common and we want to integrate them into a single data set for further analysis. In this example we have the data sets *node_attrib.csv* and *network.csv*
 
 ```{r}
 # Importing the farm dataseet

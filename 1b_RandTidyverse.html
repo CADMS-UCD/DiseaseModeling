@@ -418,6 +418,10 @@ code with the operator <code>&lt;-</code>, but a lot of people uses
 y = 5:10 # create the same sequence but with a different approach
 x == y # ask R if the objects have the same information</code></pre>
 <pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p>Notice that in the previous example we compared two objects using
+<code>==</code>, this is the way we tell R that we want to COMPARE and
+not to assign (remember that to assign you use only one <code>=</code>
+symbol).</p>
 <p>When we have a vector, we can ask R specific values inside an
 object.</p>
 <pre class="r"><code># Here we ask the 3rd value from our sequence
@@ -549,22 +553,140 @@ PRRS &lt;- readxl::read_xlsx(&quot;Data/PRRS.xlsx&quot;)</code></pre>
 <p>The most popular format for tables in R are called
 <code>data.frame</code>, when we import the data from a <em>.csv</em> o
 <em>.xlsx</em>. We can examine what kind of object it is using the
-function <code>class()</code>, an object can have more than one type of
-class.</p>
-<pre class="r"><code>class(PRRS)</code></pre>
+function <code>class()</code>:</p>
+<pre class="r"><code># Ask the class of a given object
+class(PRRS)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<p>In the previous example, you can notice that the <code>PRRS</code>
-object has 3 different types of class.</p>
+<p>It is possible that objects can have more than 1 class. In the
+previous example, you can notice that the <code>PRRS</code> object has 3
+different types of class.</p>
 </div>
 <div id="data-manipulation" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Data manipulation</h1>
 <p>In the following section we will cover some basics of data
 manipulation, this includes create, modify and summarise variables in
 our data.</p>
+<div id="reducing-our-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Reducing our
+data</h2>
+<p>Sometimes we want to select specific columns and rows on our data to
+reduce the dimentionality, for this we can use the functions:</p>
+<ul>
+<li><code>select()</code> to select specific <em>columns</em></li>
+<li><code>slice()</code> to select specific <em>rows</em> based on
+position</li>
+<li><code>filter()</code> to select specific <em>rows</em> based on a
+condition</li>
+</ul>
+<div id="selecting-specific-columns" class="section level3"
+number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Selecting specific
+columns</h3>
+<pre class="r"><code>PRRS %&gt;%  # the name of our data
+  select(Result, farm_type) # we want to select only the columns Result and farm_type</code></pre>
+<pre><code>## # A tibble: 1,353 × 2
+##    Result farm_type
+##    &lt;chr&gt;  &lt;chr&gt;    
+##  1 No     sow farm 
+##  2 No     sow farm 
+##  3 No     sow farm 
+##  4 Yes    sow farm 
+##  5 Yes    sow farm 
+##  6 Yes    sow farm 
+##  7 Yes    sow farm 
+##  8 Yes    sow farm 
+##  9 Yes    sow farm 
+## 10 Yes    sow farm 
+## # ℹ 1,343 more rows</code></pre>
+<p>We can also specify which columns we DON’T want to show in our
+data:</p>
+<pre class="r"><code>PRRS %&gt;% 
+  select(-Age, -id) # with a &#39;-&#39; before the name we will exclude the column from the data</code></pre>
+<pre><code>## # A tibble: 1,353 × 6
+##    Result Sex   OtherSpecies name                    farm_type County       
+##    &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;     &lt;chr&gt;        
+##  1 No     H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  2 No     H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  3 No     H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  4 Yes    H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  5 Yes    H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  6 Yes    H                0 Armstrong Research Farm sow farm  Pottawattamie
+##  7 Yes    M                0 Armstrong Research Farm sow farm  Pottawattamie
+##  8 Yes    M                0 Armstrong Research Farm sow farm  Pottawattamie
+##  9 Yes    M                0 Armstrong Research Farm sow farm  Pottawattamie
+## 10 Yes    H                0 Armstrong Research Farm sow farm  Pottawattamie
+## # ℹ 1,343 more rows</code></pre>
+</div>
+<div id="filtering-specific-rows" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Filtering specific
+rows</h3>
+<p>Filtering columns works based on boolean logic, so we can specify a
+condition and R will show only the rows that satisfy that condition. For
+example, lets filter only the observations from boar studs:</p>
+<pre class="r"><code>PRRS %&gt;% 
+  filter(farm_type == &#39;boar studs&#39;) # we will use the equals to operator for this</code></pre>
+<pre><code>## # A tibble: 0 × 8
+## # ℹ 8 variables: Result &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;dbl&gt;, OtherSpecies &lt;dbl&gt;,
+## #   id &lt;dbl&gt;, name &lt;chr&gt;, farm_type &lt;chr&gt;, County &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="creating-or-modifying-variables" class="section level2"
+number="3.2">
+<h2><span class="header-section-number">3.2</span> Creating or modifying
+variables</h2>
+<p>To create a new variable we can use the function
+<code>mutate()</code>. For example, lets create a new variable that will
+tell us if the farm type is a sow farm or not. For this we use the
+variable <code>farm_type</code> which already contains information for
+different farm types</p>
+<pre class="r"><code># Creating a new variable
+PRRS %&gt;% # name of the data set
+  mutate( # mutate is the function we sue to create new variables
+    SowFarm = ifelse(farm_type == &#39;sow farm&#39;, 1, 0) # we will create a binary variable where 1 = sow farm, 0 = Any other farm type
+  ) </code></pre>
+<pre><code>## # A tibble: 1,353 × 9
+##    Result Sex     Age OtherSpecies    id name           farm_type County SowFarm
+##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;
+##  1 No     H        18            0    23 Armstrong Res… sow farm  Potta…       1
+##  2 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
+##  3 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
+##  4 Yes    H        36            0    23 Armstrong Res… sow farm  Potta…       1
+##  5 Yes    H        50            0    23 Armstrong Res… sow farm  Potta…       1
+##  6 Yes    H        16            0    23 Armstrong Res… sow farm  Potta…       1
+##  7 Yes    M        15            0    23 Armstrong Res… sow farm  Potta…       1
+##  8 Yes    M        22            0    23 Armstrong Res… sow farm  Potta…       1
+##  9 Yes    M        30            0    23 Armstrong Res… sow farm  Potta…       1
+## 10 Yes    H        14            0    23 Armstrong Res… sow farm  Potta…       1
+## # ℹ 1,343 more rows</code></pre>
+<p>Notice that in the previous code chunk, we did not assigned it to an
+object, which means that R is just going to print it and dont save it.
+To save it, remember that we use the assign operator <code>&lt;-</code>
+or <code>=</code>.<br />
+To modify an existing variable we can use the same function
+<code>mutate()</code>, and specify what we want to replace the existing
+variable with. For example, in the next chunk of code, we will modify
+the variable <em>Sex</em>. The original variable has H for Female and M
+for Male, so let’s change it to something that makes more sense:</p>
+<pre class="r"><code># Now we will assign the new object to itself overwriting it.
+PRRS &lt;- PRRS %&gt;%  # this is the data set we will use
+  mutate( # we use the mutate function to create new variables
+    Sex = recode( # The function recode, can be used similar to replace in excel
+      Sex, # we will overwrite the variable Sex using the same name
+      H = &#39;Female&#39;,
+      M = &#39;Male&#39;
+    )
+  )</code></pre>
+<p>Be careful when overwriting objects in R there is no undo for this.
+It is important that your code is ordered and replicable in case you
+make any mistake, so you can easily reach to your progress before the
+mistake.</p>
+</div>
 <div id="grouping-and-summarizing-tables" class="section level2"
-number="3.1">
-<h2><span class="header-section-number">3.1</span> Grouping and
+number="3.3">
+<h2><span class="header-section-number">3.3</span> Grouping and
 summarizing tables</h2>
+<p>Often times we want to calculate summary statistics from our data, we
+can group by a specific variable (or even multiple variables) to</p>
 <pre class="r"><code># We can count how many observations for each of a variable name
 PRRS %&gt;% 
   count(Result)</code></pre>
@@ -580,42 +702,17 @@ variables to count</p>
 PRRS %&gt;% 
   count(Result, Sex)</code></pre>
 <pre><code>## # A tibble: 4 × 3
-##   Result Sex       n
-##   &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
-## 1 No     H       737
-## 2 No     M       249
-## 3 Yes    H       229
-## 4 Yes    M       138</code></pre>
+##   Result Sex        n
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;
+## 1 No     Female   737
+## 2 No     Male     249
+## 3 Yes    Female   229
+## 4 Yes    Male     138</code></pre>
 <pre class="r"><code># PRRS %&gt;% 
   # count(Sex, wt = Result)</code></pre>
 </div>
-<div id="creating-new-variables" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Creating new
-variables</h2>
-<p>To create a new variable we can use the function
-<code>mutate()</code>. For example, lets create a new variable that will
-tell us if the farm type is a sow farm or not. For this we use the
-variable <code>farm_type</code> which already contains information for
-different farm types</p>
-<pre class="r"><code>PRRS %&gt;% 
-  mutate(SowFarm = ifelse(farm_type == &#39;sow farm&#39;, 1, 0))</code></pre>
-<pre><code>## # A tibble: 1,353 × 9
-##    Result Sex     Age OtherSpecies    id name           farm_type County SowFarm
-##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;
-##  1 No     H        18            0    23 Armstrong Res… sow farm  Potta…       1
-##  2 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
-##  3 No     H        60            0    23 Armstrong Res… sow farm  Potta…       1
-##  4 Yes    H        36            0    23 Armstrong Res… sow farm  Potta…       1
-##  5 Yes    H        50            0    23 Armstrong Res… sow farm  Potta…       1
-##  6 Yes    H        16            0    23 Armstrong Res… sow farm  Potta…       1
-##  7 Yes    M        15            0    23 Armstrong Res… sow farm  Potta…       1
-##  8 Yes    M        22            0    23 Armstrong Res… sow farm  Potta…       1
-##  9 Yes    M        30            0    23 Armstrong Res… sow farm  Potta…       1
-## 10 Yes    H        14            0    23 Armstrong Res… sow farm  Potta…       1
-## # ℹ 1,343 more rows</code></pre>
-</div>
-<div id="joining-datasets" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Joining datasets</h2>
+<div id="joining-datasets" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Joining datasets</h2>
 <pre class="r"><code># Importing the farm dataseet
 nodes &lt;- read.csv(&quot;Data/node_attrib.csv&quot;)
 # Importing the movement dataset
@@ -745,15 +842,15 @@ nodes</code></pre>
 we can create a table that shows the number of positive by sex:</p>
 <pre class="r"><code>TBL &lt;- table(PRRS$Sex, PRRS$Result)
 TBL</code></pre>
-<pre><code>##    
-##      No Yes
-##   H 737 229
-##   M 249 138</code></pre>
+<pre><code>##         
+##           No Yes
+##   Female 737 229
+##   Male   249 138</code></pre>
 <p>When we have a table object we can ask for a specific column or row,
 where is represented as [row, column].</p>
 <pre class="r"><code>TBL[,2] # Get the second column</code></pre>
-<pre><code>##   H   M 
-## 229 138</code></pre>
+<pre><code>## Female   Male 
+##    229    138</code></pre>
 <!-- # Loops in R -->
 </div>
 <div id="exporting-the-data" class="section level1" number="5">
