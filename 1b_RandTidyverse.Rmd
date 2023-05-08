@@ -132,7 +132,7 @@ As you can notice, to read the code `F2(F1(x))` we have to go from the inside to
 **Suggestion:** we can use the keys *Ctrl* + *shift* + *m* to insert the `%>%` operator.  
 
 ```{r pipes} 
-# We previosly used this code to calculate the square root of the sum of x
+# We previously used this code to calculate the square root of the sum of x
 sqrt(sum(x))
 ```
 

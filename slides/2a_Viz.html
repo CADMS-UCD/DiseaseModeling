@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2a_Visualzation_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2a_Visualzation_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2a_Visualzation_files/libs/quarto-html/popper.min.js"></script>
-<script src="2a_Visualzation_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2a_Visualzation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2a_Visualzation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2a_Visualzation_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="2a_Viz_files/libs/clipboard/clipboard.min.js"></script>
+<script src="2a_Viz_files/libs/quarto-html/tabby.min.js"></script>
+<script src="2a_Viz_files/libs/quarto-html/popper.min.js"></script>
+<script src="2a_Viz_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="2a_Viz_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="2a_Viz_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="2a_Viz_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.335">
 
   <meta name="author" content="Pablo Gomez">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2a_Visualzation_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2a_Visualzation_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="2a_Viz_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="2a_Viz_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -93,11 +93,11 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="2a_Visualzation_files/libs/revealjs/dist/theme/quarto.css" id="theme">
-  <link href="2a_Visualzation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2a_Visualzation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2a_Visualzation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2a_Visualzation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="2a_Viz_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="2a_Viz_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="2a_Viz_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="2a_Viz_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="2a_Viz_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -399,13 +399,11 @@ Pablo Gomez
 </div>
 
 </section>
-<section>
-<section id="r-syntax" class="title-slide slide level1 center">
-<h1>R syntax</h1>
-
-</section>
-<section id="review" class="slide level2" data-background-color="black" data-background-image="img/bg_2.png">
+<section id="review" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">Review</span></h2>
+<div class="cell">
+
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">5</span>, <span class="at">to =</span> <span class="dv">23</span>, <span class="at">length.out =</span> <span class="dv">10</span>) <span class="co"># create a sequence of numbers</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">0.78</span>, <span class="at">length.out =</span> <span class="dv">10</span>) <span class="co"># Create another sequence</span></span>
@@ -438,27 +436,187 @@ Pablo Gomez
 - <code>lengt.out</code></p>
 </div>
 </div>
+</section>
+<section id="todays-schedule" class="slide level2" data-background-image="img/bg.png">
+<h2>Today’s schedule</h2>
+<p><br></p>
+
+<img data-src="img/2a_Schedule.png" width="350" class="r-stretch"></section>
+<section id="r-basics" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">R basics</span></h2>
+<p>R is like a calculator, we can make mathematical operations, for example:</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1|2|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>x <span class="ot">=</span> <span class="dv">2</span> <span class="co"># create a new object with the = operator</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># create a new object with the &lt;- operator</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>x <span class="sc">+</span> y <span class="co"># make a operation with the objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+</section>
+<section id="vectors-in-r" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Vectors in R</span></h2>
+<p>You can store more than one value using vectors, to create a vector of numbers we use <code>c()</code>.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|1|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>) <span class="co"># create a sequence form 5 to 10</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>y <span class="ot">=</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">10</span> <span class="co"># create the same sequence but with a different approach</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>x <span class="sc">==</span> y <span class="co"># ask R if the objects have the same information</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p><em>Using the keys “alt” + “-” will automatically add the operator <code>&lt;-</code>.</em></p>
+</div>
+</section>
+<section id="vector-operations" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Vector operations</span></h2>
+<p>When we have a vector, we can ask R specific values inside an object by using the operator <code>[ ]</code> and specifying which ones we want.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5  6  7  8  9 10</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Here we ask the 3rd value from our sequence</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>x[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="vector-operations-1" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Vector operations</span></h2>
+<p>When we have a vector, we can ask R specific values inside an object by using the operator <code>[ ]</code> and specifying which ones we want.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>x[<span class="dv">3</span>] <span class="sc">*</span> y[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 63</code></pre>
+</div>
+</div>
+</section>
+<section id="functions" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Functions</span></h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># To get the sum of a vector of numbers inside an object we use sum()</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">sum</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 45</code></pre>
+</div>
+</div>
+</section>
+<section id="functions-1" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Functions</span></h2>
+<p>We can put functions inside function, for example, to get <span class="math inline">\(\sqrt{\sum_1^n x}\)</span> the square root of a sum of the numbers in x we can use:</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.708204</code></pre>
+</div>
+</div>
+</section>
+<section id="making-functions" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Making functions</span></h2>
+<p>The following function has only one argument which is a name (string) and just pastes some text before and after:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>F1 <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">paste</span>(<span class="st">"Hola"</span>, name, <span class="st">"! welcome to the R world (: !"</span>) <span class="co"># paste the name with some text</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>}</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># Testing the function (Put your name)</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="fu">F1</span>(<span class="at">name =</span> <span class="st">"Pablo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hola Pablo ! welcome to the R world (: !"</code></pre>
+</div>
+</div>
+</section>
+<section id="remember-this" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Remember this?</span></h2>
+<p><span class="math display">\[\sqrt{\sum_1^n x}\]</span></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="introducing-the-pipes" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Introducing the pipes <code>%&gt;%</code></span></h2>
+<p><em>Pipes</em> (<code>%&gt;%</code>), can connect several functions to an object.</p>
+<div class="fragment">
+<p>For example, if we want to execute a function <code>F1()</code> followed by another function <code>F2()</code> for the object <code>x</code>:</p>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">F2</span>(<span class="fu">F1</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>is equivalent to:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">F1</span>() <span class="sc">%&gt;%</span> <span class="fu">F2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="for-example" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">For example</span></h2>
+<p><span class="math display">\[\sqrt{\sum_1^n x}\]</span></p>
+<p>Instead of this:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>We can write it like this:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">sum</span>() <span class="sc">%&gt;%</span> <span class="fu">sqrt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="for-example-1" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">For example</span></h2>
+<p>Instead of this:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>We can write this:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="for-example-2" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">For example</span></h2>
+<p>Instead of this:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can write this:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> <span class="co"># This is the movement data set</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span> <span class="co"># Group by origin</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># Count the number of observations</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig) <span class="co"># Rename the variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br> And we can break down the code easier!</p>
 <div class="footer footer-default">
 <p><a href="https://cadms-ucd.github.io/DiseaseModeling/">Workshop homepage</a></p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2a_Visualzation_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="2a_Visualzation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="2a_Viz_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

@@ -1,0 +1,254 @@
+---
+title: "R syntax and Data visualization"
+author: "Pablo Gomez"
+format: 
+  revealjs:
+    theme: [dark, custom.scss]
+    footer: "[Workshop homepage](https://cadms-ucd.github.io/DiseaseModeling/)"
+editor: visual
+title-slide-attributes:
+    data-background-image: img/bg_title.png
+---
+
+## [Review]{style="color:black;"} {background-image="img/bg_2.png"}
+
+```{r, echo = F}
+knitr::opts_chunk$set(warning = F, message = F, echo = T)
+library(dplyr); library(kableExtra)
+```
+
+```{r echo=T}
+x <- seq(from = 5, to = 23, length.out = 10) # create a sequence of numbers
+y <- seq(from = 0.1, to = 0.78, length.out = 10) # Create another sequence
+
+mean(x*y) # Get the mean of the multiplication
+```
+
+::: columns
+::: {.column with="30%"}
+Objects:\
+- x\
+- y
+:::
+
+::: {.column with="30%"}
+Operators:\
+- `*`\
+- `<-`
+:::
+:::
+
+::: columns
+::: {.column with="30%"}
+Functions:\
+- `seq()`\
+- `mean()`
+:::
+
+::: {.column with="30%"}
+Arguments:\
+- `from`\
+- `to`\
+- `lengt.out`
+:::
+:::
+
+## Today's schedule {background-image="img/bg.png"}
+
+<br/>
+
+![](img/2a_Schedule.png){width="350"}
+
+## [R basics]{style="color:black;"} {background-image="img/bg_2.png"}
+
+R is like a calculator, we can make mathematical operations, for example:
+
+<br/>
+
+```{r}
+#| code-line-numbers: "|1|2|3"
+x = 2 # create a new object with the = operator
+y <- 2 # create a new object with the <- operator
+x + y # make a operation with the objects
+```
+
+## [Vectors in R]{style="color:black;"} {background-image="img/bg_2.png"}
+
+You can store more than one value using vectors, to create a vector of numbers we use `c()`.
+
+<br/>
+
+```{r vectors}
+#| code-line-numbers: "|1|"
+x <- c(5, 6, 7, 8, 9, 10) # create a sequence form 5 to 10
+y = 5:10 # create the same sequence but with a different approach
+x == y # ask R if the objects have the same information
+```
+
+. . .
+
+<br/>
+
+*Using the keys "alt" + "-" will automatically add the operator `<-`.*
+
+## [Vector operations]{style="color:black;"} {background-image="img/bg_2.png"}
+
+When we have a vector, we can ask R specific values inside an object by using the operator `[ ]` and specifying which ones we want.
+
+<br/>
+
+```{r}
+x
+```
+
+<br/>
+
+. . .
+
+```{r vector operations}
+# Here we ask the 3rd value from our sequence
+x[3]
+```
+
+## [Vector operations]{style="color:black;"} {background-image="img/bg_2.png"}
+
+When we have a vector, we can ask R specific values inside an object by using the operator `[ ]` and specifying which ones we want.
+
+<br/>
+
+```{r}
+x
+y
+```
+
+<br/>
+
+. . .
+
+
+```{r vector operations 2}
+# Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence
+x[3] * y[5]
+```
+
+## [Functions]{style="color:black;"} {background-image="img/bg_2.png"}
+
+<br/>
+
+```{r functions}
+# To get the sum of a vector of numbers inside an object we use sum()
+sum(x)
+```
+
+## [Functions]{style="color:black;"} {background-image="img/bg_2.png"}
+
+We can put functions inside function, for example, to get $\sqrt{\sum_1^n x}$ the square root of a sum of the numbers in x we can use:
+
+<br/>
+
+```{r nested functions}
+sqrt(sum(x))
+```
+
+## [Making functions]{style="color:black;"} {background-image="img/bg_2.png"}
+
+The following function has only one argument which is a name (string) and just pastes some text before and after:
+
+```{r creating a function}
+F1 <- function(name){
+  paste("Hola", name, "! welcome to the R world (: !") # paste the name with some text
+}
+
+# Testing the function (Put your name)
+F1(name = "Pablo")
+```
+
+## [Remember this?]{style="color:black;"} {background-image="img/bg_2.png"}
+
+$$\sqrt{\sum_1^n x}$$
+
+``` r
+sqrt(sum(x))
+```
+
+## [Introducing the pipes `%>%`]{style="color:black;"} {background-image="img/bg_2.png"}
+
+*Pipes* (`%>%`), can connect several functions to an object.
+
+. . .
+
+For example, if we want to execute a function `F1()` followed by another function `F2()` for the object `x`:
+
+. . .
+
+``` r
+F2(F1(x))
+```
+
+. . .
+
+is equivalent to:
+
+``` r
+x %>% F1() %>% F2()
+```
+
+## [For example]{style="color:black;"} {background-image="img/bg_2.png"}
+
+$$\sqrt{\sum_1^n x}$$
+
+Instead of this:
+
+``` r
+sqrt(sum(x))
+```
+
+. . .
+
+We can write it like this:
+
+``` r
+x %>% sum() %>% sqrt()
+```
+
+## [For example]{style="color:black;"} {background-image="img/bg_2.png"}
+
+Instead of this:
+
+``` r
+# Get the number of outgoing and incoming shipments 
+Out <- rename(summarise(group_by(mov, id_orig), Outgoing = n()), id = id_orig)
+```
+
+. . .
+
+We can write this:
+
+``` r
+# Get the number of outgoing and incoming shipments 
+Out <- mov %>% 
+  group_by(id_orig) %>%
+  summarise(Outgoing = n()) %>%
+  rename(id = id_orig)
+```
+
+## [For example]{style="color:black;"} {background-image="img/bg_2.png"}
+
+Instead of this:
+
+``` r
+# Get the number of outgoing and incoming shipments 
+Out <- rename(summarise(group_by(mov, id_orig), Outgoing = n()), id = id_orig)
+```
+
+We can write this:
+
+``` r
+# Get the number of outgoing and incoming shipments 
+Out <- mov %>% # This is the movement data set
+  group_by(id_orig) %>% # Group by origin
+  summarise(Outgoing = n()) %>% # Count the number of observations
+  rename(id = id_orig) # Rename the variable
+```
+
+<br/> And we can break down the code easier!
