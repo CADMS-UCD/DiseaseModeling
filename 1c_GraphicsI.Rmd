@@ -243,6 +243,9 @@ PRRS %>%
   theme_classic()
 ```
 
+# Exporting plots
+
+# Interactive figures
 
 
 ------------------------------------------------------------------------

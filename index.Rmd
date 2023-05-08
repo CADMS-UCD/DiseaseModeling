@@ -32,7 +32,6 @@ No software needs to be installed for this workshop, all the exercises will be d
 -   Integrate geospatial data in the analysis and visualization.
 -   Get a crash course in reproducible research.
 -   Introduce some concepts from network theory.\
-    <!-- - Identify appropriate statistical test to use for data analysis. -->
     
 At the end of this workshop you will be able to use your own R to process your data and generate visualizations such as the following:
 
@@ -87,11 +86,11 @@ data.frame(
     c('Introduction to R', '', '', '', '', '', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Graphics in R'), 'html',
     link = c('', '', '', '', '', '','1a_Intro_RstudioMarkdown.html', '1b_RandTidyverse.html', '1c_GraphicsI.html')
   ),
-  D02 = c('Geographical Information systems','Introduction to geographical information systems', 'Vectors and rasters', 'Break', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography', ''),
-  # D02 = cell_spec(
-  #   c('Geographical Information systems','Introduction to geographical information systems', 'Vectors and rasters', 'Break', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography', ''), 'html',
-  #   link = c('', '', '', '', '', '', '', '', '')
-  # ),
+  # D02 = c('Geographical Information systems','Introduction to geographical information systems', 'Vectors and rasters', 'Break', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography', ''),
+  D02 = cell_spec(
+    c('Geographical Information systems','R syntax and the tidyverse', 'Graphics in R', 'Break', 'Vectors and rasters', 'Lunch', 'Manipulating spatial objects', 'Cartography', ''), 'html',
+    link = c('', '1b_RandTidyverse.html', '1c_GraphicsI.html', '', '', '', '', '', '')
+  ),
   D03 = c('Network Analysis','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
   # D03 = cell_spec(
   #   c('Network Analysis','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
@@ -157,6 +156,7 @@ The data used for this workshop is contained in the package `STNet`. To install 
     folder](https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e),
     we will use this folder to provide some workshop materials such as
     code, data, or other resources.
+-   [R bloggers](https://www.r-bloggers.com), Website that shares tutorials and posts from different contributors.
 
 <!-- # Post workshop survey -->
 
