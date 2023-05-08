@@ -1,0 +1,52 @@
+---
+title: "R syntax and Data visualization"
+author: "Pablo Gomez"
+format: 
+  revealjs:
+    theme: [dark, custom.scss]
+editor: visual
+title-slide-attributes:
+    data-background-image: img/bg_title.png
+---
+
+# R syntax
+
+## [Review]{style="color:black;"} {background-color="black" background-image="img/bg_2.png"}
+
+```{r echo=T}
+x <- seq(from = 5, to = 23, length.out = 10) # create a sequence of numbers
+y <- seq(from = 0.1, to = 0.78, length.out = 10) # Create another sequence
+
+mean(x*y) # Get the mean of the multiplication
+```
+
+
+::: columns
+::: {.column with="30%"}
+Objects:\
+- x\
+- y
+:::
+
+::: {.column with="30%"}
+Operators:\
+- `*`\
+- `<-`
+:::
+:::
+
+
+::: columns
+::: {.column with="30%"}
+Functions:\
+- `seq()`\
+- `mean()`
+:::
+
+::: {.column with="30%"}
+Arguments:\
+- `from`\
+- `to`\
+- `lengt.out`
+:::
+:::

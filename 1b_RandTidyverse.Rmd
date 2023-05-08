@@ -156,7 +156,7 @@ Download the excel file from this [link](https://ucdavis.app.box.com/folder/1747
 *Suggestion:* Sometimes when we want to use only one function from a library, we can just write the name of the library followed by the operator `::` and the name of the function, for example: `package::function()`. This way we won't have to load the whole library.  
 
 ```{r}
-# If we dont have the library installed, we use:
+# If we don't have the library installed, we use:
 # install.packages("readxl")
 
 # Import the excel file

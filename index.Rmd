@@ -84,11 +84,11 @@ data.frame(
   # D01 = c('Introduction to R', '', '', '', '', '', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Graphics in R'),
   D01 = cell_spec(
     c('Introduction to R', '', '', '', '', '', 'Intro to R studio and Markdown', 'R syntax and the tidyverse', 'Graphics in R'), 'html',
-    link = c('', '', '', '', '', '','1a_Intro_RstudioMarkdown.html', '1b_RandTidyverse.html', '1c_GraphicsI.html')
+    link = c('slides/1a_Intro.html', '', '', '', '', '','1a_Intro_RstudioMarkdown.html', '1b_RandTidyverse.html', '1c_GraphicsI.html')
   ),
   # D02 = c('Geographical Information systems','Introduction to geographical information systems', 'Vectors and rasters', 'Break', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography', ''),
   D02 = cell_spec(
-    c('Geographical Information systems','R syntax and the tidyverse', 'Graphics in R', 'Break', 'Vectors and rasters', 'Lunch', 'Manipulating spatial objects', 'Cartography', ''), 'html',
+    c('Geographical Information systems','R syntax and the tidyverse', 'Graphics in R', 'Break', 'Vectors and rasters', 'Lunch', 'Vectors and rasters', 'Cartography', ''), 'html',
     link = c('', '1b_RandTidyverse.html', '1c_GraphicsI.html', '', '', '', '', '', '')
   ),
   D03 = c('Network Analysis','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
