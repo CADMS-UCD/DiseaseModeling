@@ -382,6 +382,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <script src="2a_Viz_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="2a_Viz_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -482,6 +485,7 @@ Pablo Gomez
 <pre><code>[1]  5  6  7  8  9 10</code></pre>
 </div>
 </div>
+<p><br></p>
 <div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Here we ask the 3rd value from our sequence</span></span>
@@ -497,10 +501,23 @@ Pablo Gomez
 <p>When we have a vector, we can ask R specific values inside an object by using the operator <code>[ ]</code> and specifying which ones we want.</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>x[<span class="dv">3</span>] <span class="sc">*</span> y[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5  6  7  8  9 10</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>x[<span class="dv">3</span>] <span class="sc">*</span> y[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 63</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -508,8 +525,8 @@ Pablo Gomez
 <h2><span style="color:black;">Functions</span></h2>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># To get the sum of a vector of numbers inside an object we use sum()</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">sum</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># To get the sum of a vector of numbers inside an object we use sum()</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">sum</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 45</code></pre>
 </div>
@@ -520,7 +537,7 @@ Pablo Gomez
 <p>We can put functions inside function, for example, to get <span class="math inline">\(\sqrt{\sum_1^n x}\)</span> the square root of a sum of the numbers in x we can use:</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.708204</code></pre>
 </div>
@@ -530,12 +547,12 @@ Pablo Gomez
 <h2><span style="color:black;">Making functions</span></h2>
 <p>The following function has only one argument which is a name (string) and just pastes some text before and after:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>F1 <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">paste</span>(<span class="st">"Hola"</span>, name, <span class="st">"! welcome to the R world (: !"</span>) <span class="co"># paste the name with some text</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>}</span>
-<span id="cb17-4"><a href="#cb17-4"></a></span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># Testing the function (Put your name)</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="fu">F1</span>(<span class="at">name =</span> <span class="st">"Pablo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>F1 <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">paste</span>(<span class="st">"Hola"</span>, name, <span class="st">"! welcome to the R world (: !"</span>) <span class="co"># paste the name with some text</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>}</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co"># Testing the function (Put your name)</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="fu">F1</span>(<span class="at">name =</span> <span class="st">"Pablo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Hola Pablo ! welcome to the R world (: !"</code></pre>
 </div>
@@ -544,7 +561,7 @@ Pablo Gomez
 <section id="remember-this" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">Remember this?</span></h2>
 <p><span class="math display">\[\sqrt{\sum_1^n x}\]</span></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="introducing-the-pipes" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">Introducing the pipes <code>%&gt;%</code></span></h2>
@@ -553,49 +570,655 @@ Pablo Gomez
 <p>For example, if we want to execute a function <code>F1()</code> followed by another function <code>F2()</code> for the object <code>x</code>:</p>
 </div>
 <div class="fragment">
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">F2</span>(<span class="fu">F1</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">F2</span>(<span class="fu">F1</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>is equivalent to:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">F1</span>() <span class="sc">%&gt;%</span> <span class="fu">F2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">F1</span>() <span class="sc">%&gt;%</span> <span class="fu">F2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="for-example" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">For example</span></h2>
 <p><span class="math display">\[\sqrt{\sum_1^n x}\]</span></p>
 <p>Instead of this:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>We can write it like this:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">sum</span>() <span class="sc">%&gt;%</span> <span class="fu">sqrt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">sum</span>() <span class="sc">%&gt;%</span> <span class="fu">sqrt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="for-example-1" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">For example</span></h2>
 <p>Instead of this:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>We can write this:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> </span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="for-example-2" class="slide level2" data-background-image="img/bg_2.png">
 <h2><span style="color:black;">For example</span></h2>
 <p>Instead of this:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>Out <span class="ot">&lt;-</span> <span class="fu">rename</span>(<span class="fu">summarise</span>(<span class="fu">group_by</span>(mov, id_orig), <span class="at">Outgoing =</span> <span class="fu">n</span>()), <span class="at">id =</span> id_orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can write this:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> <span class="co"># This is the movement data set</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span> <span class="co"># Group by origin</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># Count the number of observations</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig) <span class="co"># Rename the variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Get the number of outgoing and incoming shipments </span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>Out <span class="ot">&lt;-</span> mov <span class="sc">%&gt;%</span> <span class="co"># This is the movement data set</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">group_by</span>(id_orig) <span class="sc">%&gt;%</span> <span class="co"># Group by origin</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">summarise</span>(<span class="at">Outgoing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># Count the number of observations</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">rename</span>(<span class="at">id =</span> id_orig) <span class="co"># Rename the variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br> And we can break down the code easier!</p>
+</section>
+<section id="its-lab-time" class="title-slide slide level1 center">
+<h1><a href="https://cadms-ucd.github.io/DiseaseModeling/1b_RandTidyverse.html">It’s Lab time!</a></h1>
+
+</section>
+
+<section>
+<section id="lets-use-some-data" class="title-slide slide level1 center" data-background-image="img/bg_title.png">
+<h1>Let’s use some Data!</h1>
+
+</section>
+<section id="importing-data" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Importing data</span></h2>
+<p>Download the excel file from this <a href="https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv">link</a>. It’s not necessary to have a Box account.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Import the excel file</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>PRRS <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"Data/PRRS.xlsx"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3"></a>PRRS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> Sex </th>
+   <th style="text-align:right;"> Age </th>
+   <th style="text-align:right;"> OtherSpecies </th>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:left;"> farm_type </th>
+   <th style="text-align:left;"> County </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="reducing-the-data" class="slide level2" data-background-image="img/bg.png" data-body-color="black">
+<h2>Reducing the data</h2>
+<p><br></p>
+<p><span class="black">Sometimes we want to select specific columns and rows on our data to reduce the dimensionality, for this we can use the functions:</span></p>
+<ul>
+<li><code>select()</code> <span class="black">to select specific <em>columns</em></span></li>
+<li><code>slice()</code> <span class="black">to select specific <em>rows</em> based on position</span></li>
+<li><code>filter()</code> <span class="black">to select specific <em>rows</em> based on a condition</span></li>
+</ul>
+</section>
+<section id="selecting-specific-columns" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Selecting specific columns</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>PRRS <span class="sc">%&gt;%</span>  <span class="co"># the name of our data</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">select</span>(Result, farm_type) <span class="co"># we want to select only the columns Result and farm_type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> farm_type </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="selecting-specific-columns-1" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Selecting specific columns</span></h2>
+<p>We can also specify which columns we DON’T want to show in our data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>PRRS <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>Age, <span class="sc">-</span>id) <span class="co"># with a '-' before the name we will exclude the column from the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> Sex </th>
+   <th style="text-align:right;"> OtherSpecies </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:left;"> farm_type </th>
+   <th style="text-align:left;"> County </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="filtering-specific-rows" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Filtering specific rows</span></h2>
+<p>Filtering only the observations from boar studs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>PRRS <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">filter</span>(farm_type <span class="sc">==</span> <span class="st">'boar studs'</span>) <span class="co"># we will use the equals to operator for this</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> Sex </th>
+   <th style="text-align:right;"> Age </th>
+   <th style="text-align:right;"> OtherSpecies </th>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:left;"> farm_type </th>
+   <th style="text-align:left;"> County </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> M </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wild Woods Farm </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:left;"> Johnson </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> M </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wild Woods Farm </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:left;"> Johnson </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wild Woods Farm </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:left;"> Johnson </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wild Woods Farm </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:left;"> Johnson </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wild Woods Farm </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:left;"> Johnson </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="creating-variables" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Creating variables</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Creating a new variable</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>PRRS <span class="sc">%&gt;%</span> <span class="co"># name of the data set</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">mutate</span>( <span class="co"># mutate is the function we sue to create new variables</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="at">SowFarm =</span> <span class="fu">ifelse</span>(farm_type <span class="sc">==</span> <span class="st">'sow farm'</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># we will create a binary variable where 1 = sow farm, 0 = Any other farm type</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> Sex </th>
+   <th style="text-align:right;"> Age </th>
+   <th style="text-align:right;"> OtherSpecies </th>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:left;"> farm_type </th>
+   <th style="text-align:left;"> County </th>
+   <th style="text-align:right;"> SowFarm </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:left;"> Armstrong Research Farm </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:left;"> Pottawattamie </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="grouping-the-data" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Grouping the data</span></h2>
+<p>We can calculate different statistics by group. For example lets calculate the mean and standard deviation of the age by Result and Sex:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>PRRS <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">group_by</span>(Result, Sex) <span class="sc">%&gt;%</span> <span class="co"># The groups used for the data</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">summarise</span>( <span class="co"># the function summarise calculates statistics by the defined groups</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>    <span class="at">meanAge =</span> <span class="fu">mean</span>(Age), <span class="co"># Calculate the mean age</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a>    <span class="at">sdAge =</span> <span class="fu">sd</span>(Age) <span class="co"># Calculate the standard deviation</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Result </th>
+   <th style="text-align:left;"> Sex </th>
+   <th style="text-align:right;"> meanAge </th>
+   <th style="text-align:right;"> sdAge </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 39.67300 </td>
+   <td style="text-align:right;"> 24.82636 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> M </td>
+   <td style="text-align:right;"> 22.39357 </td>
+   <td style="text-align:right;"> 16.67979 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 23.61135 </td>
+   <td style="text-align:right;"> 19.79150 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> M </td>
+   <td style="text-align:right;"> 15.10870 </td>
+   <td style="text-align:right;"> 10.30037 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="joining-data-sets" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Joining data sets</span></h2>
+<p>Sometimes we have different data sets that have variables in common and we want to integrate them into a single data set for further analysis.</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="joining-data-sets-1" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Joining data sets</span></h2>
+<p>Farms:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:right;"> lat </th>
+   <th style="text-align:right;"> long </th>
+   <th style="text-align:left;"> farm_type </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Iowa Select Farms Inc </td>
+   <td style="text-align:right;"> 42.50489 </td>
+   <td style="text-align:right;"> -93.26323 </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Stanley Martins Fleckvieh Farms </td>
+   <td style="text-align:right;"> 43.08261 </td>
+   <td style="text-align:right;"> -91.56682 </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Centrum Valley Farms </td>
+   <td style="text-align:right;"> 42.66331 </td>
+   <td style="text-align:right;"> -93.63630 </td>
+   <td style="text-align:left;"> nursery </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> Hilltop Farms fresh produce </td>
+   <td style="text-align:right;"> 41.71651 </td>
+   <td style="text-align:right;"> -93.90491 </td>
+   <td style="text-align:left;"> sow farm </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> Hog Slat Inc. </td>
+   <td style="text-align:right;"> 42.25929 </td>
+   <td style="text-align:right;"> -91.15566 </td>
+   <td style="text-align:left;"> GDU </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="joining-data-sets-2" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Joining data sets</span></h2>
+<p>Movements:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>Out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:right;"> Outgoing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 33 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 11 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="joining-data-sets-3" class="slide level2" data-background-image="img/bg_2.png">
+<h2><span style="color:black;">Joining data sets</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Joining the two datasets</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>nodes <span class="ot">&lt;-</span> nodes <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">left_join</span>(Out, <span class="at">by =</span><span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-material-dark lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> name </th>
+   <th style="text-align:right;"> lat </th>
+   <th style="text-align:right;"> long </th>
+   <th style="text-align:left;"> farm_type </th>
+   <th style="text-align:right;"> Outgoing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Iowa Select Farms Inc </td>
+   <td style="text-align:right;"> 42.50489 </td>
+   <td style="text-align:right;"> -93.26323 </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Stanley Martins Fleckvieh Farms </td>
+   <td style="text-align:right;"> 43.08261 </td>
+   <td style="text-align:right;"> -91.56682 </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Centrum Valley Farms </td>
+   <td style="text-align:right;"> 42.66331 </td>
+   <td style="text-align:right;"> -93.63630 </td>
+   <td style="text-align:left;"> nursery </td>
+   <td style="text-align:right;"> 13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> Hilltop Farms fresh produce </td>
+   <td style="text-align:right;"> 41.71651 </td>
+   <td style="text-align:right;"> -93.90491 </td>
+   <td style="text-align:left;"> sow farm </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> Hog Slat Inc. </td>
+   <td style="text-align:right;"> 42.25929 </td>
+   <td style="text-align:right;"> -91.15566 </td>
+   <td style="text-align:left;"> GDU </td>
+   <td style="text-align:right;"> 33 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section></section>
+<section id="back-to-the-excercise" class="title-slide slide level1 center">
+<h1><a href="https://cadms-ucd.github.io/DiseaseModeling/1b_RandTidyverse.html">Back to the excercise!</a></h1>
 <div class="footer footer-default">
 <p><a href="https://cadms-ucd.github.io/DiseaseModeling/">Workshop homepage</a></p>
 </div>

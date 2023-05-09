@@ -36,6 +36,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -388,17 +395,21 @@ div.tocify {
 
 
 <p>We will continue using the data set from the previous section to
-introduce some basics of data visualization. If starting a new session,
-make sure to load the data, otherwise just make sure the data is in your
-environment.</p>
-<pre class="r"><code># Import the file
-PRRS &lt;- readxl::read_xlsx(&quot;Data/PRRS.xlsx&quot;)
-nodes &lt;- read.csv(&#39;Data/nodes.csv&#39;)
-mov &lt;- read.csv(&#39;Data/network.csv&#39;)
-
-# Load the libraries
+introduce some basics of data visualization. Some libraries can include
+data sets that once you install the library you can use. In this case we
+will use data from the <code>STNet</code> library, if you dont have it
+installed yet make sure you do by using:</p>
+<pre class="r"><code># Install STNet from github
+devtools::install_github(&#39;spablotemporal/STNet&#39;)</code></pre>
+<pre class="r"><code># Load the libraries
 library(ggplot2) # for graphics
-library(dplyr) # For data manipulation</code></pre>
+library(dplyr) # For data manipulation
+library(STNet)
+
+# loading the data from the package
+farms &lt;- STNet::SwineFarms
+PRRS &lt;- STNet::PRRS
+mov &lt;- STNet::SwineMov</code></pre>
 <div id="plots-in-r" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Plots in R</h1>
 <p>By default R already has a set of functions to create a variety of
@@ -477,7 +488,10 @@ class="section level2" number="2.2">
 <pre class="r"><code>figures$bars &lt;- PRRS %&gt;% 
   count(farm_type) %&gt;% 
   ggplot() +
-  geom_bar(aes(x = farm_type, y = n), stat = &#39;identity&#39;)
+  geom_bar(aes(
+    x = farm_type, # X axis
+    y = n # Y axis
+  ), stat = &#39;identity&#39;) # type of barplot
 
 figures$bars</code></pre>
 <p><img src="1c_GraphicsI_files/figure-html/barplots-1.png" width="672" /></p>
@@ -495,12 +509,12 @@ We can achieve the same result in different ways. The first one is
 better when we have our variables in the same dataset, and the second
 one when we have data from different objects. (the length of the two
 vectors has to be the same).</p>
-<pre class="r"><code>figures$scatter &lt;- nodes %&gt;% # first we start with the name of our data.frame
+<pre class="r"><code>figures$scatter &lt;- farms %&gt;% # first we start with the name of our data.frame
   ggplot() + # then we call ggplot
-  geom_point(aes(Outgoing, Incoming)) # and we add the first layer, which is the points
+  geom_point(aes(x = outgoing, y = incoming)) # and we add layer for points
 
 figures$scatter</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 </div>
 <div id="time-series" class="section level1" number="4">
@@ -520,11 +534,10 @@ as any other variable.</p>
 <pre class="r"><code>figures$timeseries &lt;- mov %&gt;% 
   count(week) %&gt;% 
   ggplot() +
-  geom_line(aes(x = week, y = n)) +
-  labs(title = &#39;Movements per week&#39;, x = &#39;Date&#39;, y = &quot;Number of movements&quot;)
+  geom_line(aes(x = week, y = n))
 
 figures$timeseries</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="arranging-the-plots-in-a-layout" class="section level1"
 number="5">
@@ -535,24 +548,87 @@ with our figures. For this we use the function <code>ggarrange()</code>
 from the ggpubr library.</p>
 <pre class="r"><code>library(ggpubr) # load the library
 ggarrange(plotlist = figures)</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="further-customization" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Further
 customization</h1>
-<div id="other-aesthetics" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Other aesthetics</h2>
+<div id="labels" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Labels</h2>
+<p>Usually we try to avoid spaces when using names for the column names,
+but for our plots this could be not the most straight forward way to
+communicate our analysis, we can set specific labels to make our plots
+more readable and self explanatory. Let’s improve bar plot figure a bit
+more to make it clearer:</p>
+<pre class="r"><code>figures$bars &lt;- PRRS %&gt;% 
+  count(farm_type) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = farm_type, y = n), stat = &#39;identity&#39;) + # type of barplot
+  labs(# We will use the function labs to generate our labels
+    title = &#39;Number of farms by type&#39;,
+    x = &#39;Farm type&#39;,
+    y = &#39;Number of farms&#39;
+  )
+
+figures$bars</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="themes" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Themes</h2>
+<p>ggplot includes the function <code>theme()</code> to define most of
+the aspects of the figure such as the background color, the grid, axes,
+legend, among many others. There is also several predefined themes (all
+start with <code>theme_</code> followed by the name of the theme) that
+you can use, if don’t want to mess with all the arguments from the
+function <code>theme()</code>. For example:</p>
+<pre class="r"><code># all the predefined themes start with theme_
+figures$timeseries &lt;- mov %&gt;% 
+  count(week) %&gt;% 
+  ggplot() +
+  geom_line(aes(x = week, y = n)) +
+  theme_minimal() # We will use the theme minimal
+
+figures$timeseries</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="other-aesthetics" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Other aesthetics</h2>
+<div id="shape" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Shape</h3>
+<p>There are other aesthetics we can define such as color, type of
+point, size, among many others. Lets try changing the point shape for
+one of the plots we previously did:</p>
+<pre class="r"><code>figures$scatter &lt;- farms %&gt;% # the data we are using
+  ggplot() + # we call ggplot
+  geom_point(aes(
+    x = outgoing, # X axis
+    y = incoming, # Y axis
+    shape = farm_type # point shape
+  )) +
+  labs(title = &#39;Movements by farm&#39;) +
+  theme_classic() # now lets try the theme &#39;classic&#39;
+
+figures$scatter</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="color" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Color</h3>
+<p>In the next example we will use the Sex of the animal to color our
+boxplot:</p>
 <pre class="r"><code>PRRS %&gt;% 
   ggplot() + # we call ggplot
   geom_boxplot(aes(y = Age, fill = Sex)) # we add a boxplot layer</code></pre>
 <p><img src="1c_GraphicsI_files/figure-html/fill-1.png" width="672" /></p>
+<p>We can also use the variable to color other parts of the plot such as
+the border:</p>
 <pre class="r"><code>PRRS %&gt;% 
   ggplot() +
   geom_boxplot(aes(y = Age, col = Sex))</code></pre>
 <p><img src="1c_GraphicsI_files/figure-html/col-1.png" width="672" /></p>
+</div>
 <div id="non-aesthetics-customization" class="section level3"
-number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Non aesthetics
+number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Non aesthetics
 customization</h3>
 <p>So far we have added variables inside our <code>aes()</code>
 function, but we can add some arguments outside the <code>aes()</code>
@@ -565,19 +641,21 @@ two groups, but the fill color different per group:</p>
     aes(y = Age, fill = Sex), # This is the normal aesthetics we define
     col = &#39;red&#39; # all aesthetics we define here will be applied to all th ebservations
   ) # we add a boxplot layer</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 </div>
-<div id="colors" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Colors</h2>
+<div id="colors" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Colors</h2>
 <p>To define specific colors for our figure, we can use the function
 <code>scale_*_manual</code> where the * represents the aesthetic we want
 to represent. If we want to use the color for the fill, we would
 use:</p>
-<pre class="r"><code>PRRS %&gt;% 
+<pre class="r"><code>figures$box &lt;- PRRS %&gt;% 
   ggplot() +
   geom_boxplot(aes(y = Age, fill = Sex)) +
-  scale_fill_manual(values = c(&#39;red&#39;, &#39;green&#39;))</code></pre>
+  scale_fill_manual(values = c(&#39;red&#39;, &#39;green&#39;))
+
+figures$box</code></pre>
 <p><img src="1c_GraphicsI_files/figure-html/colors-1.png" width="672" /></p>
 <p>R manages colors in three different ways: by name (i.e: ‘red’), by
 rgb value using the function <code>rgb()</code>
@@ -593,47 +671,82 @@ the colour picker (should be already in your addins toolbar).</p>
 <p><strong>Exercise: </strong> Pick two colors you like and use them to
 create a boxplot of the distribution of age by the test result.</p>
 </div>
-<div id="labels" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Labels</h2>
-<p>Usually we try to avoid spaces when using names for the column names,
-but for our plots this could be not the most straight forward way to
-communicate our analysis, we can set specific labels to make our plots
-more readable and self explanatory. lets improve our figure a bit
-more</p>
-<pre class="r"><code>PRRS %&gt;% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(
-    title = &#39;Distribution of Age by Farm type&#39;,
-    x = &#39;Farm type&#39;,
-    fill = &#39;Farm Type&#39;
-  )</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-</div>
-<div id="themes" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Themes</h2>
-<p>ggplot includes the function <code>theme()</code> to define most of
-the aspects of the figure such as the background color, the grid, axes,
-legend, among many others. There is also several predefined themes that
-you can use, if dont want to mess with all the arguments from the
-function <code>theme()</code>. For example:</p>
-<pre class="r"><code># all the predefined themes start with theme_
-PRRS %&gt;% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(title = &#39;Distribution of Age by Farm type&#39;, x = &#39;Farm type&#39;, fill = &#39;Farm Type&#39;) +
-  theme_minimal()</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-</div>
 </div>
 <div id="facets" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Facets</h1>
-<pre class="r"><code>PRRS %&gt;% 
-  ggplot() +
-  geom_histogram(aes(Age)) +
-  facet_grid(rows = vars(Sex), cols = vars(Result)) +
-  theme_classic()</code></pre>
-<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Facets are a way of stratifying the data based on variables in the
+data set, you can think about it in a similar way we have been using
+groups. To create a stratified plot we can use the function
+<code>facet_grid()</code> which will ask for a variable to go in the
+rows and another for columns:</p>
+<pre class="r"><code>figures$histogram &lt;- PRRS %&gt;% # The data we will use 
+  ggplot() + # we call ggplot
+  geom_histogram(aes(Age)) + # We will create a histogram of the Age
+  facet_grid(
+    rows = vars(Sex), # We will use the Sex variable for rows
+    cols = vars(Result) # We use the Result variable for Columns
+  ) +
+  theme_linedraw() # lets try another theme
+
+figures$histogram</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="exporting-plots" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Exporting plots</h1>
+<p>Now that we have a good mix of different figures, lets export them.
+We can use the function <code>ggsave()</code> to export a high
+definition figure.</p>
+<pre class="r"><code>ggsave(figures$histogram, filename = &#39;myHistogram.png&#39;)</code></pre>
+<div id="more-customization" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> More
+customization</h2>
+<p>You can create more detailed arrangements of figures like i will show
+in the following example:</p>
+<pre class="r"><code>ggarrange( # Funciton to arrange the figures
+  figures$box, figures$scatter, figures$bars, figures$timeseries, # These are the figures I will arrange
+  heights = c(5, 3), # We can define the heights for each of the rows
+  labels = c(&quot;A&quot;,&quot;B&quot;, &quot;C&quot;, &quot;D&quot;) # add a label for each figure
+) %&gt;% 
+  annotate_figure( # Function to annotate the figure
+    top = text_grob( # Top title
+      label = &#39;Distribution of the data&#39;, # Label for title
+      face = &#39;bold&#39;, # Bold letters
+      size = 18 # Size of the title
+    )
+  )</code></pre>
+<p><img src="1c_GraphicsI_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+<div id="interactive-figures" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Interactive
+figures</h1>
+<p>Having static figures is the most common application of graphics in
+R, but R is also capable of making interactive figures that can be used
+in dashboards and other platforms (i.e. shiny, or quarto). There are
+several libraries that allow you to create interactive figures, one of
+the most popular ones is called <code>plotly</code>. The best part of
+plotly is that if you learn how to use ggplot, you can transfer your
+figures to interactive plotly figures pretty much seamesly. Lets try
+that.</p>
+<p>We use the function <code>ggplotly()</code> from the
+<code>plotly</code> library to do that:</p>
+<pre class="r"><code>library(plotly) # laod the plotly library
+# Use the ggplotly function in one of the figures we previouslt created:
+ggplotly(figures$histogram)</code></pre>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d6baf828c2eea81d7915" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-d6baf828c2eea81d7915">{"x":{"data":[{"orientation":"v","width":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180],"y":[67,45,19,25,16,17,8,14,0,9,0,4,0,2,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0],"text":["count:  67<br />Age:   6","count:  45<br />Age:  12","count:  19<br />Age:  18","count:  25<br />Age:  24","count:  16<br />Age:  30","count:  17<br />Age:  36","count:   8<br />Age:  42","count:  14<br />Age:  48","count:   0<br />Age:  54","count:   9<br />Age:  60","count:   0<br />Age:  66","count:   4<br />Age:  72","count:   0<br />Age:  78","count:   2<br />Age:  84","count:   0<br />Age:  90","count:   2<br />Age:  96","count:   0<br />Age: 102","count:   0<br />Age: 108","count:   0<br />Age: 114","count:   1<br />Age: 120","count:   0<br />Age: 126","count:   0<br />Age: 132","count:   0<br />Age: 138","count:   0<br />Age: 144","count:   0<br />Age: 150","count:   0<br />Age: 156","count:   0<br />Age: 162","count:   0<br />Age: 168","count:   0<br />Age: 174","count:   0<br />Age: 180"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180],"y":[53,56,74,106,44,88,32,96,9,75,11,42,4,14,4,16,0,3,0,5,0,2,0,2,0,0,0,0,0,1],"text":["count:  53<br />Age:   6","count:  56<br />Age:  12","count:  74<br />Age:  18","count: 106<br />Age:  24","count:  44<br />Age:  30","count:  88<br />Age:  36","count:  32<br />Age:  42","count:  96<br />Age:  48","count:   9<br />Age:  54","count:  75<br />Age:  60","count:  11<br />Age:  66","count:  42<br />Age:  72","count:   4<br />Age:  78","count:  14<br />Age:  84","count:   4<br />Age:  90","count:  16<br />Age:  96","count:   0<br />Age: 102","count:   3<br />Age: 108","count:   0<br />Age: 114","count:   5<br />Age: 120","count:   0<br />Age: 126","count:   2<br />Age: 132","count:   0<br />Age: 138","count:   2<br />Age: 144","count:   0<br />Age: 150","count:   0<br />Age: 156","count:   0<br />Age: 162","count:   0<br />Age: 168","count:   0<br />Age: 174","count:   1<br />Age: 180"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180],"y":[49,34,22,28,2,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"text":["count:  49<br />Age:   6","count:  34<br />Age:  12","count:  22<br />Age:  18","count:  28<br />Age:  24","count:   2<br />Age:  30","count:   1<br />Age:  36","count:   1<br />Age:  42","count:   0<br />Age:  48","count:   0<br />Age:  54","count:   0<br />Age:  60","count:   0<br />Age:  66","count:   0<br />Age:  72","count:   0<br />Age:  78","count:   0<br />Age:  84","count:   0<br />Age:  90","count:   1<br />Age:  96","count:   0<br />Age: 102","count:   0<br />Age: 108","count:   0<br />Age: 114","count:   0<br />Age: 120","count:   0<br />Age: 126","count:   0<br />Age: 132","count:   0<br />Age: 138","count:   0<br />Age: 144","count:   0<br />Age: 150","count:   0<br />Age: 156","count:   0<br />Age: 162","count:   0<br />Age: 168","count:   0<br />Age: 174","count:   0<br />Age: 180"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180],"y":[30,59,76,43,6,10,3,4,1,4,0,6,1,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"text":["count:  30<br />Age:   6","count:  59<br />Age:  12","count:  76<br />Age:  18","count:  43<br />Age:  24","count:   6<br />Age:  30","count:  10<br />Age:  36","count:   3<br />Age:  42","count:   4<br />Age:  48","count:   1<br />Age:  54","count:   4<br />Age:  60","count:   0<br />Age:  66","count:   6<br />Age:  72","count:   1<br />Age:  78","count:   4<br />Age:  84","count:   2<br />Age:  90","count:   0<br />Age:  96","count:   0<br />Age: 102","count:   0<br />Age: 108","count:   0<br />Age: 114","count:   0<br />Age: 120","count:   0<br />Age: 126","count:   0<br />Age: 132","count:   0<br />Age: 138","count:   0<br />Age: 144","count:   0<br />Age: 150","count:   0<br />Age: 156","count:   0<br />Age: 162","count:   0<br />Age: 168","count:   0<br />Age: 174","count:   0<br />Age: 180"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":37.9178082191781,"r":18.9954337899543,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,0.489128071319852],"automargin":true,"type":"linear","autorange":false,"range":[-6,192],"tickmode":"array","ticktext":["0","50","100","150"],"tickvals":[0,50,100,150],"categoryorder":"array","categoryarray":["0","50","100","150"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(0,0,0,1)","gridwidth":0.066417600664176,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"annotations":[{"text":"Age","x":0.5,"y":0,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis","yshift":-21.9178082191781},{"text":"count","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-27.7625570776256},{"text":"0","x":0.244564035659926,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"1","x":0.755435964340074,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"H         ","x":1,"y":0.757610350076104,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"M         ","x":1,"y":0.242389649923896,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"}],"yaxis":{"domain":[0.515220700152207,1],"automargin":true,"type":"linear","autorange":false,"range":[-5.3,111.3],"tickmode":"array","ticktext":["0","25","50","75","100"],"tickvals":[0,25,50,75,100],"categoryorder":"array","categoryarray":["0","25","50","75","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(0,0,0,1)","gridwidth":0.066417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.489128071319852,"y0":0.515220700152207,"y1":1},{"type":"rect","fillcolor":"rgba(0,0,0,1)","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.489128071319852,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.510871928680148,"x1":1,"y0":0.515220700152207,"y1":1},{"type":"rect","fillcolor":"rgba(0,0,0,1)","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.510871928680148,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"rgba(0,0,0,1)","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.515220700152207,"y1":1,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.489128071319852,"y0":0,"y1":0.484779299847793},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.510871928680148,"x1":1,"y0":0,"y1":0.484779299847793},{"type":"rect","fillcolor":"rgba(0,0,0,1)","line":{"color":"rgba(0,0,0,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0,"y1":0.484779299847793,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[-6,192],"tickmode":"array","ticktext":["0","50","100","150"],"tickvals":[0,50,100,150],"categoryorder":"array","categoryarray":["0","50","100","150"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.510871928680148,1],"gridcolor":"rgba(0,0,0,1)","gridwidth":0.066417600664176,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[-5.3,111.3],"tickmode":"array","ticktext":["0","25","50","75","100"],"tickvals":[0,25,50,75,100],"categoryorder":"array","categoryarray":["0","25","50","75","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.484779299847793],"gridcolor":"rgba(0,0,0,1)","gridwidth":0.066417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"6a4a6b3e46eb":{"x":{},"type":"bar"}},"cur_data":"6a4a6b3e46eb","visdat":{"6a4a6b3e46eb":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="other-type-of-figures" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Other type of
+figures</h1>
+<p>Here we did not covered all the different visualization tools
+available in R, there are several other type of figures you can do. A
+good resource for this is the <a href="https://r-graph-gallery.com"
+class="uri">https://r-graph-gallery.com</a>. this is a website that has
+multiple categories of figures and code to reproduce them all. Let’s
+take some time to explore the different types of visualizations
+available. Go to the website and explore on your own for a little
+bit.</p>
 <hr />
 <p><em>This lab has been developed with contributions from: <a
 href="https://www.spablo-temporal.network">Jose Pablo

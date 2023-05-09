@@ -13,17 +13,24 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
-We will continue using the data set from the previous section to introduce some basics of data visualization. If starting a new session, make sure to load the data, otherwise just make sure the data is in your environment.
+We will continue using the data set from the previous section to introduce some basics of data visualization. Some libraries can include data sets that once you install the library you can use. In this case we will use data from the `STNet` library, if you dont have it installed yet make sure you do by using:
+
+```{r eval = F}
+# Install STNet from github
+devtools::install_github('spablotemporal/STNet')
+```
+
 
 ```{r}
-# Import the file
-PRRS <- readxl::read_xlsx("Data/PRRS.xlsx")
-nodes <- read.csv('Data/nodes.csv')
-mov <- read.csv('Data/network.csv')
-
 # Load the libraries
 library(ggplot2) # for graphics
 library(dplyr) # For data manipulation
+library(STNet)
+
+# loading the data from the package
+farms <- STNet::SwineFarms
+PRRS <- STNet::PRRS
+mov <- STNet::SwineMov
 ```
 
 # Plots in R
@@ -96,7 +103,10 @@ figures$box
 figures$bars <- PRRS %>% 
   count(farm_type) %>% 
   ggplot() +
-  geom_bar(aes(x = farm_type, y = n), stat = 'identity')
+  geom_bar(aes(
+    x = farm_type, # X axis
+    y = n # Y axis
+  ), stat = 'identity') # type of barplot
 
 figures$bars
 ```
@@ -109,9 +119,9 @@ This is one of the most popular kind of plots, it is useful to represent relatio
 We can achieve the same result in different ways. The first one is better when we have our variables in the same dataset, and the second one when we have data from different objects. (the length of the two vectors has to be the same).  
 
 ```{r}
-figures$scatter <- nodes %>% # first we start with the name of our data.frame
+figures$scatter <- farms %>% # first we start with the name of our data.frame
   ggplot() + # then we call ggplot
-  geom_point(aes(Outgoing, Incoming)) # and we add the first layer, which is the points
+  geom_point(aes(x = outgoing, y = incoming)) # and we add layer for points
 
 figures$scatter
 ```
@@ -134,8 +144,7 @@ Now that we have our variables in the correct format, we can use it as any other
 figures$timeseries <- mov %>% 
   count(week) %>% 
   ggplot() +
-  geom_line(aes(x = week, y = n)) +
-  labs(title = 'Movements per week', x = 'Date', y = "Number of movements")
+  geom_line(aes(x = week, y = n))
 
 figures$timeseries
 ```
@@ -151,13 +160,70 @@ ggarrange(plotlist = figures)
 
 # Further customization
 
+## Labels
+
+Usually we try to avoid spaces when using names for the column names, but for our plots this could be not the most straight forward way to communicate our analysis, we can set specific labels to make our plots more readable and self explanatory. Let's improve bar plot figure a bit more to make it clearer:
+
+```{r}
+figures$bars <- PRRS %>% 
+  count(farm_type) %>% 
+  ggplot() +
+  geom_bar(aes(x = farm_type, y = n), stat = 'identity') + # type of barplot
+  labs(# We will use the function labs to generate our labels
+    title = 'Number of farms by type',
+    x = 'Farm type',
+    y = 'Number of farms'
+  )
+
+figures$bars
+```
+
+## Themes
+
+ggplot includes the function `theme()` to define most of the aspects of the figure such as the background color, the grid, axes, legend, among many others. There is also several predefined themes (all start with `theme_` followed by the name of the theme) that you can use, if don't want to mess with all the arguments from the function `theme()`. For example:
+
+```{r}
+# all the predefined themes start with theme_
+figures$timeseries <- mov %>% 
+  count(week) %>% 
+  ggplot() +
+  geom_line(aes(x = week, y = n)) +
+  theme_minimal() # We will use the theme minimal
+
+figures$timeseries
+```
+
 ## Other aesthetics
+
+### Shape
+
+There are other aesthetics we can define such as color, type of point, size, among many others. Lets try changing the point shape for one of the plots we previously did:
+
+```{r}
+figures$scatter <- farms %>% # the data we are using
+  ggplot() + # we call ggplot
+  geom_point(aes(
+    x = outgoing, # X axis
+    y = incoming, # Y axis
+    shape = farm_type # point shape
+  )) +
+  labs(title = 'Movements by farm') +
+  theme_classic() # now lets try the theme 'classic'
+
+figures$scatter
+```
+
+### Color
+
+In the next example we will use the Sex of the animal to color our boxplot:
 
 ```{r fill}
 PRRS %>% 
   ggplot() + # we call ggplot
   geom_boxplot(aes(y = Age, fill = Sex)) # we add a boxplot layer
 ```
+
+We can also use the variable to color other parts of the plot such as the border:
 
 ```{r col}
 PRRS %>% 
@@ -183,10 +249,12 @@ PRRS %>%
 To define specific colors for our figure, we can use the function `scale_*_manual` where the * represents the aesthetic we want to represent. If we want to use the color for the fill, we would use:
 
 ```{r colors}
-PRRS %>% 
+figures$box <- PRRS %>% 
   ggplot() +
   geom_boxplot(aes(y = Age, fill = Sex)) +
   scale_fill_manual(values = c('red', 'green'))
+
+figures$box
 ```
 
 
@@ -204,48 +272,66 @@ PRRS %>%
 ```
 
 
-## Labels
-
-Usually we try to avoid spaces when using names for the column names, but for our plots this could be not the most straight forward way to communicate our analysis, we can set specific labels to make our plots more readable and self explanatory. lets improve our figure a bit more
-
-```{r}
-PRRS %>% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(
-    title = 'Distribution of Age by Farm type',
-    x = 'Farm type',
-    fill = 'Farm Type'
-  )
-```
-
-## Themes
-
-ggplot includes the function `theme()` to define most of the aspects of the figure such as the background color, the grid, axes, legend, among many others. There is also several predefined themes that you can use, if dont want to mess with all the arguments from the function `theme()`. For example:
-
-```{r}
-# all the predefined themes start with theme_
-PRRS %>% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(title = 'Distribution of Age by Farm type', x = 'Farm type', fill = 'Farm Type') +
-  theme_minimal()
-```
-
-
 # Facets
 
+Facets are a way of stratifying the data based on variables in the data set, you can think about it in a similar way we have been using groups. To create a stratified plot we can use the function `facet_grid()` which will ask for a variable to go in the rows and another for columns:
+
 ```{r}
-PRRS %>% 
-  ggplot() +
-  geom_histogram(aes(Age)) +
-  facet_grid(rows = vars(Sex), cols = vars(Result)) +
-  theme_classic()
+figures$histogram <- PRRS %>% # The data we will use 
+  ggplot() + # we call ggplot
+  geom_histogram(aes(Age)) + # We will create a histogram of the Age
+  facet_grid(
+    rows = vars(Sex), # We will use the Sex variable for rows
+    cols = vars(Result) # We use the Result variable for Columns
+  ) +
+  theme_linedraw() # lets try another theme
+
+figures$histogram
 ```
 
 # Exporting plots
 
+Now that we have a good mix of different figures, lets export them. We can use the function `ggsave()` to export a high definition figure. 
+
+```{r}
+ggsave(figures$histogram, filename = 'myHistogram.png')
+```
+
+## More customization
+
+You can create more detailed arrangements of figures like i will show in the following example:
+
+```{r}
+ggarrange( # Funciton to arrange the figures
+  figures$box, figures$scatter, figures$bars, figures$timeseries, # These are the figures I will arrange
+  heights = c(5, 3), # We can define the heights for each of the rows
+  labels = c("A","B", "C", "D") # add a label for each figure
+) %>% 
+  annotate_figure( # Function to annotate the figure
+    top = text_grob( # Top title
+      label = 'Distribution of the data', # Label for title
+      face = 'bold', # Bold letters
+      size = 18 # Size of the title
+    )
+  )
+```
+
 # Interactive figures
+
+Having static figures is the most common application of graphics in R, but R is also capable of making interactive figures that can be used in dashboards and other platforms (i.e. shiny, or quarto). There are several libraries that allow you to create interactive figures, one of the most popular ones is called `plotly`. The best part of plotly is that if you learn how to use ggplot, you can transfer your figures to interactive plotly figures pretty much seamesly. Lets try that.  
+
+We use the function `ggplotly()` from the `plotly` library to do that:
+
+```{r}
+library(plotly) # laod the plotly library
+# Use the ggplotly function in one of the figures we previouslt created:
+ggplotly(figures$histogram)
+```
+
+
+# Other type of figures
+
+Here we did not covered all the different visualization tools available in R, there are several other type of figures you can do. A good resource for this is the https://r-graph-gallery.com. this is a website that has multiple categories of figures and code to reproduce them all. Let's take some time to explore the different types of visualizations available. Go to the website and explore on your own for a little bit.
 
 
 ------------------------------------------------------------------------
