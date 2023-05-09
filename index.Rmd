@@ -14,7 +14,6 @@ library(kableExtra); library(dplyr)
 knitr::opts_chunk$set(echo = F)
 ```
 
-
 <img src="img/cadms-left.png" style="width:50%;position:center"/>
 
 # Introduction
@@ -22,18 +21,29 @@ knitr::opts_chunk$set(echo = F)
 In this workshop we will cover basics of R for animal health research.
 Some concepts we cover in this workshop includes data management,
 visualization, introduction to analytical methods and geographical
-information systems. At the end of the workshop, the participants will have a basic understanding of R and geographical information systems. For this workshop we will be using a data set derived from a bovine rabies study done in the south of Mexico in 2016 provided by Alejandro Zaldivar Gomez et. al.  
-No software needs to be installed for this workshop, all the exercises will be done in a web based platform for cloud computing. Please follow [these instructions](0a_R_Intro.html) for setting up your posit.cloud account. All the concepts covered in this workshop are directly transferable to Rstudio for people that prefer to run the exercises locally.
+information systems. At the end of the workshop, the participants will
+have a basic understanding of R and geographical information systems.
+For this workshop we will be using a data set derived from a bovine
+rabies study done in the south of Mexico in 2016 provided by Alejandro
+Zaldivar Gomez et. al.\
+No software needs to be installed for this workshop, all the exercises
+will be done in a web based platform for cloud computing. Please follow
+[these instructions](0a_R_Intro.html) for setting up your posit.cloud
+account. All the concepts covered in this workshop are directly
+transferable to Rstudio for people that prefer to run the exercises
+locally.
 
 # Objectives
 
--   Understand the basic Rstudio ecosystem and R programming language syntax.
+-   Understand the basic Rstudio ecosystem and R programming language
+    syntax.
 -   Use R for data visualization.
 -   Integrate geospatial data in the analysis and visualization.
 -   Get a crash course in reproducible research.
 -   Introduce some concepts from network theory.\
-    
-At the end of this workshop you will be able to use your own R to process your data and generate visualizations such as the following:
+
+At the end of this workshop you will be able to use your own R to
+process your data and generate visualizations such as the following:
 
 <img src="img/0_exampleMap.png" style="width:33%;position:left"/>
 <img src="img/0_exBar.png" style="width:33%;position:center"/>
@@ -95,7 +105,7 @@ data.frame(
   D03 = cell_spec(
     c('Data visualization','Recap from yesterday', 'Graphics in R', 'Break', 'Further customization', 'Lunch', 'Vectors and rasters', 'Cartography', ''),
     'html',
-    link = c('', '', '1d_GraphicsII.html', '', '1d_GraphicsII.html', 'Lunch.html', '', '2a_VectorsRasters', '')
+    link = c('slides/Day-03.html', '', '1d_GraphicsII.html', '', '1d_GraphicsII.html', 'Lunch.html', '', '2a_VectorsRasters', '')
   ),
   D04 = c('Risk assessment', 'Case studies', 'Introduction to Risk assessment', 'Break', 'Risk assessment in R I', 'Lunch', 'Risk assessment in R I II', '', '')
   # D04 = cell_spec(
@@ -113,7 +123,6 @@ data.frame(
   row_spec(1, bold = T, extra_css = "border-bottom: 1px solid") %>%
   row_spec(c(4,6), background = "#F6F5FA", italic = T)
 ```
-
 
 ```{r TT schedule}
 # data.frame(
@@ -141,12 +150,13 @@ data.frame(
 #   row_spec(c(4,6, 8), background = "#F6F5FA", italic = T)
 ```
 
-
 ------------------------------------------------------------------------
 
 ## Data
 
-The data used for this workshop is contained in the package `STNet`. To install `STNet` we need the package `devtools` and use the command `devtools::install_github("spablotemporal/STNet")`.
+The data used for this workshop is contained in the package `STNet`. To
+install `STNet` we need the package `devtools` and use the command
+`devtools::install_github("spablotemporal/STNet")`.
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -156,8 +166,15 @@ The data used for this workshop is contained in the package `STNet`. To install 
     folder](https://ucdavis.box.com/s/65bg7mu85kblruofbkf481ontvuw128e),
     we will use this folder to provide some workshop materials such as
     code, data, or other resources.
--   [R bloggers](https://www.r-bloggers.com), Website that shares tutorials and posts from different contributors.
--   [Desktop installation instructions](https://www.spablo-temporal.network/ShinyWorkshop/0a_R_Intro.html)
+-   [R bloggers](https://www.r-bloggers.com), Website that shares
+    tutorials and posts from different contributors.
+-   [Desktop installation
+    instructions](https://www.spablo-temporal.network/ShinyWorkshop/0a_R_Intro.html)
+-   [R cheat
+    sheets](https://posit.co/resources/cheatsheets/?type=posit-cheatsheets/):
+    -   [dplyr](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
+    -   [ggplot2](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
+    -   [markdown](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf)
 
 <!-- # Post workshop survey -->
 

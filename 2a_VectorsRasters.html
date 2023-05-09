@@ -600,40 +600,40 @@ number="2.3">
 <p>We can convert a data.frame to a spatial points if we have the
 coordinates information, lets try with one of the data sets from the
 STNet library:</p>
-<pre class="r"><code>data(&#39;captura&#39;) # we lead the data
+<pre class="r"><code>data(&#39;captures&#39;) # we load the data
 # Lets look at the variables
-head(captura)</code></pre>
-<pre><code>##         NOM_MUN           NOM_LOC     REFUGIO_NOM FECHA_OP YEAR CAPTURADOS
-## 1 Temascaltepec San Pedro Tenayac   Cueva  el Uno 11/06/14 2014          6
-## 2      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/05/05 2005          3
-## 3      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/05/07 2007         30
-## 4      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/03/09 2009          0
-## 5      Tlatlaya  Nuevo Copaltepec La alcantarilla 10/08/10 2010          4
-## 6      Tlatlaya  Nuevo Copaltepec La alcantarilla 16/05/11 2011          4
-##   TRATADOS  LATITUD      LONG
-## 1        6 18.03546 -100.2095
-## 2        2 18.40417 -100.2688
-## 3       29 18.40417 -100.2688
-## 4        0 18.40417 -100.2688
-## 5        3 18.40417 -100.2688
-## 6        3 18.40417 -100.2688</code></pre>
+head(captures)</code></pre>
+<pre><code>##    municipality          location             Loc     date year captures
+## 1 Temascaltepec San Pedro Tenayac   Cueva  el Uno 11/06/14 2014        6
+## 2      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/05/05 2005        3
+## 3      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/05/07 2007       30
+## 4      Tlatlaya  Nuevo Copaltepec La alcantarilla 12/03/09 2009        0
+## 5      Tlatlaya  Nuevo Copaltepec La alcantarilla 10/08/10 2010        4
+## 6      Tlatlaya  Nuevo Copaltepec La alcantarilla 16/05/11 2011        4
+##   treated      lat       lon trap_type
+## 1       6 18.03546 -100.2095         1
+## 2       2 18.40417 -100.2688         1
+## 3      29 18.40417 -100.2688         4
+## 4       0 18.40417 -100.2688         3
+## 5       3 18.40417 -100.2688         1
+## 6       3 18.40417 -100.2688         2</code></pre>
 <p>This data has the column <em>LATITUD</em> and <em>LONG</em>, which
 correspond with x and y for a spatial coordinate. We can use the
 function <code>st_as_sf()</code> to do this:</p>
-<pre class="r"><code>capturaSp &lt;- captura %&gt;% 
+<pre class="r"><code>capturesSp &lt;- captures %&gt;% 
   st_as_sf(
-    coords = c(&#39;LONG&#39;, &#39;LATITUD&#39;), # the names of the variables with the x and y information
+    coords = c(&#39;lon&#39;, &#39;lat&#39;), # the names of the variables with the x and y information
     crs = st_crs(4326) # the CRS for those coordinates
   )
 
 # Lets have a look at our points
-plot(capturaSp$geometry)</code></pre>
+plot(capturesSp$geometry)</code></pre>
 <p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>You will notice that the points by itself does not provides a lot of
 useful information. Lets try to put the points and the polygons in the
 same map:</p>
 <pre class="r"><code>plot(Area$geometry)
-plot(capturaSp$geometry, add = T)</code></pre>
+plot(capturesSp$geometry, add = T)</code></pre>
 <p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Still not pretty enough, we will work more on this later…</p>
 </div>
@@ -645,29 +645,36 @@ information for the points to the polygons by joining based on where
 they intersect, for this we can sue the <code>st_join()</code> function.
 It is important that the two spatial objects are in the same CRS.</p>
 <pre class="r"><code>spJoin &lt;- Area %&gt;% 
-  st_join(capturaSp)
+  st_join(capturesSp)
 
 # Lets examine our object
 head(spJoin)</code></pre>
-<pre><code>## Simple feature collection with 6 features and 13 fields
+<pre><code>## Simple feature collection with 6 features and 14 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
 ## Bounding box:  xmin: -100.5848 ymin: 16.88094 xmax: -98.218 ymax: 18.35471
 ## Geodetic CRS:  WGS 84
-##   CVEGEO CVE_ENT CVE_MUN                  NOMGEO AREA_LCC    ID NOM_MUN NOM_LOC
-## 1  12067      12     067              Tlapehuala  284.696 12067    &lt;NA&gt;    &lt;NA&gt;
-## 2  12043      12     043              Metlatónoc  584.023 12043    &lt;NA&gt;    &lt;NA&gt;
-## 3  12081      12     081               Iliatenco  235.682 12081    &lt;NA&gt;    &lt;NA&gt;
-## 4  12066      12     066      Tlapa de Comonfort  609.030 12066    &lt;NA&gt;    &lt;NA&gt;
-## 5  12078      12     078      Cochoapa el Grande  638.160 12078    &lt;NA&gt;    &lt;NA&gt;
-## 6  12079      12     079 José Joaquín de Herrera  131.977 12079    &lt;NA&gt;    &lt;NA&gt;
-##   REFUGIO_NOM FECHA_OP YEAR CAPTURADOS TRATADOS                       geometry
-## 1        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-100.3237 1...
-## 2        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-98.26956 1...
-## 3        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-98.57511 1...
-## 4        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-98.5618 17...
-## 5        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-98.28944 1...
-## 6        &lt;NA&gt;     &lt;NA&gt; &lt;NA&gt;         NA       NA MULTIPOLYGON (((-98.95271 1...</code></pre>
+##   CVEGEO CVE_ENT CVE_MUN                  NOMGEO AREA_LCC    ID municipality
+## 1  12067      12     067              Tlapehuala  284.696 12067         &lt;NA&gt;
+## 2  12043      12     043              Metlatónoc  584.023 12043         &lt;NA&gt;
+## 3  12081      12     081               Iliatenco  235.682 12081         &lt;NA&gt;
+## 4  12066      12     066      Tlapa de Comonfort  609.030 12066         &lt;NA&gt;
+## 5  12078      12     078      Cochoapa el Grande  638.160 12078         &lt;NA&gt;
+## 6  12079      12     079 José Joaquín de Herrera  131.977 12079         &lt;NA&gt;
+##   location  Loc date year captures treated trap_type
+## 1     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+## 2     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+## 3     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+## 4     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+## 5     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+## 6     &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;       NA      NA        NA
+##                         geometry
+## 1 MULTIPOLYGON (((-100.3237 1...
+## 2 MULTIPOLYGON (((-98.26956 1...
+## 3 MULTIPOLYGON (((-98.57511 1...
+## 4 MULTIPOLYGON (((-98.5618 17...
+## 5 MULTIPOLYGON (((-98.28944 1...
+## 6 MULTIPOLYGON (((-98.95271 1...</code></pre>
 <p>If we look at our object, we will notice that it is a Multipolygon
 with 606 observations now, instead of the original 319 observations from
 the Area file. This is beacause there were more than one point joined to
@@ -677,7 +684,7 @@ municipality.</p>
 <pre class="r"><code>spJoin &lt;- spJoin %&gt;% 
   data.frame() %&gt;% # first we will transfor to a data.frame (this makes easier for the aggregation)
   group_by(CVEGEO) %&gt;% 
-  summarise(captures = sum(CAPTURADOS, na.rm = T), treated = sum(TRATADOS, na.rm = T))
+  summarise(captures = sum(captures, na.rm = T), treated = sum(treated, na.rm = T))
 
 # Lets look at the result
 head(spJoin)</code></pre>
@@ -751,7 +758,7 @@ together wit ggplot</h1>
 <pre class="r"><code>ggplot() +
   geom_stars(data = Mxst) +
   geom_sf(data = Area, fill = NA, col = &#39;grey60&#39;) +
-  geom_sf(data = capturaSp, cex = 0.3) +
+  geom_sf(data = capturesSp, cex = 0.3) +
   theme_void() +
   scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;)</code></pre>
 <p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>

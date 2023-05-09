@@ -37,6 +37,14 @@ head(captures) # let's have a look at the data
 
 By default R already has a set of functions to create a variety of figures, but the code can get quite complex and difficult to read as we produce more detailed figures. `ggplot2` is a library that provides a set of functions for producing a variety of figures.
 
+The function `ggplot()` has to be called at the beginning of the plot definition, this function sets a blank canvas for our plot. If we call the function with no arguments we will just see the empty canvas, for example:
+
+```{r}
+ggplot()
+```
+
+Then we can add layers to our canvas based on the data we want to visualize, similarly to the pipes, we will connect the different layers of our plot with the operator `+`. 
+
 The basic components that we need to define for a plot are the following:
   
   - *data*, the data set we will use to generate the figure
@@ -61,7 +69,6 @@ figures <- list()
 ```
 
 
-
 # Visualizing distributions
 
 ## Continous variables
@@ -70,10 +77,12 @@ figures <- list()
 
 The most simple way to visualize the distribution of a continuous variable is using a histogram. Histograms are a special kind of bar plots where our variable is grouped in bins and showing the counts for each bin. Now that we have our container list for the plots, we can simply save it there and assign a name we want.
 
+Notice that we will combine the pipes with the ggplot syntax. you can either define the name of the data in the ggplot function or before the function and connect it with a pipe.  
+
 ```{r hist}
-figures$histogram <- captures %>% 
-  ggplot() +
-  geom_histogram(aes(x = treated))
+figures$histogram <- captures %>% # This is the data we use.
+  ggplot() + # we set the empty canvas
+  geom_histogram(aes(x = treated)) # add a layer to visualize a histogram
 
 # we can see our plot by calling the name in our container list
 figures$histogram
@@ -94,9 +103,9 @@ figures$box
 ```
 
 
-## Frequencies (Barplots, bubbles, mozaics, Pie charts)
+## Barplots
 
-### Barplots
+Bar plots are great to represent frequencies of categories. In the following example we will first count the number of treated by year, and then see it in a bar plot. 
 
 ```{r barplots}
 figures$bars <- captures %>% 
@@ -118,7 +127,7 @@ This is one of the most popular kind of plots, it is useful to represent relatio
 
 ```{r}
 figures$scatter <- captures %>% # first we start with the name of our data.frame
-  ggplot() + # then we call ggplot
+  ggplot() + # then we set the canvas
   geom_point(aes(x = treated, y = captures)) # and we add layer for points
 
 figures$scatter
@@ -199,7 +208,7 @@ There are other aesthetics we can define such as color, type of point, size, amo
 
 ```{r}
 figures$scatter <- captures %>% # the data we are using
-  ggplot() + # we call ggplot
+  ggplot() + # we set the canvas
   geom_point(aes(
     x = captures, # X axis
     y = treated, # Y axis
@@ -217,7 +226,7 @@ In the next example we will use the trap type to color our boxplot:
 
 ```{r fill}
 captures %>% 
-  ggplot() + # we call ggplot
+  ggplot() + # set the canvas
   geom_boxplot(aes(y = treated, fill = factor(trap_type))) # we add a boxplot layer
 ```
 
@@ -225,7 +234,7 @@ We can also use the variable to color other parts of the plot such as the border
 
 ```{r col}
 captures %>% 
-  ggplot() + # we call ggplot
+  ggplot() + # set the canvas
   geom_boxplot(aes(y = treated, col = factor(trap_type))) # we add a boxplot layer
 ```
 
@@ -235,7 +244,7 @@ So far we have added variables inside our `aes()` function, but we can add some 
 
 ```{r}
 captures %>% 
-  ggplot() + # we call ggplot
+  ggplot() + # set the canvas
   geom_boxplot(
     aes(y = treated, fill = factor(trap_type)), # This is the normal aesthetics we define
     col = 'red' # all aesthetics we define here will be applied to all th ebservations
@@ -275,7 +284,7 @@ Facets are a way of stratifying the data based on variables in the data set, you
 
 ```{r}
 figures$histogram <- captures %>% # The data we will use 
-  ggplot() + # we call ggplot
+  ggplot() + # set the canvas
   geom_histogram(aes(treated), fill = 'red4') + # We will create a histogram of the Age
   facet_grid(
     rows = vars(trap_type), # We will use the Sex variable for rows

@@ -1,5 +1,5 @@
 ---
-title: "R syntax and Data visualization"
+title: "R syntax"
 author: "Pablo Gomez"
 format: 
   revealjs:
@@ -132,7 +132,6 @@ y
 
 . . .
 
-
 ```{r vector operations 2}
 # Now we multiply the 3rd value of the x sequence times the 5th value of the y sequence
 x[3] * y[5]
@@ -262,11 +261,11 @@ Out <- mov %>% # This is the movement data set
 
 # [It's Lab time!](https://cadms-ucd.github.io/DiseaseModeling/1b_RandTidyverse.html)
 
-# Let's use some Data!{background-image="img/bg_title.png"}
+# Let's use some Data! {background-image="img/bg_title.png"}
 
-## [Importing data]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Importing data]{style="color:black;"} {background-image="img/bg_2.png"}
 
-Download the excel file from this [link](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv). It's not necessary to have a Box account.  
+Download the excel file from this [link](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv). It's not necessary to have a Box account.
 
 ```{r eval = F}
 # Import the excel file
@@ -288,12 +287,12 @@ PRRS %>%
 <br/>
 
 [Sometimes we want to select specific columns and rows on our data to reduce the dimensionality, for this we can use the functions:]{.black}
-  
-  - `select()` [to select specific *columns*]{.black}
-  - `slice()` [to select specific *rows* based on position]{.black}
-  - `filter()` [to select specific *rows* based on a condition]{.black}
-  
-## [Selecting specific columns]{style="color:black;"}{background-image="img/bg_2.png"}
+
+-   `select()` [to select specific *columns*]{.black}
+-   `slice()` [to select specific *rows* based on position]{.black}
+-   `filter()` [to select specific *rows* based on a condition]{.black}
+
+## [Selecting specific columns]{style="color:black;"} {background-image="img/bg_2.png"}
 
 ```{r select 1, eval = F}
 PRRS %>%  # the name of our data
@@ -306,7 +305,7 @@ PRRS %>%  # the name of our data
   Pable()
 ```
 
-## [Selecting specific columns]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Selecting specific columns]{style="color:black;"} {background-image="img/bg_2.png"}
 
 We can also specify which columns we DON'T want to show in our data:
 
@@ -321,22 +320,22 @@ PRRS %>%
   Pable()
 ```
 
-## [Filtering specific rows]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Filtering specific rows]{style="color:black;"} {background-image="img/bg_2.png"}
 
-Filtering only the observations from boar studs: 
+Filtering only the observations from boar studs:
 
 ```{r filtering observations, eval = F}
 PRRS %>% 
-  filter(farm_type == 'boar studs') # we will use the equals to operator for this
+  filter(farm_type == 'boar stud') # we will use the equals to operator for this
 ```
 
 ```{r filtering observationse, echo = F}
 PRRS %>% 
-  filter(farm_type == 'nursery') %>%  # we will use the equals to operator for this
+  filter(farm_type == 'boar stud') %>%  # we will use the equals to operator for this
   Pable()
 ```
 
-## [Creating variables]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Creating variables]{style="color:black;"} {background-image="img/bg_2.png"}
 
 ```{r creating new variables, eval=F}
 # Creating a new variable
@@ -355,7 +354,7 @@ PRRS %>% # name of the data set
   Pable()
 ```
 
-## [Grouping the data]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Grouping the data]{style="color:black;"} {background-image="img/bg_2.png"}
 
 We can calculate different statistics by group. For example lets calculate the mean and standard deviation of the age by Result and Sex:
 
@@ -377,9 +376,10 @@ PRRS %>%
   ) %>% Pable()
 ```
 
-## [Joining data sets]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Joining data sets]{style="color:black;"} {background-image="img/bg_2.png"}
 
 Sometimes we have different data sets that have variables in common and we want to integrate them into a single data set for further analysis.
+
 ```{r echo = F}
 # Importing the farm dataseet
 nodes <- read.csv("../Data/node_attrib.csv")
@@ -397,29 +397,31 @@ In <- mov %>%
   rename(id = id_dest)
 ```
 
-## [Joining data sets]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Joining data sets]{style="color:black;"} {background-image="img/bg_2.png"}
 
 Farms:
 
 ```{r eval=F}
 nodes
 ```
+
 ```{r echo=F}
 Pable(nodes)
 ```
 
-## [Joining data sets]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Joining data sets]{style="color:black;"} {background-image="img/bg_2.png"}
 
 Movements:
+
 ```{r eval=F}
 Out
 ```
+
 ```{r echo = F}
 Pable(Out)
 ```
 
-
-## [Joining data sets]{style="color:black;"}{background-image="img/bg_2.png"}
+## [Joining data sets]{style="color:black;"} {background-image="img/bg_2.png"}
 
 ```{r}
 # Joining the two datasets
