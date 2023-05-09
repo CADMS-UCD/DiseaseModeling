@@ -215,7 +215,7 @@ Filtering columns works based on boolean logic, so we can specify a condition an
 
 ```{r filtering observations}
 PRRS %>% 
-  filter(farm_type == 'boar studs') # we will use the equals to operator for this
+  filter(farm_type == 'boar stud') # we will use the equals to operator for this
 ```
 
 ## Creating or modifying variables
@@ -332,7 +332,7 @@ farms <- farms %>%
 The first rows of your data should look like these:
 
 ```{r}
-farms
+head(farms)
 ```
 
 Notice that we have some outgoing and incoming rows with NA values. Sometimes NAs can interfer with some functions such as sum, in the next example we will summarise the data and egt the ones with the highest number of incoming movements:

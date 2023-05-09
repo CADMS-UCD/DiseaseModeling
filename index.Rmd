@@ -157,6 +157,7 @@ The data used for this workshop is contained in the package `STNet`. To install 
     we will use this folder to provide some workshop materials such as
     code, data, or other resources.
 -   [R bloggers](https://www.r-bloggers.com), Website that shares tutorials and posts from different contributors.
+-   [Desktop installation instructions](https://www.spablo-temporal.network/ShinyWorkshop/0a_R_Intro.html)
 
 <!-- # Post workshop survey -->
 
