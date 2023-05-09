@@ -558,6 +558,12 @@ function <code>class()</code>:</p>
 <pre class="r"><code># Ask the class of a given object
 class(PRRS)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>PRRS %&gt;% 
+  select(Result, Age, Sex) %&gt;% # select COlumns Result, Age, Sex
+  filter(Age &gt;= 20) %&gt;% 
+  filter(Result == 1)</code></pre>
+<pre><code>## # A tibble: 0 × 3
+## # ℹ 3 variables: Result &lt;chr&gt;, Age &lt;dbl&gt;, Sex &lt;chr&gt;</code></pre>
 <p>It is possible that objects can have more than 1 class. In the
 previous example, you can notice that the <code>PRRS</code> object has 3
 different types of class.</p>
@@ -741,29 +747,41 @@ sets</h2>
 and we want to integrate them into a single data set for further
 analysis. In this example we have the data sets <em>node_attrib.csv</em>
 and <em>network.csv</em></p>
-<pre class="r"><code># Importing the farm dataset
+<pre class="r"><code># First we import the data -----------
+# Importing the farm dataset 
 nodes &lt;- read.csv(&quot;Data/node_attrib.csv&quot;)
 # Importing the movement dataset
-mov &lt;- read.csv(&quot;Data/network.csv&quot;)
-# Get the number of outgoing and incoming shipments 
-Out &lt;- mov %&gt;% 
-  group_by(id_orig) %&gt;%
-  summarise(Outgoing = n()) %&gt;%
-  rename(id = id_orig)
-# Get the incomming number of movements
-In &lt;- mov %&gt;%
-  group_by(id_dest) %&gt;%
-  summarise(Incoming = n()) %&gt;% 
-  rename(id = id_dest)
-
-# Joining the two datasets
-nodes &lt;- nodes %&gt;% 
-  left_join(Out, by =&quot;id&quot;)
-
-nodes &lt;- nodes %&gt;%
-  left_join(In, by = &quot;id&quot;)
-
-nodes</code></pre>
+mov &lt;- read.csv(&quot;Data/network.csv&quot;)</code></pre>
+<p>The data <code>mov</code> has information of place of origin
+(<em>id_orig</em>) and destination (<em>id_dest</em>) of animal
+shipments. First we will calculate the total number of pigs moved for
+each of the incoming and outgoing movements. To do this we will use the
+function <code>count()</code></p>
+<pre class="r"><code># Get the number of outgoing and incoming shipments 
+Out &lt;- mov %&gt;% # First we call the data
+  count(id_orig, wt = pigs.moved) %&gt;% # then we count the number of movements
+  rename(id = id_orig, outgoing = n) # Rename the variables</code></pre>
+<p>You will notice that we added the argument
+<code>wt = pigs.moved</code>, <em>pigs.moved</em> is a variable that
+tell us the number of pigs shipped. The argument <code>wt</code> in the
+function <code>count()</code> allow us to add a weight to the counts. We
+also used the function <code>rename()</code> which pretty much does what
+it sounds like, it renames variables in the data.</p>
+<p>Now we will join the data with the farm information contained in the
+<em>nodes</em> object, to do this we use the <code>left_join()</code>
+function:</p>
+<pre class="r"><code># Joining the two tables
+# First we join with the outgoing
+farms &lt;- nodes %&gt;% # This is the main object we will join with
+  left_join(Out, by =&quot;id&quot;) # we need to specify the variable name we are joining by</code></pre>
+<p><strong>Exercise: </strong> Not create a object that is the same as
+the <code>Out</code> we just created, but instead of counting the
+outgoing animals, counts the incoming animals. For this you can use the
+column <em>id_dest</em>. Then join the new object you created with the
+farms data. Name the variable that has the number of pigs moved
+<em>incoming</em></p>
+<p>The first rows of your data should look like these:</p>
+<pre class="r"><code>farms</code></pre>
 <pre><code>##    id                                                  name      lat      long
 ## 1   1                                 Iowa Select Farms Inc 42.50489 -93.26323
 ## 2   2                       Stanley Martins Fleckvieh Farms 43.08261 -91.56682
@@ -805,62 +823,66 @@ nodes</code></pre>
 ## 38 38                                       A &amp; D Farms Inc 41.27141 -92.01188
 ## 39 39                                           Geno Source 41.89120 -92.06679
 ## 40 40                                          Tatonka Farm 42.53873 -92.10478
-##    farm_type Outgoing Incoming
-## 1   sow farm       30       13
-## 2   sow farm       NA       33
-## 3    nursery       13       NA
-## 4   sow farm       15       35
-## 5        GDU       33       14
-## 6        GDU       11       47
-## 7        GDU        3      116
-## 8   sow farm       83      195
-## 9    nursery        6       NA
-## 10   nursery        1        7
-## 11   nursery        1       NA
-## 12   nursery        5       21
-## 13   nursery       NA        2
-## 14   nursery       15      121
-## 15  finisher       NA       42
-## 16  finisher        1       NA
-## 17  finisher       68      821
-## 18  finisher       NA       23
-## 19  sow farm      397       45
-## 20  finisher       27       NA
-## 21   nursery       38       NA
-## 22  sow farm       NA        1
-## 23  sow farm       21       NA
-## 24  sow farm       27        2
-## 25       GDU      154        6
-## 26  sow farm       NA        1
-## 27   nursery        1       NA
-## 28   nursery       22       NA
-## 29   nursery      522       NA
-## 30   nursery       12       34
-## 31       GDU      101       27
-## 32 boar stud       NA        1
-## 33  sow farm       NA        1
-## 34  sow farm       NA        1
-## 35  sow farm       NA        1
-## 36  sow farm       NA        1
-## 37  sow farm        1       NA
-## 38  sow farm        1       NA
-## 39  sow farm        1       NA
-## 40  sow farm        1       NA</code></pre>
-<p>Now we lets get the ones that had the higher number of movements:</p>
-<pre class="r"><code>mov %&gt;% 
-  group_by(id_orig) %&gt;% 
-  summarise(N = n(), N_pigs = sum(pigs.moved)) %&gt;%
-  arrange(desc(N)) %&gt;%
-  head()</code></pre>
-<pre><code>## # A tibble: 6 × 3
-##   id_orig     N N_pigs
-##     &lt;int&gt; &lt;int&gt;  &lt;int&gt;
-## 1      29   522  50565
-## 2      19   397  38686
-## 3      25   154  15653
-## 4      31   101  10711
-## 5       8    83   7620
-## 6      17    68   6633</code></pre>
+##    farm_type outgoing incoming
+## 1   sow farm     3528     1466
+## 2   sow farm       NA     3382
+## 3    nursery     1087       NA
+## 4   sow farm     1606     3684
+## 5        GDU     3440     1467
+## 6        GDU     1073     4491
+## 7        GDU      231    11034
+## 8   sow farm     7620    19184
+## 9    nursery      609       NA
+## 10   nursery      158      948
+## 11   nursery      109       NA
+## 12   nursery      565     1884
+## 13   nursery       NA      145
+## 14   nursery     1268    12334
+## 15  finisher       NA     4648
+## 16  finisher      175       NA
+## 17  finisher     6633    79948
+## 18  finisher       NA     2944
+## 19  sow farm    38686     4450
+## 20  finisher     3367       NA
+## 21   nursery     3455       NA
+## 22  sow farm       NA      107
+## 23  sow farm     2107       NA
+## 24  sow farm     2566       73
+## 25       GDU    15653      678
+## 26  sow farm       NA      118
+## 27   nursery        7       NA
+## 28   nursery     2092       NA
+## 29   nursery    50565       NA
+## 30   nursery     1273     2776
+## 31       GDU    10711     2706
+## 32 boar stud       NA       86
+## 33  sow farm       NA      193
+## 34  sow farm       NA      110
+## 35  sow farm       NA       18
+## 36  sow farm       NA      157
+## 37  sow farm       88       NA
+## 38  sow farm      137       NA
+## 39  sow farm      111       NA
+## 40  sow farm      111       NA</code></pre>
+<p>Notice that we have some outgoing and incoming rows with NA values.
+Sometimes NAs can interfer with some functions such as sum, in the next
+example we will summarise the data and egt the ones with the highest
+number of incoming movements:</p>
+<pre class="r"><code>farms %&gt;% # This is our joined data
+  group_by(id) %&gt;% # We will group it by id
+  summarise( # we will perform some summary statistics
+    incoming = sum(incoming, na.rm = T) # notice that we add the argument na.rm = T
+  ) %&gt;%
+  arrange(desc(incoming)) %&gt;% # now we will order by incoming
+  head(5) # we use the head() function to get the first 5 observations</code></pre>
+<pre><code>## # A tibble: 5 × 2
+##      id incoming
+##   &lt;int&gt;    &lt;int&gt;
+## 1    17    79948
+## 2     8    19184
+## 3    14    12334
+## 4     7    11034
+## 5    15     4648</code></pre>
 <!-- ## Wide and Long formats -->
 <!-- # Loops in R -->
 </div>
@@ -871,7 +893,7 @@ nodes</code></pre>
 it so the next time dont have to run all the code. YOu can export to
 multiple formats, but the most common is to a comma delimited file
 (CSV), which can be read in excel.</p>
-<pre class="r"><code>write.csv(nodes, &#39;Data/nodes.csv&#39;, row.names = F)</code></pre>
+<pre class="r"><code>write.csv(farms, &#39;Data/farms.csv&#39;, row.names = F)</code></pre>
 <hr />
 <p><em>This lab has been developed with contributions from: <a
 href="https://www.spablo-temporal.network">Jose Pablo

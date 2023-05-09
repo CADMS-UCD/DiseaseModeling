@@ -170,6 +170,17 @@ The most popular format for tables in R are called `data.frame`, when we import 
 class(PRRS)
 ```
 
+
+```{r}
+PRRS %>% 
+  select(Result, Age, Sex) %>% # select COlumns Result, Age, Sex
+  filter(Age >= 20) %>% 
+  filter(Result == 1)
+```
+
+
+
+
 It is possible that objects can have more than 1 class. In the previous example, you can notice that the `PRRS` object has 3 different types of class.  
 
 # Data manipulation

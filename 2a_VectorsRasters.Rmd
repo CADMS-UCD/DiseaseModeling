@@ -10,6 +10,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
+library(sf)
 ```
 
 # Introduction.  
@@ -221,6 +222,8 @@ ggplot() +
 ```
 
 # Putting everything together wit ggplot
+
+
 
 ```{r}
 ggplot() +
