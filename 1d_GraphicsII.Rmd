@@ -1,5 +1,5 @@
 ---
-title: "Graphics part II"
+title: "Graphics"
 author: "Pablo Gomez"
 output:
   html_document:
@@ -13,20 +13,220 @@ knitr::opts_chunk$set(warning = F, message = F)
 library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
 ```
 
+
+We will continue using the data set from the previous section to introduce some basics of data visualization. Some libraries can include data sets that once you install the library you can use. In this case we will use data from the `STNet` library, if you dont have it installed yet make sure you do by using:
+
+```{r eval = F}
+# Install STNet from github
+devtools::install_github('spablotemporal/STNet')
+```
+
+
+```{r}
+# Load the libraries
+library(ggplot2) # for graphics
+library(dplyr) # For data manipulation
+library(STNet)
+
+# loading the data from the package
+data('captures') # we load the data
+head(captures) # let's have a look at the data
+```
+
+# Plots in R
+
+By default R already has a set of functions to create a variety of figures, but the code can get quite complex and difficult to read as we produce more detailed figures. `ggplot2` is a library that provides a set of functions for producing a variety of figures.
+
+The basic components that we need to define for a plot are the following:
+  
+  - *data*, the data set we will use to generate the figure
+  - *geometry*, or type of graphic we will generate (i.e. histogram, bar, scatter, etc..)
+  - *aesthetic*, variables or arguments that will be used for the figure for example: location, color, size, etc..
+
+An example:
+
+```{r hist example}
+ggplot(data = captures) + # This is the data we will use
+  geom_histogram( # This is the geometry 
+    aes(x = treated) # The aesthetic includes only one variable representing the x axis
+  )
+```
+
+Other components of the plots can be defined to further customize our figures, and we will cover those more in detail in future sections.  
+As you noticed in the previous example, we can print the figures directly from the R console, but a way I like to organize our figures is to put them all inside a single object in R. This object can be a `list`, which is just a container for other objects.  
+
+```{r create fig list}
+# To create an empty list we can use the function list()
+figures <- list()
+```
+
+
+
+# Visualizing distributions
+
+## Continous variables
+
+### Histograms
+
+The most simple way to visualize the distribution of a continuous variable is using a histogram. Histograms are a special kind of bar plots where our variable is grouped in bins and showing the counts for each bin. Now that we have our container list for the plots, we can simply save it there and assign a name we want.
+
+```{r hist}
+figures$histogram <- captures %>% 
+  ggplot() +
+  geom_histogram(aes(x = treated))
+
+# we can see our plot by calling the name in our container list
+figures$histogram
+```
+
+
+### Boxplots
+
+Box plots are great to show the distribution of a continuous variable. We can use it to show only one variable, or multiple variables. It is important to be very descriptive when making plots, the idea of a figure is that can explain itself. we will start to slowly introduce functions to do this and customize our figures.
+
+```{r boxplot}
+# Only one variable
+figures$box <- captures %>% 
+  ggplot() +
+  geom_boxplot(aes(y = treated))
+
+figures$box
+```
+
+
+## Frequencies (Barplots, bubbles, mozaics, Pie charts)
+
+### Barplots
+
+```{r barplots}
+figures$bars <- captures %>% 
+  count(year, wt = treated) %>% 
+  ggplot() +
+  geom_bar(aes(
+    x = year, # X axis
+    y = n # Y axis
+  ), stat = 'identity') # type of barplot
+
+figures$bars
+```
+
+# Visualizing relationships
+
+## Scatterplots
+
+This is one of the most popular kind of plots, it is useful to represent relationship between two continuous variables.  
+
+```{r}
+figures$scatter <- captures %>% # first we start with the name of our data.frame
+  ggplot() + # then we call ggplot
+  geom_point(aes(x = treated, y = captures)) # and we add layer for points
+
+figures$scatter
+```
+
+
+# Time series
+
+To create a time series we will need to reformat the data a little bit so R can do what we want. We will introduce a new kind of variable: `date`. The date variables are pretty much what it sounds like, is a variable that has a format with year, month and day; there are other ways to format dates in R, but this is the most common and straight forward.  
+
+```{r}
+tCaptures <- captures %>% 
+  count(date, wt = treated) %>% 
+  mutate(date = as.Date(date, "%m/%d/%y"), # First we will format the date
+         week = format(date, "%V"),
+         week = lubridate::floor_date(date, 'week')) # The we create a variable formatting the date as week of the year
+```
+
+Now that we have our variables in the correct format, we can use it as any other variable.
+
+```{r}
+figures$timeseries <- tCaptures %>% 
+  ggplot() +
+  geom_line(aes(x = week, y = n))
+
+figures$timeseries
+```
+
+# Arranging the plots in a layout
+
+Now that we have all the figures in a list, we can make arrangements with our figures. For this we use the function `ggarrange()` from the ggpubr library.  
+
+```{r}
+library(ggpubr) # load the library
+ggarrange(plotlist = figures)
+```
+
 # Further customization
+
+## Labels
+
+Usually we try to avoid spaces when using names for the column names, but for our plots this could be not the most straight forward way to communicate our analysis, we can set specific labels to make our plots more readable and self explanatory. Let's improve bar plot figure a bit more to make it clearer:
+
+```{r}
+figures$bars <- captures %>% 
+  count(year, wt = treated) %>% 
+  ggplot() +
+  geom_bar(aes(x = year, y = n), stat = 'identity') + # type of barplot
+  labs(# We will use the function labs to generate our labels
+    title = 'Number of treated by year',
+    x = 'Year',
+    y = 'Number of treated'
+  )
+
+figures$bars
+```
+
+## Themes
+
+ggplot includes the function `theme()` to define most of the aspects of the figure such as the background color, the grid, axes, legend, among many others. There is also several predefined themes (all start with `theme_` followed by the name of the theme) that you can use, if don't want to mess with all the arguments from the function `theme()`. For example:
+
+```{r}
+# all the predefined themes start with theme_
+figures$timeseries <- tCaptures %>% 
+  ggplot() +
+  geom_line(aes(x = week, y = n)) +
+  labs(title = 'Treated by year', x = 'Week', y = 'Number of treated') +
+  theme_minimal() # We will use the theme minimal
+
+figures$timeseries
+```
 
 ## Other aesthetics
 
-```{r fill}
-PRRS %>% 
+### Shape
+
+There are other aesthetics we can define such as color, type of point, size, among many others. Lets try changing the point shape for one of the plots we previously did:
+
+```{r}
+figures$scatter <- captures %>% # the data we are using
   ggplot() + # we call ggplot
-  geom_boxplot(aes(y = Age, fill = Sex)) # we add a boxplot layer
+  geom_point(aes(
+    x = captures, # X axis
+    y = treated, # Y axis
+    shape = factor(trap_type) # point shape
+  )) +
+  labs(title = 'Captures and treatments by year', x = 'Captures', y = 'Treated', shape = 'Trap type') +
+  theme_classic() # now lets try the theme 'classic'
+
+figures$scatter
 ```
 
+### Color
+
+In the next example we will use the trap type to color our boxplot:
+
+```{r fill}
+captures %>% 
+  ggplot() + # we call ggplot
+  geom_boxplot(aes(y = treated, fill = factor(trap_type))) # we add a boxplot layer
+```
+
+We can also use the variable to color other parts of the plot such as the border:
+
 ```{r col}
-PRRS %>% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, col = Sex))
+captures %>% 
+  ggplot() + # we call ggplot
+  geom_boxplot(aes(y = treated, col = factor(trap_type))) # we add a boxplot layer
 ```
 
 ### Non aesthetics customization
@@ -34,10 +234,10 @@ PRRS %>%
 So far we have added variables inside our `aes()` function, but we can add some arguments outside the `aes()` function that we want them to be applied for all observations. For example, we can change the outline of the boxplot to be the same for the two groups, but the fill color different per group:
 
 ```{r}
-PRRS %>% 
+captures %>% 
   ggplot() + # we call ggplot
   geom_boxplot(
-    aes(y = Age, fill = Sex), # This is the normal aesthetics we define
+    aes(y = treated, fill = factor(trap_type)), # This is the normal aesthetics we define
     col = 'red' # all aesthetics we define here will be applied to all th ebservations
   ) # we add a boxplot layer
 ```
@@ -47,10 +247,12 @@ PRRS %>%
 To define specific colors for our figure, we can use the function `scale_*_manual` where the * represents the aesthetic we want to represent. If we want to use the color for the fill, we would use:
 
 ```{r colors}
-PRRS %>% 
+figures$box <- captures %>% 
   ggplot() +
-  geom_boxplot(aes(y = Age, fill = Sex)) +
-  scale_fill_manual(values = c('red', 'green'))
+  geom_boxplot(aes(y = treated, fill = factor(trap_type))) +
+  scale_fill_manual(values = c('red', 'green', 'blue', 'yellow'))
+
+figures$box
 ```
 
 
@@ -58,64 +260,72 @@ R manages colors in three different ways: by name (i.e: 'red'), by rgb value usi
 
 ![](img/1c_colPicker.gif)
 
-**Exercise: ** Pick two colors you like and use them to create a boxplot of the distribution of age by the test result.
+**Exercise: ** Pick 4 colors you like and use them to create a boxplot of the distribution of number of treated by the trap type.
 
 ```{r include = F}
-PRRS %>% 
+captures %>% 
   ggplot() +
-  geom_boxplot(aes(y = Age, fill = Result), col = 'grey20') +
-  scale_fill_manual(values = c('red4', 'blue4'))
+  geom_boxplot(aes(y = treated, fill = factor(trap_type))) +
+  scale_fill_manual(values = c('red4', 'blue3', 'skyblue', 'orchid'))
 ```
-
-
-## Labels
-
-Usually we try to avoid spaces when using names for the column names, but for our plots this could be not the most straight forward way to communicate our analysis, we can set specific labels to make our plots more readable and self explanatory. lets improve our figure a bit more
-
-```{r}
-PRRS %>% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(
-    title = 'Distribution of Age by Farm type',
-    x = 'Farm type',
-    fill = 'Farm Type'
-  )
-```
-
-## Themes
-
-ggplot includes the function `theme()` to define most of the aspects of the figure such as the background color, the grid, axes, legend, among many others. There is also several predefined themes that you can use, if dont want to mess with all the arguments from the function `theme()`. For example:
-
-```{r}
-# all the predefined themes start with theme_
-PRRS %>% 
-  ggplot() +
-  geom_boxplot(aes(y = Age, fill = farm_type)) +
-  labs(title = 'Distribution of Age by Farm type', x = 'Farm type', fill = 'Farm Type') +
-  theme_minimal()
-```
-
 
 # Facets
 
+Facets are a way of stratifying the data based on variables in the data set, you can think about it in a similar way we have been using groups. To create a stratified plot we can use the function `facet_grid()` which will ask for a variable to go in the rows and another for columns:
+
 ```{r}
-PRRS %>% 
-  ggplot() +
-  geom_histogram(aes(Age)) +
-  facet_grid(rows = vars(Sex), cols = vars(Result)) +
-  theme_classic()
+figures$histogram <- captures %>% # The data we will use 
+  ggplot() + # we call ggplot
+  geom_histogram(aes(treated), fill = 'red4') + # We will create a histogram of the Age
+  facet_grid(
+    rows = vars(trap_type), # We will use the Sex variable for rows
+    cols = vars(year) # We use the Result variable for Columns
+  ) +
+  theme_pubclean() # lets try another theme
+
+figures$histogram
 ```
-
-
-
-# Further customization
-
-# Layouts
 
 # Exporting plots
 
+Now that we have a good mix of different figures, lets export them. We can use the function `ggsave()` to export a high definition figure. 
+
+```{r}
+ggsave(figures$histogram, filename = 'myHistogram.png')
+```
+
+## More customization
+
+You can create more detailed arrangements of figures like i will show in the following example:
+
+```{r}
+ggarrange( # Funciton to arrange the figures
+  figures$box, figures$scatter, figures$bars, figures$timeseries, # These are the figures I will arrange
+  heights = c(5, 3), # We can define the heights for each of the rows
+  labels = c("A","B", "C", "D") # add a label for each figure
+) %>% 
+  annotate_figure( # Function to annotate the figure
+    top = text_grob( # Top title
+      label = 'Distribution of the data', # Label for title
+      face = 'bold', # Bold letters
+      size = 18 # Size of the title
+    )
+  )
+```
+
 # Interactive figures
+
+Having static figures is the most common application of graphics in R, but R is also capable of making interactive figures that can be used in dashboards and other platforms (i.e. shiny, or quarto). There are several libraries that allow you to create interactive figures, one of the most popular ones is called `plotly`. The best part of plotly is that if you learn how to use ggplot, you can transfer your figures to interactive plotly figures pretty much seamesly. Lets try that.  
+
+We use the function `ggplotly()` from the `plotly` library to do that:
+
+```{r}
+library(plotly) # laod the plotly library
+# Use the ggplotly function in one of the figures we previouslt created:
+ggplotly(figures$histogram)
+```
+
+
 
 ------------------------------------------------------------------------
 

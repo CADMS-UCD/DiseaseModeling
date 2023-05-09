@@ -88,15 +88,15 @@ data.frame(
   ),
   # D02 = c('Geographical Information systems','Introduction to geographical information systems', 'Vectors and rasters', 'Break', 'Manipulating spatial objects and projections', 'Lunch', 'Spatial statistics', 'Cartography', ''),
   D02 = cell_spec(
-    c('Geographical Information systems','R syntax and the tidyverse', 'Graphics in R', 'Break', 'Graphics in R (cont.)', 'Lunch', 'Vectors and rasters', 'Cartography', ''), 'html',
-    link = c('slides/2a_Viz.html', '1b_RandTidyverse.html', '1c_GraphicsI.html', '', '1c_GraphicsI.html', 'Lunch.html', '2a_VectorsRasters.html', '', '')
+    c('R syntax and the tidyverse','Intro to R syntac', 'Functions in R', 'Break', 'Loading data', 'Lunch', 'Data reduction', 'Joining datasets', ''), 'html',
+    link = c('slides/2a_Viz.html', '1b_RandTidyverse.html', '1b_RandTidyverse.html', '', '1c_GraphicsI.html', 'Lunch.html', '1b_RandTidyverse.html', '', '')
   ),
-  D03 = c('Network Analysis','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
-  # D03 = cell_spec(
-  #   c('Network Analysis','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
-  #   'html',
-  #   link = c('', '', '3a_NetworkViz.html', '', '3a_NetworkViz.html', 'Lunch.html', '', '3c_DynamicNetworks.html', '')
-  # ),
+  # D03 = c('Data visualization','Intro to SNA', 'SNA in R', 'Break', 'Network visualization', 'Lunch', 'Bipartite Networks', 'Dynamic Networks', ''),
+  D03 = cell_spec(
+    c('Data visualization','Recap from yesterday', 'Graphics in R', 'Break', 'Further customization', 'Lunch', 'Vectors and rasters', 'Cartography', ''),
+    'html',
+    link = c('', '', '1d_GraphicsII.html', '', '1d_GraphicsII.html', 'Lunch.html', '', '2a_VectorsRasters', '')
+  ),
   D04 = c('Risk assessment', 'Case studies', 'Introduction to Risk assessment', 'Break', 'Risk assessment in R I', 'Lunch', 'Risk assessment in R I II', '', '')
   # D04 = cell_spec(
   #   c('Risk assessment', 'Case studies', 'Introduction to Risk assessment', 'Break', 'Risk assessment in R I', 'Lunch', 'Risk assessment in R I II', '', ''),

@@ -16,22 +16,31 @@ library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse); library(s
 
 Ok now that we are familiarized with spatial data and visualization, we can go more detailed into making a pretty map.
 
+First lets aggregate all the capture regarding the year:
+
 ```{r}
-capturaSp
+cap <- capturaSp %>% 
+  group_by(NOM_LOC) %>% 
+  summarise(captures = sum(CAPTURADOS))
+
+ggplot(data = cap) +
+  geom_sf(data = Area) +
+  geom_sf(aes(size = captures), alpha = 0.5)
 ```
 
 
 # Extent
 
 ```{r}
-bbox <- st_bbox(capturaSp)
+bbox <- st_bbox(capturaSp) 
+bbox <- lims(x = bbox[c(1, 3)], y = bbox[c(2, 4)]) 
 
 ggplot() +
   geom_sf(data = Area,col = 'grey60') +
   geom_sf(data = capturaSp, cex = 0.6) +
   theme_void() +
   scale_fill_gradient(low = 'black', high = 'red') +
-  lims(x = bbox[c(1, 3)], y = bbox[c(2, 4)]) 
+  bbox
 ```
 
 # Scale bar
@@ -44,7 +53,7 @@ ggplot() +
   geom_sf(data = capturaSp, cex = 0.6) +
   theme_void() +
   scale_fill_gradient(low = 'black', high = 'red') +
-  lims(x = bbox[c(1, 3)], y = bbox[c(2, 4)]) +
+  bbox +
   annotation_scale(location = 'br', width_hint = 0.25, line_width = 0.2, height = unit(.03, "in")) 
 ```
 

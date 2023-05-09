@@ -124,7 +124,7 @@ st_crs(Area)
 We can convert a data.frame to a spatial points if we have the coordinates information, lets try with one of the data sets from the STNet library:
 
 ```{r}
-data('captura') # we lead the data
+data('captura') # we load the data
 # Lets look at the variables
 head(captura)
 ```
