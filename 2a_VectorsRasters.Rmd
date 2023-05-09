@@ -299,17 +299,17 @@ ggplot and tmap have more personalization options that will not be covered in th
 One of the easiest ways to get data from other countries or regions is downloading directly from R using the `raster` library. For example, we will get a shapefile for Denmark. The data will be downloaded in your computer and store in your project directory. Once downloaded you can just load it directly from your computer without internet connection with the function `read_sf`.
 
 ```{r}
-TT <- raster::getData(name = 'GADM', # this is the data source
+Sp <- raster::getData(name = 'GADM', # this is the data source
                       level = 1, # Level of administration
-                      country = 'TT') %>%  # country code
+                      country = 'Mx') %>%  # country code
   st_as_sf() # Now transform the data to sf
 
 # the dataset can be quite detailed, so we can simplify it to make it easier to plot
-TT <- rmapshaper::ms_simplify(TT)
+Sp <- rmapshaper::ms_simplify(Sp)
 
 # Plot the map
 ggplot() +
-  geom_sf(data = TT) +
+  geom_sf(data = Sp) +
   theme_void()
 ```
 
