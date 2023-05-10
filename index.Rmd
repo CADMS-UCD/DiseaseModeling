@@ -105,7 +105,7 @@ data.frame(
   D03 = cell_spec(
     c('Data visualization','Recap from yesterday', 'Graphics in R', 'Break', 'Further customization', 'Lunch', 'Vectors and rasters', 'Cartography', ''),
     'html',
-    link = c('slides/Day-03.html', '', '1d_GraphicsII.html', '', '1d_GraphicsII.html', 'Lunch.html', '', '2a_VectorsRasters', '')
+    link = c('slides/Day-03.html', '', '1d_GraphicsII.html', '', '1d_GraphicsII.html', 'Lunch.html', '2a_VectorsRasters.html', '2a_VectorsRasters.html', '')
   ),
   D04 = c('Risk assessment', 'Case studies', 'Introduction to Risk assessment', 'Break', 'Risk assessment in R I', 'Lunch', 'Risk assessment in R I II', '', '')
   # D04 = cell_spec(

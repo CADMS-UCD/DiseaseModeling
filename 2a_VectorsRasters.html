@@ -758,11 +758,11 @@ together wit ggplot</h1>
 <pre class="r"><code>ggplot() +
   geom_stars(data = Mxst) +
   geom_sf(data = Area, fill = NA, col = &#39;grey60&#39;) +
-  geom_sf(data = capturesSp, cex = 0.3) +
+  geom_sf(data = capturesSp, cex = 0.3, col = &#39;skyblue&#39;) +
   theme_void() +
-  scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;)</code></pre>
+  scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;, na.value = NA) +
+  labs(fill = &#39;Altitude&#39;)</code></pre>
 <p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<hr />
 </div>
 <div id="getting-data-for-other-countriesregions" class="section level1"
 number="4">
@@ -787,6 +787,92 @@ ggplot() +
   geom_sf(data = Sp) +
   theme_void()</code></pre>
 <p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="cartography" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Cartography</h1>
+<p>Ok now that we are familiarized with spatial data and visualization,
+we can go more detailed into making a pretty map.</p>
+<p>First lets aggregate all the capture regarding the year:</p>
+<pre class="r"><code>cap &lt;- capturesSp %&gt;% # Captures data
+  count(Loc, wt = captures) %&gt;%  # count the number of captures by location
+  rename(captures = n) # rename the variable 
+
+# Lets see how it looks like
+ggplot(data = cap) +
+  geom_sf(data = Area) +
+  geom_sf(aes(size = captures), alpha = 0.5)</code></pre>
+<p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div id="change-the-map-extent" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Change the map
+extent</h2>
+<p>Most of the data is concentrated in a specific region and its hard to
+see it clear, for this we will zoom in into the region with our points.
+We can use the function <code>lims()</code> to specify the x and y
+limits of our map. We will define the limits based on the bounding box
+of the captures data and save this to an object so we can use it
+later</p>
+<pre class="r"><code>bbox &lt;- st_bbox(capturesSp) # Get the bounding box
+bbox &lt;- lims(x = bbox[c(1, 3)], y = bbox[c(2, 4)]) # specify the limits and save to an object 
+
+# Visualize the map 
+ggplot() + # we set the canvas
+  geom_sf(data = Area,col = &#39;grey60&#39;) +
+  geom_sf(data = cap, aes(size = captures), alpha = 0.5) +
+  theme_void() +
+  scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;) +
+  scale_size(range = c(0.1, 3)) +
+  bbox</code></pre>
+<p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="scale-bar" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Scale bar</h2>
+<pre class="r"><code>library(ggspatial)
+
+ggplot() +
+  geom_sf(data = Area,col = &#39;grey60&#39;) +
+  geom_sf(data = cap, aes(size = captures), alpha = 0.5) +
+  theme_void() +
+  scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;) +
+  bbox +
+  annotation_scale(location = &#39;br&#39;, width_hint = 0.25, line_width = 0.2, height = unit(.03, &quot;in&quot;)) </code></pre>
+<p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="facets" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Facets</h2>
+<pre class="r"><code>ggplot(data = capturesSp) +
+  geom_sf(data = Area,col = &#39;grey60&#39;) +
+  geom_sf(size = 0.5, alpha = 0.5) +
+  theme_void() +
+  bbox +
+  facet_wrap(~year) +
+  theme_dark() +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )</code></pre>
+<p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="legends" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Legends</h2>
+</div>
+<div id="names" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Names</h2>
+<pre class="r"><code>library(ggspatial)
+
+ggplot() +
+  geom_sf(data = Area,col = &#39;grey60&#39;) +
+  # geom_sf_text(data = Area, aes(label = NOMGEO), alpha = 0.6, col = &#39;grey90&#39;) +
+  geom_sf(data = capturesSp, cex = 0.3) +
+  theme_void() +
+  scale_fill_gradient(low = &#39;black&#39;, high = &#39;red&#39;) +
+  annotation_scale(location = &#39;br&#39;, width_hint = 0.25, line_width = 0.2, height = unit(.03, &quot;in&quot;)) +
+  annotation_north_arrow(location = &quot;tr&quot;, which_north = &quot;true&quot;, style = north_arrow_fancy_orienteering(text_size = 5), 
+                         height = unit(.6, &quot;in&quot;),
+                         width = unit(.6, &quot;in&quot;),
+                         pad_x = unit(0.05, &quot;in&quot;), pad_y = unit(0.05, &quot;in&quot;))</code></pre>
+<p><img src="2a_VectorsRasters_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
 </div>
 
 
