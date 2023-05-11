@@ -152,13 +152,13 @@ install `STNet` we need the package `devtools` and use the command
 -   [R graph gallery](https://r-graph-gallery.com)
 -   [Data-to-viz](https://www.data-to-viz.com), tool from the same author of the R graph gallery to identify visual needed for the data.  
 
-<!-- # Post workshop survey -->
+# Post workshop survey
 
 <!-- ICAHS -->
 
-<!-- We would appreciate if you take a minute to fill a quick anonymous -->
+We would appreciate if you take a minute to fill a quick anonymous
 
-<!-- survey for feedback. To go to the survey follow [THIS LINK](Survey.html) -->
+survey for feedback. To go to the survey follow [THIS LINK](Survey.html)
 
 <!-- https://forms.gle/2NLzs7vLYUdumYjT9 -->
 
