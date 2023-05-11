@@ -111,7 +111,7 @@ data.frame(
   D04 = cell_spec(
     c('More data visualization', 'Recap from yesterday', 'Cartography', 'Break', 'Data visualization exercise', 'Lunch', 'Other visualization approaches', '', ''),
     'html',
-    link = c('slides/Day-04.html', 'slides/Day-03.html', '2a_VectorsRasters.html', '', 'https://www.data-to-viz.com', '', '', '', '')
+    link = c('slides/Day-04.html', 'slides/Day-03.html', '2a_VectorsRasters.html', '', '4a_DataVizExercise.html', '', '', '', '')
   )
 ) %>%
   kbl("html", escape = FALSE, col.names = c('', 'Day 01', 'Day 02', 'Day 03', 'Day 04')) %>%
