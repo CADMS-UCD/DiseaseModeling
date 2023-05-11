@@ -14,7 +14,7 @@ $theme-light: #99D9DD;
 
 $body-bg: #000 !default;
 $body-color: #EBD4EA !default;
-$link-color: #D0E9D8 !default;
+$link-color: #A0E7B5 !default;
 $selection-bg: #C99CCf !default;
 //$presentation-heading-color: #900;
 
@@ -43,6 +43,10 @@ $code-block-border-color: #000000;
 
 .black{
   color: #000;
+}
+
+.red{
+  color: #D00;
 }
 
 .sectionhead {

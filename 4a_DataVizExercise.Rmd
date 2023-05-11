@@ -1,0 +1,26 @@
+---
+title: "Data visualization exercise"
+author: "Pablo Gomez"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = F, message = F)
+library(dplyr); library(ggplot2); library(ggpubr);library(Pabloverse)
+```
+
+Now that you know some tools to look for information, you will have to make your figures on your own. If you want to make figures with the datasets we have been using you can do those, or you can use any of the code online to replicate them.  
+
+1. Go to the [Data to Viz website](https://www.data-to-viz.com)
+2. Identify a few figures that you would like to do (you can also do figures that we have previously done in the exercises)
+3. Make sure you label your figures!
+4. Experiment changing the colros, variables, themes etc...
+5. Replicate a few figures and put them in an arrangement.
+
+At the end we will have a discussion where you can share your figures and troubleshoot any problems you might have had.  
+
+
