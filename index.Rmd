@@ -151,6 +151,7 @@ install `STNet` we need the package `devtools` and use the command
     -   [markdown](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf)
 -   [R graph gallery](https://r-graph-gallery.com)
 -   [Data-to-viz](https://www.data-to-viz.com), tool from the same author of the R graph gallery to identify visual needed for the data.  
+-   [String manipulation](https://www.spablo-temporal.network/HowTo/Text_Manipulation.html)
 
 # Post workshop survey
 
